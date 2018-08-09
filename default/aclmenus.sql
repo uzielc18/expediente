@@ -1,0 +1,218 @@
+-- phpMyAdmin SQL Dump
+-- version 3.5.1
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost
+-- Tiempo de generación: 28-06-2017 a las 02:29:02
+-- Versión del servidor: 5.5.16-log
+-- Versión de PHP: 5.3.8
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+--
+-- Base de datos: `spatricia`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `aclmenus`
+--
+
+CREATE TABLE IF NOT EXISTS `aclmenus` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `aclmenus_id` int(10) unsigned DEFAULT NULL,
+  `aclrecursos_id` int(10) unsigned DEFAULT NULL,
+  `nombre` varchar(100) DEFAULT NULL,
+  `url` varchar(250) DEFAULT NULL,
+  `posicion` int(11) DEFAULT NULL,
+  `clases` varchar(50) DEFAULT NULL,
+  `class_new` varchar(100) DEFAULT NULL,
+  `visible_en` int(1) DEFAULT NULL,
+  `activo` tinyint(1) unsigned DEFAULT NULL,
+  `ubicacion` tinyint(1) DEFAULT NULL,
+  `fecha_at` datetime DEFAULT NULL,
+  `fecha_in` datetime DEFAULT NULL,
+  `userid` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `aclmenus_FKIndex1` (`aclrecursos_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=182 ;
+
+--
+-- Volcado de datos para la tabla `aclmenus`
+--
+
+INSERT INTO `aclmenus` (`id`, `aclmenus_id`, `aclrecursos_id`, `nombre`, `url`, `posicion`, `clases`, `class_new`, `visible_en`, `activo`, `ubicacion`, `fecha_at`, `fecha_in`, `userid`) VALUES
+(1, 18, 1, 'Usuarios', 'admin/usuarios', 2, NULL, NULL, 2, 1, 1, NULL, '2012-04-24 09:58:23', NULL),
+(3, 18, 2, 'Roles', 'admin/roles', 3, NULL, NULL, 2, 1, 1, NULL, '2012-04-19 10:42:04', NULL),
+(4, 18, 3, 'Recursos', 'admin/recursos', 4, NULL, NULL, 2, 1, 1, NULL, '2012-04-19 10:42:09', NULL),
+(5, 18, 4, 'Menu', 'admin/menu', 5, NULL, NULL, 2, 1, 1, NULL, '2012-04-19 10:42:15', NULL),
+(7, 18, 5, 'Privilegios', 'admin/privilegios', 6, NULL, NULL, 2, 1, 1, NULL, '2012-04-19 10:42:20', NULL),
+(18, NULL, 17, 'Administracion', 'admin/usuarios/index', 2, NULL, NULL, 2, 1, 1, NULL, '2013-05-08 13:07:00', NULL),
+(19, NULL, 14, 'Mi Perfil', 'admin/usuarios/perfil', 8, 'usuario', 'user', 3, 1, 3, NULL, '2013-12-06 17:25:45', NULL),
+(21, 18, 15, 'Config. Aplicacion', 'admin', 7, NULL, NULL, 2, 1, 1, NULL, '2012-04-19 10:42:41', NULL),
+(22, 18, 18, 'Auditorias', 'admin/auditorias', 8, NULL, NULL, 2, 1, 1, NULL, '2012-04-19 10:42:48', NULL),
+(23, 32, 20, 'Empresas', 'admin/aclempresas', 1, NULL, NULL, 2, 1, 3, '2012-04-19 10:41:40', '2012-06-25 11:26:30', NULL),
+(24, 32, 21, 'Areas', 'admin/plareas', 9, NULL, NULL, 2, 1, 3, '2012-04-19 12:20:25', '2012-06-25 11:24:15', 3),
+(25, 0, 19, 'Aplicaciones', 'index/index', 100, NULL, NULL, 3, 1, 1, '2012-04-19 13:07:14', '2012-07-05 10:19:49', 3),
+(26, 25, 23, 'SANTA CARMELA SAC', 'santacarmela/index/bienvenida', 1, NULL, NULL, 3, 1, 1, '2012-04-19 13:13:25', '2013-10-16 13:04:07', 3),
+(27, 25, 22, 'TEXTIL SANTA PATRICIA SA', 'santapatricia/index/bienvenida', 2, NULL, NULL, 3, 1, 1, '2012-04-19 13:14:00', '2013-04-10 08:27:13', 3),
+(28, 25, 15, 'ADMINISTRAR', 'admin/index/bienvenido', 3, NULL, NULL, 3, 1, 1, '2012-04-19 13:37:17', '2012-06-26 09:55:51', 3),
+(29, 32, 26, 'Personal SC', 'santacarmela/personal/listado', 4, NULL, NULL, 4, 1, 3, '2012-04-25 11:51:31', '2013-11-06 11:07:25', 3),
+(30, 32, 24, 'Personal SP', 'santapatricia/personal/listado', 5, NULL, NULL, 0, 1, 3, '2012-04-25 11:54:00', '2012-06-25 12:29:53', 3),
+(31, 32, 31, 'Linea de Productos SP', 'santapatricia/lineaproductos', 5, NULL, NULL, 0, 1, 3, '2012-04-27 09:57:57', '2012-06-25 11:31:14', 3),
+(32, NULL, 19, 'Mantenimiento', 'index/index', 7, 'mantenimiento', 'cog', 3, 1, 3, '2012-04-27 11:13:47', '2013-12-06 17:26:19', 3),
+(33, 32, 28, 'Colores', 'admin/tescolores', 1, NULL, NULL, 2, 1, 3, '2012-04-27 11:17:01', '2012-11-27 09:13:31', 3),
+(34, 32, 29, 'Cuentas Corrientes', 'admin/tescuentascorrientes', 2, NULL, NULL, 2, 1, 3, '2012-04-27 11:25:11', '2012-06-25 12:34:20', 3),
+(35, 32, 34, 'Acabados de Tela', 'admin/proacabados', 4, NULL, NULL, 2, 1, 3, '2012-04-27 11:29:26', '2013-02-04 09:39:17', 3),
+(36, 32, 35, 'Estado Procesos', 'admin/proestadosprocesos', 5, NULL, NULL, 2, 1, 3, '2012-04-27 11:30:32', '2013-02-04 09:39:42', 3),
+(37, 32, 36, 'Bancos', 'admin/tesbancos', 9, NULL, NULL, 2, 1, 3, '2012-04-27 11:31:14', '2012-06-25 12:34:57', 3),
+(38, 32, 37, 'Documentos', 'admin/tesdocumentos', 6, NULL, NULL, 2, 1, 3, '2012-04-27 11:33:52', '2012-06-26 09:40:30', 3),
+(39, 32, 32, 'Productos SP', 'santapatricia/productos/listado', 5, NULL, NULL, 0, 1, 3, '2012-05-02 11:22:55', '2012-06-26 09:40:42', 3),
+(40, 32, 40, 'Tipo de Persona', 'admin/testipodatos', 7, NULL, NULL, 2, 1, 3, '2012-05-03 12:24:44', '2012-06-26 09:41:04', 3),
+(41, 32, 41, 'Unidades de Medida', 'admin/tesunidadesmedidas', 8, NULL, NULL, 2, 1, 3, '2012-05-03 12:26:47', '2012-06-26 09:41:42', 3),
+(42, 32, 39, 'Estado Plegador', 'admin/estadoplegador', 10, NULL, NULL, 2, 1, 3, '2012-05-03 12:30:18', '2012-06-26 09:41:20', 3),
+(43, 32, 42, 'Clientes', 'santapatricia/clientes/listado', 8, NULL, NULL, 0, 1, 3, '2012-05-08 09:27:16', '2013-05-22 11:00:51', 3),
+(44, 32, 43, 'Proveedores', 'santapatricia/proveedores/listado', 20, NULL, NULL, 0, 1, 3, '2012-05-08 09:27:55', '2012-07-23 10:16:32', 3),
+(45, 32, 50, 'Linea de Productos SC', 'santacarmela/lineaproductos', 100, NULL, NULL, 4, 1, 1, '2012-05-15 08:34:41', NULL, 3),
+(46, 32, 49, 'Productos SC', 'santacarmela/productos/listado', 1, NULL, NULL, 4, 1, 3, '2012-05-15 08:39:03', '2012-11-27 09:14:18', 3),
+(47, 137, 48, 'Libro de Accidentes SP', 'santapatricia/accidentes', 9, NULL, NULL, 0, 1, 3, '2012-05-15 08:40:25', '2013-09-25 08:56:54', 3),
+(48, 32, 45, 'Plan de Cuentas', 'admin/cuentas', 8, NULL, NULL, 2, 1, 3, '2012-05-21 09:39:35', '2012-06-26 09:42:07', 3),
+(49, 32, 52, 'Maquinas', 'santapatricia/maquinas/listado', 26, NULL, NULL, 0, 1, 3, '2012-05-22 12:55:27', '2012-06-26 09:42:40', 3),
+(50, 32, 51, 'Repuestos', 'santapatricia/repuestos/listado', 5, NULL, NULL, 0, 1, 3, '2012-05-22 12:56:02', '2013-06-18 11:59:37', 3),
+(51, 32, 53, 'Transportes', 'santapatricia/transportes/listado', 25, NULL, NULL, 0, 1, 3, '2012-05-23 09:52:15', '2012-06-26 09:40:20', 3),
+(52, 32, 54, 'Plegadores', 'santapatricia/plegadores/listado', 26, NULL, NULL, 0, 1, 3, '2012-05-23 09:54:58', '2012-06-25 12:36:15', 3),
+(53, 32, 33, 'Cargos', 'admin/placargos', 4, NULL, NULL, 2, 1, 3, '2012-06-04 11:44:06', '2012-06-25 12:34:06', 3),
+(54, 32, 56, 'Transportistas', 'santapatricia/transportistas/listado', 5, NULL, NULL, 0, 1, 3, '2012-06-04 11:46:43', '2012-06-26 09:45:48', 3),
+(55, NULL, 57, 'Inventarios', 'santapatricia/inventarios', 1, NULL, NULL, 0, 1, 1, '2012-06-18 12:56:05', '2012-11-29 08:35:24', 3),
+(56, 32, 58, 'Memos', 'admin/memos', 1, NULL, NULL, 2, 1, 1, '2012-06-20 09:20:05', '2012-06-20 09:22:56', 3),
+(57, NULL, 59, 'Ingresar Documentos', 'santapatricia/ingresos', 5, NULL, NULL, 0, 1, 1, '2012-06-28 09:18:11', '2013-09-10 10:17:14', 3),
+(58, 32, 60, 'Variables', 'admin/configuraciones', 8, NULL, NULL, 2, 1, 3, '2012-07-30 12:41:57', NULL, 3),
+(59, 32, 61, 'Tipo de Cambio', 'admin/testipocambios', 9, NULL, NULL, 2, 1, 3, '2012-07-30 12:42:39', '2013-02-04 09:33:51', 3),
+(60, NULL, 55, 'Proformas', 'santapatricia/proformas', 11, 'proformas', 'file-text', 0, 1, 3, '2012-08-02 08:35:40', '2013-12-06 17:17:39', 3),
+(61, NULL, 63, 'OCompras y Pedidos!', 'santapatricia/ordendecompra', 10, 'compras', 'car', 0, 1, 3, '2012-08-07 10:13:51', '2013-12-06 17:13:52', 3),
+(62, NULL, 54, 'Plegadores', 'santapatricia/plegadores/plegadoresmov', 5, 'plegador', 'ship', 0, 1, 3, '2012-09-06 09:44:05', '2013-02-28 10:24:43', 3),
+(63, 0, 64, 'Produccion', 'santapatricia/produccion', 7, NULL, NULL, 0, 1, 1, '2012-09-07 09:15:47', '2015-04-20 11:21:02', 3),
+(64, 89, 65, 'Nota de Salida', 'santapatricia/notadepedido/index/salida', 1, NULL, NULL, 0, 1, 3, '2012-09-18 12:47:07', '2013-04-10 08:31:59', 2),
+(65, 32, 66, 'Tipo de Plegadores', 'admin/tipoplegadores', 10, NULL, NULL, 2, 1, 3, '2012-10-15 09:35:32', '2013-02-04 09:40:12', 3),
+(66, 32, 67, 'Forma de Pago', 'admin/formasdepago', 11, NULL, NULL, 2, 1, 3, '2012-10-15 11:15:22', '2013-02-04 09:40:33', 3),
+(67, NULL, 68, 'Hilado', 'santapatricia/hilos', 4, 'anuncio', 'brille', 0, 1, 3, '2012-10-16 10:33:28', '2013-12-06 17:14:59', 3),
+(68, 67, 68, 'Mant. Hilado', 'santapatricia/hilos', 1, NULL, NULL, 0, 1, 3, '2012-10-16 11:51:47', '2013-03-01 09:42:42', 3),
+(69, 67, 71, 'Sist. Medida', 'santapatricia/sistemas', 2, NULL, NULL, 0, 1, 3, '2012-10-16 11:52:51', NULL, 3),
+(70, 67, 70, 'Caracteristicas', 'santapatricia/fibras', 3, NULL, NULL, 0, 1, 3, '2012-10-16 11:53:30', '2016-08-31 23:06:52', 3),
+(71, 67, 69, 'Tipo Material', 'santapatricia/acabados', 3, NULL, NULL, 0, 1, 3, '2012-10-16 11:54:02', '2016-08-31 23:07:55', 3),
+(72, NULL, 72, 'Vouchers', 'santapatricia/vouchers', 10, NULL, NULL, 0, 1, 1, '2012-10-26 09:07:56', '2012-10-26 09:08:57', 3),
+(73, 137, 74, 'Libro de Accidentes SC', 'santacarmela/accidentes', 1, NULL, NULL, 4, 1, 3, '2012-10-26 10:33:14', '2013-10-17 09:16:21', 3),
+(75, NULL, 76, 'Reg Doc. ', 'santacarmela/ingresos', 3, NULL, NULL, 4, 1, 1, '2012-10-26 10:40:42', '2013-11-21 15:08:20', 3),
+(76, 32, 50, 'Linea de Productos SC', 'santacarmela/lineaproductos', 100, NULL, NULL, 4, 1, 3, '2012-10-26 11:06:03', NULL, 3),
+(77, 32, 73, 'Clientes SC', 'santacarmela/clientes/listado', 3, NULL, NULL, 4, 1, 3, '2012-10-26 11:12:22', '2012-10-26 11:13:06', 3),
+(78, 32, 81, 'Proveedores SC', 'santacarmela/proveedores/listado', 4, NULL, NULL, 4, 1, 3, '2012-10-26 11:14:02', NULL, 3),
+(79, 32, 84, 'Transportista', 'santacarmela/transportistas/listado', 5, NULL, NULL, 4, 1, 3, '2012-10-26 11:15:09', '2012-10-26 11:16:34', 3),
+(80, NULL, 77, 'Inventarios SC', 'santacarmela/inventarios', 1, NULL, NULL, 4, 1, 1, '2012-10-26 11:17:27', '2013-10-16 12:06:27', 3),
+(81, NULL, 85, 'Vouchers SC', 'santacarmela/vouchers', 5, NULL, NULL, 4, 1, 1, '2012-10-26 11:44:43', NULL, 3),
+(82, 121, 78, 'Salidas Almacen<i class='' icon-flag''></i>', 'santacarmela/notadepedido/index/salida', 7, NULL, NULL, 4, 1, 3, '2012-10-26 12:32:40', '2013-06-17 11:58:14', 3),
+(83, NULL, 80, 'Proformas SC', 'santacarmela/proformas', 9, 'pantalla', 'tablet', 4, 1, 3, '2012-10-26 12:48:29', '2013-12-09 12:58:42', 3),
+(84, NULL, 79, 'O/C SC', 'santacarmela/ordendecompra', 7, 'ventas', 'shopping-cart', 4, 1, 3, '2012-10-26 13:03:25', '2013-12-09 12:55:55', 3),
+(85, 127, 87, 'Obligaciones', 'santapatricia/letras', 1, NULL, NULL, 0, 1, 3, '2012-11-13 08:22:48', '2013-08-28 10:32:54', 3),
+(86, 85, 87, 'Registrar N.Unico-Letras', 'santapatricia/letras', 1, NULL, NULL, 0, 1, 3, '2012-11-13 08:23:38', '2013-02-04 09:32:20', 3),
+(87, 85, 87, 'Reporte Semanal de Letras', 'santapatricia/letras/letrasporfecha', 2, NULL, NULL, 0, 0, 3, '2012-11-13 08:25:08', '2015-11-11 10:21:39', 3),
+(88, 85, 87, 'Pago de Obligaciones', 'santapatricia/letras/crear', 3, NULL, NULL, 0, 1, 3, '2012-11-15 16:19:21', '2012-11-15 16:35:30', 3),
+(89, NULL, 65, 'Nota de Pedido', 'santapatricia/notadepedido', 9, 'rombo', 'diamond', 0, 1, 3, '2012-11-21 08:59:11', '2015-04-20 11:21:10', 3),
+(90, 89, 65, 'Nota de Ingreso', 'santapatricia/notadepedido/index/ingreso', 2, NULL, NULL, 0, 1, 3, '2012-11-21 09:03:01', '2013-04-10 08:31:38', 3),
+(91, 121, 78, 'Ingreso Almacen', 'santacarmela/notadepedido/index/ingreso', 8, NULL, NULL, 4, 1, 3, '2012-11-22 13:28:45', '2013-06-17 12:06:45', 3),
+(92, 32, 88, 'Almacenes', 'admin/almacenes', 10, NULL, NULL, 2, 1, 3, '2012-12-10 17:09:50', NULL, 3),
+(93, 32, 89, 'Destino de Hilo', 'admin/hilodestino', 100, NULL, NULL, 2, 1, 3, '2012-12-13 09:26:19', NULL, 3),
+(94, 67, 68, 'Guias Hilado', 'santapatricia/hilos/salidas', 1, NULL, NULL, 0, 1, 3, '2012-12-13 09:33:45', '2013-09-10 10:19:03', 3),
+(95, 85, 87, 'Reporte Obligaciones', 'santapatricia/letras/obligacionesporfecha', 5, NULL, NULL, 0, 1, 3, '2012-12-17 12:09:24', NULL, 3),
+(96, 67, 86, 'Cajas Hilado', 'santapatricia/cajas', 9, NULL, NULL, 0, 1, 3, '2013-01-04 12:41:02', '2013-09-10 10:19:43', 3),
+(97, NULL, 90, 'Tintoreria', 'santapatricia/tintoreria/', 15, 'mantenimiento2', 'cogs', 0, 1, 3, '2013-01-10 08:25:54', '2013-12-06 17:23:17', 3),
+(98, 67, 91, 'Salida a Trama', 'santapatricia/salidasinternas/salidas', 10, NULL, NULL, 0, 1, 3, '2013-01-14 12:30:08', '2013-10-01 12:25:03', 3),
+(99, 97, 90, 'Salidas<i class="icon-share-alt"></i>', 'santapatricia/tintoreria/salidas', 1, NULL, NULL, 0, 1, 3, '2013-01-16 10:53:59', '2013-09-10 11:40:12', 3),
+(100, 97, 90, 'Ingresos<i class="icon-download-alt"></i>', 'santapatricia/tintoreria/ingresos', 2, NULL, NULL, 0, 1, 3, '2013-01-17 13:49:00', '2013-09-10 11:40:43', 3),
+(101, 97, 90, 'Control de Rollos!<i class="icon-hand-up"></i>', 'santapatricia/tintoreria/control', 3, NULL, NULL, 0, 1, 3, '2013-02-01 09:01:03', '2013-02-19 11:00:09', 3),
+(102, 97, 90, '    <i class=''icon-lock''></i>', 'santapatricia/tintoreria/salidas_i', 5, NULL, NULL, 0, 1, 3, '2013-02-13 12:53:17', '2013-02-19 10:56:05', 3),
+(103, 32, 92, 'Vendedores', 'santapatricia/vendedores', 10, NULL, NULL, 0, 1, 3, '2013-02-19 11:30:56', NULL, 3),
+(104, 32, 93, 'Condicion de Pago', 'admin/condicionesdepago', 20, NULL, NULL, 2, 1, 3, '2013-02-20 09:18:46', NULL, 3),
+(105, NULL, 94, 'Ventas', 'santapatricia/ventas', 16, 'ventas', 'shopping-cart', 0, 1, 3, '2013-02-20 11:19:42', '2013-12-06 17:23:37', 3),
+(106, NULL, 97, 'Confecciones', 'santapatricia/confecciones', 2, 'reloj', 'clock-o', 0, 1, 3, '2013-02-28 11:08:30', '2013-12-06 17:18:53', 3),
+(107, 106, 97, 'Generar Guias', 'santapatricia/confecciones/salidas', 1, NULL, NULL, 0, 1, 3, '2013-02-28 11:10:51', '2013-02-28 11:14:14', 3),
+(108, 106, 97, '    ', 'santapatricia/confecciones/salidas_i', 8, NULL, NULL, 0, 0, 3, '2013-02-28 11:19:08', '2013-09-10 12:57:34', 3),
+(109, 105, 94, 'Ventas<i class=''icon-check''></i>', 'santapatricia/ventas', 1, NULL, NULL, 0, 1, 3, '2013-03-13 11:38:45', '2013-09-10 10:21:43', 3),
+(110, 105, 98, '    ', 'santapatricia/ventasinternas', 8, NULL, NULL, 0, 1, 3, '2013-03-13 11:41:43', NULL, 3),
+(112, NULL, 128, 'Reportes', 'santapatricia/reportes/index', 12, 'reporte', 'flag', 0, 1, 3, '2013-03-21 10:29:03', '2013-12-06 17:16:03', 3),
+(113, NULL, 101, 'Abonos', 'santapatricia/abonos', 4, NULL, NULL, 0, 1, 1, '2013-04-01 10:10:35', '2013-09-17 12:01:16', 3),
+(114, 32, 102, 'Tipo de Abonos', 'admin/formadeabonos', 100, NULL, NULL, 2, 1, 3, '2013-04-01 10:26:27', NULL, 3),
+(115, 105, 103, 'Canjear Facturas', 'santapatricia/cancelacionfacturas', 5, NULL, NULL, 0, 1, 3, '2013-05-22 08:43:36', '2013-05-22 08:44:18', 3),
+(116, 105, 105, 'Venta Productos<i class=''icon-adjust''></i>', 'santapatricia/ventasproductos', 2, NULL, NULL, 0, 1, 3, '2013-06-03 09:07:21', '2013-06-03 09:37:21', 3),
+(117, 85, 87, 'Resumen de Semana', 'santapatricia/letras/totalporsemana', 1, NULL, NULL, 0, 1, 3, '2013-06-04 11:52:04', NULL, 3),
+(118, NULL, 106, 'Cheques', 'santapatricia/chequeingresos', 1, 'carpetas', 'folder', 0, 1, 3, '2013-06-10 10:01:11', '2013-12-06 17:13:05', 3),
+(119, 118, 106, 'Cheques Recibidos <i class=''icon-download''></i>', 'santapatricia/chequeingresos', 2, NULL, NULL, 0, 1, 3, '2013-06-10 10:07:35', '2013-12-06 17:28:04', 3),
+(120, 118, 107, 'Cheques Emitidos<i class=''icon-upload''></i>', 'santapatricia/chequesalidas', 1, NULL, NULL, 0, 1, 3, '2013-06-10 10:08:32', '2013-12-06 17:28:24', 3),
+(121, NULL, 78, 'Pedidos Almacen  SC', 'santacarmela/notadepedido', 8, 'rombo', 'diamond', 4, 1, 3, '2013-06-17 11:52:58', '2013-12-09 12:55:00', 3),
+(122, 154, 121, 'Venta Productos SC', 'santacarmela/ventasproductos', 4, NULL, NULL, 4, 1, 3, '2013-06-17 12:34:42', '2013-11-13 10:11:31', 3),
+(123, NULL, 51, 'Repuestos', 'santapatricia/repuestos', 14, 'llave', 'key', 0, 1, 3, '2013-06-18 12:01:31', '2013-12-06 17:16:48', 2),
+(124, 32, 122, 'Turnos<i class=''icon-time''></i>', 'admin/turnos', 7, NULL, NULL, 2, 1, 3, '2013-07-03 09:28:39', '2013-07-03 09:30:55', 3),
+(125, NULL, 123, 'Eficiencias', 'santapatricia/eficiencias/selector', 3, 'rss', 'connectdevelop', 0, 1, 3, '2013-08-14 10:51:29', '2013-12-06 17:15:33', 3),
+(126, NULL, 124, 'Reportes. Graficos', 'santapatricia/graficos', 13, 'reporte', 'flag-checkered', 0, 1, 3, '2013-08-28 09:10:16', '2013-12-06 17:22:49', 3),
+(127, NULL, 22, 'Letras', 'santapatricia/index', 5, 'pantalla', 'tablet', 0, 1, 3, '2013-08-28 10:09:57', '2013-12-18 10:55:29', 3),
+(128, 127, 99, 'Letras por Cobrar', 'santapatricia/letrassalidas/', 1, NULL, NULL, 0, 1, 3, '2013-08-28 11:07:28', '2013-08-29 08:55:42', 3),
+(131, 128, 99, 'Letras Emitidas', 'santapatricia/letrassalidas', 1, NULL, NULL, 0, 1, 3, '2013-08-29 08:56:19', NULL, 3),
+(132, 128, 99, 'Letras Emitidas - Por Mes', 'santapatricia/letrassalidas/letrasemitidas', 2, NULL, NULL, 0, 1, 3, '2013-08-29 08:57:37', '2013-09-24 17:23:00', 3),
+(133, 67, 68, 'Utilizacion', 'santapatricia/hilos/hiloutilizado', 5, NULL, NULL, 0, 1, 3, '2013-08-29 11:02:48', '2013-09-02 09:09:54', 3),
+(134, 67, 68, 'Precios Hilado', 'santapatricia/hilos/hiloprecios', 6, NULL, NULL, 0, 1, 3, '2013-08-29 12:28:22', '2013-09-10 10:20:10', 3),
+(135, 85, 87, 'Obligaciones por Mes', 'santapatricia/letras/letrasrecibidas', 8, NULL, NULL, 0, 1, 3, '2013-09-04 09:25:45', '2013-09-24 17:21:36', 3),
+(136, 105, 94, 'Precios Telas', 'santapatricia/ventas/precios', 8, NULL, NULL, 0, 1, 3, '2013-09-04 12:26:38', NULL, 3),
+(137, NULL, 11, 'Libros', 'index', 6, 'informes', 'info-circle', 3, 1, 3, '2013-09-25 08:56:15', '2013-12-06 17:26:05', 3),
+(138, 32, 126, 'Tipo Eventos', 'admin/tipoeventos', 16, NULL, NULL, 2, 1, 3, '2013-09-25 11:38:50', NULL, 3),
+(139, NULL, 125, 'Calendarios', 'santapatricia/calendarios', 1, NULL, NULL, 0, 1, 1, '2013-10-01 12:24:48', '2013-11-06 15:44:50', 3),
+(140, NULL, 165, 'Reportes SC', 'santacarmela/reportes/index', 10, 'reporte', 'flag', 4, 1, 3, '2013-10-16 12:05:22', '2013-12-09 12:55:31', 3),
+(141, 156, 115, 'Cheques Recibidos SC', 'santacarmela/chequeingresos', 6, NULL, NULL, 4, 1, 3, '2013-10-17 08:57:12', '2013-11-13 10:12:00', 3),
+(142, 156, 113, 'Cheques Emitidos SC', 'santacarmela/chequesalidas', 6, NULL, NULL, 4, 1, 3, '2013-10-17 09:00:30', '2013-11-13 10:12:22', 3),
+(143, 157, 112, 'Dev-Hilos-Clientes', 'santacarmela/hilos/salidas', 6, NULL, NULL, 4, 1, 3, '2013-10-22 12:20:33', '2013-11-13 10:13:15', 3),
+(144, NULL, 166, 'Repuesto', 'santacarmela/maquinas', 7, NULL, 'train', 4, 0, 3, '2013-10-24 10:51:57', '2013-11-06 11:34:00', 3),
+(145, 157, 173, 'Serv. Terceros SC', 'santacarmela/confecciones/salidas', 8, NULL, NULL, 4, 1, 3, '2013-10-24 12:45:53', '2013-11-13 10:13:28', 3),
+(147, 166, 169, 'Rollos de Telas SC', 'santacarmela/telas', 11, NULL, NULL, 4, 1, 3, '2013-10-30 08:39:08', '2013-12-04 10:52:36', 3),
+(148, 32, 166, 'Mant. Maquina', 'santacarmela/maquinas/listado', 8, NULL, NULL, 4, 1, 3, '2013-10-30 10:11:34', NULL, 3),
+(149, NULL, 111, 'Abonos SC', 'santacarmela/abonos', 1, NULL, NULL, 4, 1, 1, '2013-11-06 09:40:55', '2013-11-06 11:03:29', 3),
+(150, 32, 172, 'Mant. Repuestos', 'santacarmela/repuestos/listado', 11, NULL, NULL, 4, 1, 3, '2013-11-06 10:55:27', '2013-11-06 11:36:17', 3),
+(151, NULL, 172, 'Repuestos SC', 'santacarmela/repuestos', 11, 'llave', 'key', 4, 1, 3, '2013-11-06 11:33:14', '2013-12-09 12:56:19', 2),
+(152, NULL, 162, 'Agenda', 'santacarmela/calendarios', 1, NULL, NULL, 4, 0, 1, '2013-11-06 15:21:57', '2013-11-21 12:54:56', 2),
+(153, 154, 118, 'F.Adelantos/Servicio', 'santacarmela/ventas', 3, NULL, NULL, 4, 1, 3, '2013-11-07 10:13:50', '2013-11-13 10:11:15', 3),
+(154, NULL, 118, 'Ventas SC', 'santacarmela/ventas', 13, 'compras', 'shopping-cart', 4, 1, 3, '2013-11-11 11:06:24', '2013-12-09 12:56:38', 2),
+(155, 154, 118, 'Listado de Precios', 'santacarmela/ventas/precios', 8, NULL, NULL, 4, 1, 3, '2013-11-11 11:11:35', NULL, 2),
+(156, NULL, 115, 'Cheques SC', 'santacarmela/chequeingresos', 2, 'carpetas', 'folder', 4, 1, 3, '2013-11-11 11:52:53', '2013-12-09 12:57:24', 2),
+(157, NULL, 173, 'Guias Servicio', 'santacarmela/confecciones', 3, 'anuncio', 'flag-checkered', 4, 1, 3, '2013-11-11 11:56:36', '2015-03-16 10:05:41', 2),
+(158, NULL, 161, 'Almacen Hilos', 'santacarmela/cajas', 1, 'anuncios', 'cube', 4, 1, 3, '2013-11-11 13:10:16', '2013-12-09 12:59:07', 2),
+(159, 158, 161, 'Hilado Clientes', 'santacarmela/cajas', 100, NULL, NULL, 4, 1, 3, '2013-11-11 13:10:59', '2013-11-11 13:14:48', 2),
+(160, 158, 77, 'Stock Hilado', 'santacarmela/inventarios/reporte_cajas', 100, NULL, NULL, 4, 1, 3, '2013-11-11 13:12:31', '2013-11-11 13:15:17', 2),
+(161, 32, 174, 'Procesos', 'santacarmela/procesos', 10, NULL, NULL, 4, 1, 3, '2013-11-13 10:15:17', NULL, 3),
+(163, 32, 170, 'Transporte', 'santacarmela/transportes/listado', 3, NULL, NULL, 4, 1, 3, '2013-11-14 11:49:47', NULL, 3),
+(164, NULL, 175, 'Produccion SC', 'santacarmela/produccion', 5, NULL, NULL, 4, 1, 1, '2013-11-21 12:54:10', NULL, 3),
+(165, 32, 177, 'Calidades', 'santacarmela/calidades', 8, NULL, NULL, 4, 1, 3, '2013-11-27 10:40:08', NULL, 3),
+(166, NULL, 169, 'Stocks', 'santacarmela/telas', 12, 'pantalla', 'tablet', 4, 1, 3, '2013-12-04 10:46:28', '2015-03-16 11:05:18', 3),
+(167, NULL, 23, 'Letras SC', 'santacarmela/index', 4, 'anuncio', 'tablet', 4, 1, 3, '2013-12-18 10:57:13', '2013-12-18 10:58:18', 3),
+(168, 167, 164, 'Obligaciones SC', 'santacarmela/letras', 1, NULL, NULL, 4, 1, 3, '2013-12-18 11:00:06', NULL, 3),
+(169, 169, 116, 'Letras Emitidas SC', 'santacarmela/letrassalidas', 2, NULL, NULL, 4, 1, 3, '2013-12-18 11:03:38', '2013-12-18 12:05:32', 3),
+(170, 168, 164, 'Ingresar N. Unico', 'santacarmela/letras', 1, NULL, NULL, 4, 1, 3, '2013-12-18 11:04:29', NULL, 3),
+(171, 168, 164, 'Reporte por fecha', 'santacarmela/letras/letrasporfecha', 2, NULL, NULL, 4, 1, 3, '2013-12-18 11:25:09', NULL, 3),
+(172, 168, 164, 'Reporte Semanal', 'santacarmela/letras/totalporsemana', 3, NULL, NULL, 4, 1, 3, '2013-12-18 11:25:53', NULL, 3),
+(173, 168, 164, 'Obligaciones por Fecha', 'santacarmela/letras/obligacionesporfecha', 4, NULL, NULL, 4, 1, 3, '2013-12-18 11:26:52', NULL, 3),
+(174, 167, 116, 'Letras Pendientes', 'santacarmela/letrassalidas', 1, NULL, NULL, 4, 1, 3, '2013-12-18 11:34:28', NULL, 3),
+(175, 168, 164, 'Pago Obligaciones', 'santacarmela/letras/crear', 5, NULL, NULL, 4, 1, 3, '2013-12-18 12:08:30', NULL, 3),
+(176, 164, 179, 'Urdidos', 'santacarmela/urdidos', 5, NULL, NULL, 4, 1, 1, '2013-12-23 11:38:00', '2013-12-23 11:51:20', 3),
+(177, 164, 175, 'Prod. Productos', 'santacarmela/produccion', 1, 'rombo', NULL, 4, 1, 1, '2013-12-23 11:56:36', NULL, 3),
+(178, NULL, 182, 'Reparar', 'admin/reparar', 4, 'pantalla', 'wrench', 3, 1, 3, '2014-12-04 09:59:00', '2015-03-04 10:41:54', 3),
+(179, NULL, 180, 'Admin. Rollos', 'admin/rollos', 2, 'rss', 'rss', 2, 1, 3, '2014-12-04 10:00:43', NULL, 3),
+(180, 32, 60, 'Configuraciones', 'admin/configuraciones', 50, NULL, NULL, 2, 1, 3, '2015-04-07 10:32:57', NULL, 3),
+(181, 32, 187, 'Control Reportes', 'admin/reportes', 1, NULL, NULL, 2, 1, 3, '2016-11-08 02:10:14', NULL, 3);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

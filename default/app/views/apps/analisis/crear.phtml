@@ -1,0 +1,162 @@
+<?php 
+$exp_id = $partida->getPresupuestos()->getExpedientes()->expedientes_id;
+$mod_id = $modulo->id;
+$bloc_id = $partida->getPresupuestos()->expedientes_id;
+$pres_id = $partida->presupuestos_id;?>
+<section class="content">
+<div class="row">
+<?php 
+View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
+		<div class="col-md-12">
+			<div class="box box-solid">
+				<div class="box-header">
+				    <h2 class="box-title"><?php echo $titulo?></h2>
+				</div>
+				<blockquote>
+					<dl class="dl-horizontal">
+				      <dt>Presupuesto: </dt><dd><?php echo $partida->getPresupuestos()->nombre?></dd>
+				      <dt>Titulo: </dt><dd><?php echo $partida->getTitulopartidas()->titulo?></dd>
+				      <dt>Medida: </dt><dd><?php echo $partida->getMedidas()->nombre?> (<?php echo $partida->getMedidas()->abr?>)</dd>
+				  	</dl>
+				</blockquote>
+				<div class="box-body">
+					<div class="col-sm-10">
+						<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
+						<?php echo Form::hidden('detalleanalisis.id');?>
+						<?php echo Form::hidden('detalleanalisis.partidas_id',NULL,$partida->id);?>
+						<?php echo Form::hidden('detalleanalisis.estado',NULL,1);?>
+						<?php echo Form::hidden('detalleanalisis.parcial');?>
+						<?php echo Form::hidden('detalleanalisis.modulos_id',NULL,$modulo->id);?>
+					    <div class="form-group">
+					    <?php echo Form::label('Material','detalleanalisis.materiales_id','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::dbSelect('detalleanalisis.materiales_id','nombre',NULL,'seleccione','class="form-control" placeholder="Materiales"')?>
+					        </div>
+					    </div>
+					    <div class="form-group">
+					    <?php echo Form::label('Medida','detalleanalisis.medidas_id','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::dbSelect('detalleanalisis.medidas_id','nombre',NULL,'seleccione','class="form-control" placeholder="Nº de veces"')?>
+					        </div>
+					    </div>
+					    <div class="form-group">
+					    <?php echo Form::label('Cuadrilla','detalleanalisis.cuadrilla','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('detalleanalisis.cuadrilla','class="form-control calcular" placeholder="Cuadrilla"')?>
+					        </div>
+					    </div>
+					    <div class="form-group">
+					    <?php echo Form::label('Cantidad','detalleanalisis.cantidad','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('detalleanalisis.cantidad','class="form-control calcular" placeholder="Cantidad"')?>
+					        </div>
+					    </div>
+					    <div class="form-group">
+					    <?php echo Form::label('Precio','detalleanalisis.precio','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('detalleanalisis.precio','class="form-control calcular" placeholder="Precio"')?>
+					        </div>
+					    </div>
+					    <div>
+					    	<?php echo Form::submit('Guardar Datos','class="btn btn-primary pull-right"') ?>
+					    </div>
+					    <?php echo Form::close();?>
+					</div>
+					<div class="col-sm-2"></div>
+
+					<div class="col-sm-12">
+						<br>
+						<?Php 
+						echo Form::open('apps/analisis/terminar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
+						echo Form::hidden('partida.id');
+						echo Form::hidden('partida.presupuestos_id');
+						echo Form::hidden('partida.titulopartidas_id');
+						echo Form::hidden('partida.medidas_id');
+						?>
+						<div role="separator" class="divider">
+							<div class="col-sm-3">
+								Rendimiento <b><?php echo $partida->getMedidas()->abr?>/DIA</b>
+							</div>
+							<div class="col-sm-3">
+								<input id="partida_rendimiento" name="partida[rendimiento]" type="number" class="form-control">
+							</div>
+							<div class="col-sm-3">
+								Costo unitario directo por: <?php echo $partida->getMedidas()->abr?>
+							</div>
+							<div class="col-sm-3">
+								<b><?php echo $partida->parcial ? number_format($partida->parcial,4): '-';?></b>
+							</div>
+						</div>
+						<table class="table">
+							<caption>Detalle del metrado </caption>
+							<thead>
+								<tr>
+									<th>Codigo</th>
+									<th>Descripcion recurso</th>
+									<th>Unidad</th>
+									<th>Cuadrilla</th>
+									<th>Cantidad</th>
+									<th>Precio S/</th>
+									<th>Parcial</th>
+									<th>Accion</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php 
+								$total=0;
+								$n=0;
+								foreach($analisis as $item){
+									$n++;
+									$cantidad = $item->cantidad ? $item->cantidad : 0;
+									$precio = $item->precio ? $item->precio : 0;
+									$total=$total+$item->parcial;
+									?>
+								<tr>
+									<td><?php echo $item->getMateriales()->codigo;?></td>
+									<td><?php echo $item->getMateriales()->nombre;?></td>
+									<td><?Php echo $item->getMedidas()->nombre?></td>
+									<td align="right"><?php echo $item->cuadrilla ;?></td>
+									<td align="right"><?php echo $item->cantidad ? number_format($cantidad,4) : '-'?></td>
+									<td align="right">S/ <?php echo $item->precio ? number_format($precio,4) : '-'?></td>
+									<td align="right">S/ <?php echo number_format($item->parcial,4);?></td>
+									<td align="center">
+										<?php echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:25px;"></i>');?></td>
+								</tr>
+								<?php }?>
+							</tbody>
+							<tfoot>
+								<tr>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td align="right"><b>Total:</b></td>
+									<td align="right">S/ <?php echo number_format($total,4);?></td>
+									<td></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+				<div class="box-footer with-border">
+					<div class="pull-right">
+				    <?php 
+				    echo Form::hidden('partida.parcial',NULL,$total);
+				    echo Form::submit('Terminar','class="btn btn-primary"') ?></div>
+				    <?php echo Form::close();?>
+				</div>
+			<script>
+			function calcular() {
+			  var cantidad = $( "#detalleanalisis_cantidad" ).val();
+			  var precio = $( "#detalleanalisis_precio" ).val();
+			  return cantidad*precio;
+			}
+			$(".calcular").change(function() {
+			  $("#detalleanalisis_parcial" ).val(calcular());
+			});
+			</script>
+			</div>
+		</div>
+	</div>
+</section>

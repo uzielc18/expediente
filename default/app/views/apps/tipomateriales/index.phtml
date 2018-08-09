@@ -1,0 +1,84 @@
+<div class="box-header">
+    <h2 class="box-title"><?php echo $titulo?></h2>
+</div>
+<div class="box-body">
+	<div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+        <?php foreach($tipos as $tip){?>
+          <li <?php echo $tipo->id==$tip->id? 'class="active"':'';?>><a href="/apps/tipomateriales/index/<?php echo $tip->id?>#<?php echo $tip->simbologia ?>"><?php echo $tip->nombre ?></a></li>
+        <?php }?>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="<?php echo $tipo->simbologia?>">
+          	<div class="row">
+          	<div class="col-sm-10">
+                <?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
+                <?php echo Form::hidden('tipomateriales.id');?>
+                <?php echo Form::hidden('tipomateriales.aclempresas_id',NULL,Auth::get('aclempresas_id'));?>
+                <?php echo Form::hidden('tipomateriales.tipomateriales_id',NULL,$tipo->id);?>
+                <?php echo Form::hidden('tipomateriales.estado',NULL,1);?>
+                <div class="form-group">
+			    	<?php echo Form::label('Nombre','tipomateriales.nombre','class="col-sm-2 control-label"');?>
+			        <div class="col-sm-9">
+			        	<?php echo Form::text('tipomateriales.nombre','class="form-control calcular" placeholder="Nombre"')?>
+			        </div>
+			    </div>
+			    <div class="form-group">
+			    	<?php echo Form::label('Descripcion','tipomateriales.descripcion','class="col-sm-2 control-label"');?>
+			        <div class="col-sm-9">
+			        	<?php echo Form::textArea('tipomateriales.descripcion','class="form-control calcular" placeholder="Descripcion"')?>
+			        </div>
+			    </div>
+                <div class="form-group">
+			    	<?php echo Form::label('Indice unificado','tipomateriales.indice_unificado','class="col-sm-2 control-label"');?>
+			        <div class="col-sm-9">
+			        	<?php echo Form::text('tipomateriales.indice_unificado','class="form-control calcular" placeholder="Indice unificado"')?>
+			        </div>
+			    </div>
+                <div class="form-group">
+			    	<?php echo Form::label('Simbologia','tipomateriales.simbologia','class="col-sm-2 control-label"');?>
+			        <div class="col-sm-9">
+			        	<?php echo Form::text('tipomateriales.simbologia','class="form-control calcular" placeholder="Simbologia"')?>
+			        </div>
+			    </div>
+			    <div class="form-group">
+			    	<?php echo Form::submit('Guardar Datos','class="btn btn-primary pull-right"') ?>
+			    </div>
+				<?php echo Form::close();?>
+		    </div>
+		    <div class="col-sm-2"></div>
+			</div>
+		  <div class="row">
+		    <div class="col-sm-12">
+		    	<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Nombre</th>
+							<th>Indice</th>
+							<th>Simbologia</th>
+							<th>Acciones</th>
+						</tr>
+					</thead>
+
+					<tbody>
+						<?php $n=0;foreach($indices as $item):
+						$n++;?>
+						<tr>
+							<td><?php echo $n;?></td>
+							<td><?php echo $item->nombre?></td>
+							<td><?php echo $item->indice_unificado?></td>
+							<td><?php echo $item->simbologia?></td>
+							<td><?php echo Html::linkAction('index/'.$item->tipomateriales_id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:25px;"></i>');?></td>
+						</tr>
+						<?php endforeach;?>
+					</tbody>
+				</table>
+		    </div>
+			
+          </div>
+          </div>
+        </div>
+            <!-- /.tab-content -->
+    </div>
+</div>

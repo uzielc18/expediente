@@ -1,0 +1,35 @@
+<header class="main-header">
+    <nav class="navbar navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="/apps/" class="navbar-brand"><b><?Php echo $modulo_title?></b></a>
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+            <i class="fa fa-bars"></i>
+          </button>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+          <?php if($modulo=='apps')//View::renderMenu(Menu::APP,3,'class="nav navbar-nav"') ?>
+          <form class="navbar-form navbar-left" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search">
+            </div>
+          </form>
+        </div>
+        <!-- /.navbar-collapse -->
+        <!-- Navbar Right Menu -->
+        <div class="navbar-custom-menu">
+          <?php if($modulo=='admin')View::renderMenu(Menu::BACKEND,1,'class="nav navbar-nav"') ?>
+          <?php if($modulo=='apps')View::renderMenu(Menu::APP,1,'class="nav navbar-nav"') ?>
+          <ul class="nav navbar-nav">
+              <li class="dropdown">
+                  <li><?php echo Html::link('logout/index/logout', 'Salir') ?></li>
+              </li>
+          </ul> 
+        </div>
+        <!-- /.navbar-custom-menu -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </header>

@@ -1,0 +1,239 @@
+/* Todas las reglas Css */
+@media tty
+{@page
+{
+	size:portrait;
+	page-break-inside:avoid;
+}
+body {
+   font: 9pt font:"Courier New", Courier, monospace !important;
+}
+table{
+  font: 9pt Verdana, Geneva, sans-serif !important;
+  border-collapse:collapse;
+}
+
+table td{
+	padding:2pt;
+	/*border-bottom:#CCCCCC 1pt solid !important;*/
+	}
+table th{
+	padding:2pt;
+	border-bottom:#CCCCCC 1pt solid !important;
+	}
+}
+@page
+{
+	size:portrait;
+	page-break-inside:avoid;
+}
+body {
+   font: 9pt font:"Courier New", Courier, monospace !important;
+}
+h1,h2,h3,h4{ font:"Courier New", Courier, monospace; font-weight:bold; margin-bottom:2px; padding:1px;}
+h1{font: 12pt !important; text-decoration:underline;}
+h2{font: 11pt !important; text-decoration:underline;}
+h3{font: 10.5pt !important; font-style:oblique; text-decoration:underline;}
+h4{font: 10pt !important; font-style:italic; text-decoration:underline;}
+table{
+  font: 9pt Verdana, Geneva, sans-serif !important;  
+  max-width: 100%;
+  /*border:#333333 dotted 1pt;
+  margin:auto;*/
+  border-collapse:collapse;
+}
+
+table td{
+	padding:2pt;
+	/*border-bottom:#CCCCCC 1pt solid !important;*/
+	}
+table th{
+	padding:2pt;
+	border-top:#CCCCCC 1pt solid !important;
+	}
+footer{visibility:hidden;display: none;}
+
+#contenedor{ 
+    text-align: left; 
+    width: 100%; 
+    margin: auto; 
+} 
+#header,#cabecera,#Cambio,.page-header{ 
+   visibility:hidden; 
+   display: none; 
+}
+
+.well
+{
+   visibility:hidden; 
+   display: none; 	
+}
+.form-actions{
+   visibility:hidden; 
+   display: none; }
+.simbolo
+{
+	display:block;
+	float:left;
+}
+.total_letras
+{
+	padding-top:75px;
+	float:left;
+	width:66%;
+	font-weight:bold;
+	text-transform: uppercase;
+}
+/*TB PARA IMPRIMIR*/
+.simbolo
+{
+	display:block;
+	float:left;
+}
+.total_letras
+{
+	padding-top:75px;
+	float:left;
+	width:66%;
+	font-weight:bold;
+	text-transform: uppercase;
+}
+.hoja{
+  background: #fff;
+  margin: 0 auto;
+  width: 700px;
+}
+.hoja_a5{
+  background: #fff;
+  margin: 0 auto;
+  width: 530px;
+  padding:10px 5px 10px 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  -webkit-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+  -moz-box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+  box-shadow: rgba(0,0,0,0.2) 0px 1px 3px;
+}
+.caja1
+{
+  margin: 0 auto;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+border-radius: 4px;
+}
+.caja_iz
+{
+  margin: 0 auto;
+  width:33%;
+  float:left;
+ }
+.caja_iz span
+{
+	margin:2px 2px;
+	font-size:11px;
+	font-style:italic;
+	color:#666666;
+	width:100%;
+	display:block;
+}
+.caja_ce{
+  margin: 0 auto;
+  width:33%;
+  float:left;
+  }
+  .caja_de{
+  margin: 0 auto;
+  width:33%;
+  float:right;
+  }
+  .caja_de h1{
+	  font-size:16px;
+	  color:#333;
+	  font-weight:bold;
+  }
+
+  .caja2{
+  margin: 5px auto;
+  }
+  .caja2 .mitad
+  {
+	  width:48%;
+	  margin:1px;
+	  float:left;
+	  text-align:justify;
+  }
+  .caja2 h2
+  {
+	  font-size:12px;
+	  text-transform: uppercase;
+  }
+  .caja2 .sobre_encabezado th
+  {
+	 text-transform: uppercase; 
+  }
+  .caja3{
+  margin: 0 auto;
+  }
+  .cajapie{
+  margin: 0 auto;
+  padding-top:10px;
+  }
+.hoja .sobre_encabezado table {
+   width: 100%;
+   border: 1px solid #999;
+   text-align: left;
+   border-collapse: collapse;
+   margin:5px 2px;
+   caption-side: top;
+}
+.hoja .sobre_encabezado caption, .hoja .sobre_encabezado td, .hoja .sobre_encabezado th {
+   padding: 1px;
+}
+.hoja .sobre_encabezado th, .hoja .sobre_encabezado td {
+   border-bottom: 1px solid #999;
+}
+.hoja .sobre_encabezado caption {
+   font-weight: bold;
+   font-style: italic;
+}
+.page-header h1 span
+{
+	font-size:12px;
+	color:#666666;
+	font-style:italic;
+	display:block;
+	padding-top:10px;
+}
+.page-header h1 div
+{
+	margin-top:-40px;
+}
+.page {
+position: relative;
+z-index: 2;
+width: 870px !important; 
+}
+
+.texto {
+color:#F00;
+position:absolute;
+padding-top:10%;
+text-align:center ;
+z-index:1;
+top:0;
+left:0;
+right:0;
+bottom:0;
+font-size:36px !important;;
+}
+.saltodepagina
+{
+page-break-after: always;
+}
+.page table.fichas_plegadores{
+	font-size:24px !important;
+}
+.menu{display:none;}
+.no_imprimir{display:none !important;}
+.no_ver{display: none;}

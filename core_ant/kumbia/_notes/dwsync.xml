@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="bootstrap.php" server="192.168.1.109" local="129435543600000000" remote="130341237000000000" />
+<file name="config.php" server="192.168.1.109" local="129073687760000000" remote="130341237000000000" />
+<file name="console.php" server="192.168.1.109" local="129501255220000000" remote="130341237000000000" />
+<file name="controller.php" server="192.168.1.109" local="129501254340000000" remote="130341237000000000" />
+<file name="controller_deprecated.php" server="192.168.1.109" local="129707913900000000" remote="130341237000000000" />
+<file name="dispatcher.php" server="192.168.1.109" local="130143143418750000" remote="130341237000000000" />
+<file name="kumbia_exception.php" server="192.168.1.109" local="129292062600000000" remote="130341237000000000" />
+<file name="kumbia_view.php" server="192.168.1.109" local="130251116500625000" remote="130341237000000000" />
+<file name="load.php" server="192.168.1.109" local="129370716900000000" remote="130341237000000000" />
+<file name="router.php" server="192.168.1.109" local="129708486840000000" remote="130341237000000000" />
+<file name="util.php" server="192.168.1.109" local="129707913780000000" remote="130341237000000000" />
+</dwsync>

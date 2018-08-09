@@ -1,0 +1,106 @@
+<div class="page-header">
+    <h1>Configuraci&oacute;n de Perfil</h1>
+</div>
+<?php View::content() ?>
+<ul class="nav nav-tabs">
+    <li class="active"><a href="#datos-personales" data-toggle="tab">Datos Personales</a></li>
+    <li><a href="#clave" data-toggle="tab">Contrase&ntilde;a</a></li>
+</ul>
+<div class="tab-content">
+    <div id="datos-personales" class="tab-pane active">
+        <?php echo Ajax::form('res-datos-personales', NULL, 'form-horizontal') //Form::open() ?>
+        <fieldset>
+            <legend>Configurar Datos Personales</legend>
+            <div id="res-datos-personales"></div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Nombre Completo* : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::text('usuario1.nombres','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Correo Electronico* : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::text('datos.correo','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Apellido Paterno : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::text('datos.appaterno','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Apellido materno : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::text('datos.apmaterno','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">DNI : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::text('datos.dni','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Telefonos : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::text('datos.telefono','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Celulares : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::text('datos.celular','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Fecha Nacimiento : </label>
+                <div class="col-xs-9">
+                    <?php
+				 echo Calendar::selector('datos.fnacimiento')?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Direccion : </label>
+                <div class="col-xs-9">
+				<?php echo Form::text('datos.direccion','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-actions">
+                <?php echo Form::submit('Guardar Cambios', 'name="datos_personas" class="btn btn-primary"') ?>
+            </div>
+        </fieldset>
+        <?php echo Form::close() ?>
+    </div>
+    <div id="clave" class="tab-pane">
+        <?php echo Ajax::form('res-clave', NULL, 'form-horizontal')//Form::open() ?>
+        <fieldset>
+            <legend>Cambiar Contrase&ntilde;a</legend>
+            <div id="res-clave"></div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Contrase&ntilde;a Actual * : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::pass('usuario2.clave_actual','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Nueva Contrase&ntilde;a* : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::pass('usuario2.nueva_clave','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-xs-3">Volver a escribir Contrase&ntilde;a* : </label>
+                <div class="col-xs-9">
+                    <?php echo Form::pass('usuario2.nueva_clave2','class="form-control"') ?>
+                </div>
+            </div>
+            <div class="form-actions">
+                <?php echo Form::submit('Guardar Cambios', 'name="cambiar_clave" class="btn btn-primary"') ?>
+            </div>
+        </fieldset>
+        <?php echo Form::close() ?>
+    </div>
+
+</div>

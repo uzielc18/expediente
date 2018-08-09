@@ -1,0 +1,66 @@
+<script type="text/javascript">
+$(document).ready(function(){
+
+		$("#visible").change(function(){
+                var op = $("#visible option:selected").val();
+                document.location = "/<?php echo $module_name?>/menu/index/"+op+'/1';
+        });
+});
+</script>
+<div class="box-header">
+    <h1 class="box-title">Menus del Sistema</h1>    
+</div>
+  <?php View::content() ?>
+<div class="form-actions">
+    <?php echo Html::linkAction("crear", 'Crear Menu', 'class="btn btn-primary"') ?>
+    <?php echo Form::select('visible',array("1"=>"Solo en La Aplicación, fuera del Backend","2"=>"Solo en El Backend","3"=>"En cualquier parte del sistema"),"class='btn'")?>
+</div>
+<div class="box-body">
+    <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Nº</th>
+            <th>id</th>
+            <th>Texto a Mostrar</th>
+            <th>Menu Padre</th>
+            <th>Recurso al que Accede</th>
+            <th>URL</th>
+            <th>Clases / Ubicacion</th>
+            <th>Posición</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+    <tbody>
+    <?php $n=0;
+    foreach($menus->items as $item){ $n++;?>
+      <tr>
+        <td><?php echo $n?></td>
+        <td><?php echo $item->id?></td>
+        <td><?php echo $item->nombre?></td>
+        <td><?php if(empty($item->padre)) echo "Padre"; else echo $item->padre;?></td>
+        <td><?php echo $item->recurso?></td>
+        <td><?php echo $item->url ?></td>
+        <td><?php echo $item->class_new?> / <?php echo $item->ubicacion?></td>
+        <td><?php echo $item->posicion?></td>
+        <td>
+        <?php 
+         if($item->activo=='0'){
+         echo Html::linkAction('activar/'.$item->id,Html::img("figuras/circulo_rojo.png",'Editar','style="width: 20px;margin-left:10px;margin-right:10px;"'),'');
+         }else{
+         echo Html::linkAction("desactivar/$item->id",Html::img("figuras/circulo_verde.png",'Editar','style="width: 20px;margin-left:10px;margin-right:10px;"'), 'onclick="return confirm(\'¿Está seguro?\')"');}?>
+        </td>
+        <td><?php echo Html::linkAction('editar/'.$item->id,Html::img("figuras/editar.png",'Editar','style="width: 20px;margin-left:10px;margin-right:10px;"'),'')?>
+        <?php echo Html::linkAction("eliminar/$item->id",Html::img("figuras/eliminar.png",'Eliminar','style="width: 20px;margin-left:10px;margin-right:10px;"'), 'onclick="return confirm(\'¿Está seguro?\')"');?>
+        </td>
+      </tr>
+    <?php }?>
+    </tbody>
+    </table>
+    <?php View::partial('paginators/bootstrap', false, array('page' => $menus ,'url'=>Router::get('controller_path').'/index/'.$visible)); ?>
+</div>						
+<div class="box-footer"></div>
+
+
+
+

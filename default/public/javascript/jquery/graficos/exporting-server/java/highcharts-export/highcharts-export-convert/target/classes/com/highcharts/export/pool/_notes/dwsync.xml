@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="AbstractPool.class" server="192.168.1.109" local="130217561820000000" remote="130341237000000000" />
+<file name="BlockingQueuePool.class" server="192.168.1.109" local="130217561820000000" remote="130341237000000000" />
+<file name="ObjectFactory.class" server="192.168.1.109" local="130217561820000000" remote="130341237000000000" />
+<file name="ObjectPool.class" server="192.168.1.109" local="130217561820000000" remote="130341237000000000" />
+<file name="PoolException.class" server="192.168.1.109" local="130217561820000000" remote="130341237000000000" />
+<file name="ServerObjectFactory$PortStatus.class" server="192.168.1.109" local="130217561820000000" remote="130341237000000000" />
+<file name="ServerObjectFactory.class" server="192.168.1.109" local="130217561820000000" remote="130341237000000000" />
+</dwsync>

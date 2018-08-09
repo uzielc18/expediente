@@ -1,0 +1,73 @@
+<div class="box-header">
+    <h1 class="box-title"><?php echo($titulo) ?></h1>
+</div>
+<div class="box-body">
+<?php View::content() ?>
+<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal "') ?>
+<?php echo Form::hidden('rol.id') ?>
+<div class="form-group">
+    <label for="rol_rol" class="form-label col-sm-2">Nombre del rol* : </label>
+    <div class="col-sm-7">
+        <?php echo Form::text('rol.rol','class="form-control"') ?>
+    </div>
+</div>
+<div class="form-group">
+    <label for="rol_plantilla" class="form-label col-sm-2">Plantilla a Usar : </label>
+    <div class="col-sm-7">
+        <?php echo Form::text('rol.plantilla','class="form-control"') ?>
+    </div>
+</div>
+<div class="form-group" id="select_padres">
+    <label for="menu2.roles_id" class="form-label col-sm-2">Padres del rol : </label>
+    <div class="col-sm-7">
+        <?php echo Form::dbSelect('menu2.aclroles_id', 'rol',NULL,NULL,'class="form-control"') ?>
+    </div>
+</div>
+<div id="roles_padres" class="form-group">
+</div>
+<div class="form-group">
+    <label for="menus_activo" class="form-label col-sm-2">Activo (Visible) : </label>
+    <div class="col-sm-7">
+        <?php echo Form::select('rol.activo', array('1' => 'Si', '0' => 'No'),'class="form-control"') ?>
+    </div>
+</div>
+<div class="form-actions">
+    <?php echo Form::submit('Guardar Datos', 'class="btn btn-primary"') ?>
+    <?php echo Html::linkAction('', 'Cancelar', 'class="btn"') ?>
+    </div>
+<?php echo Form::close() ?>
+<script type="text/javascript">
+$(function()
+{
+    alert('aqui')
+    var url ="/admin/roles/agregar_padre/";
+    $("#select_padres select").on('change',function()
+    {
+        var padre = $('option:selected',this).text();        
+        alert('47', padre)
+        if ( $("#roles_padres").html().indexOf(padre) < 0 && $('option:selected',this).val() != "<?php echo $rol->id; ?>" )
+        {
+            alert('5a paso la validacion');
+            $.post(url + $('option:selected',this).val(),{},function(data)
+            {
+                $("#roles_padres").append(data);
+            });
+        }
+    });
+    $("#roles_padres .rol_padre span img").on("click",function()
+    {
+        alert('59 eliminar')
+        $(this).parent().remove();
+    });
+<?php if (isset($rol) and $rol->padres) : ?>
+<?php foreach (explode(',', $rol->padres) as $e) : ?>
+                            $.post(url + <?php echo $e;?>,{},function(data){
+                                $("#roles_padres").append(data);
+                            });
+<?php endforeach ?>
+<?php endif ?>
+});
+</script>              
+ 
+</div>
+<?php echo '<i class="fa fa-trash"></i>'; ?>

@@ -1,0 +1,39 @@
+
+<header class="main-header">
+    <a href="javascript:;" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b><?Php echo $mini1?></b><?Php echo $mini2?></span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b><?Php echo $modulo_title ?></b></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+        <div style="width: 50%;display: inline-flex;">
+          <form action="#" method="get" style="margin:10px 10px 0px 10px; border: white;">
+              <div class="input-group">
+                <input type="text" name="q" class="form-control" placeholder="Search...">
+                    <span class="input-group-btn" style="background-color: white;    border: white;">
+                      <button type="submit" name="search" id="search-btn" class="btn btn-flat" style="background-color: white;    border: white;">
+                          <i class="fa fa-search"></i>
+                      </button>
+                    </span>
+              </div>
+          </form>
+        </div>
+        
+         <div class="navbar-custom-menu"> 
+              
+        <?php if($modulo=='admin')View::renderMenu(Menu::BACKEND,1,'class="nav navbar-nav"') ?>
+        <?php if($modulo=='apps')View::renderMenu(Menu::APP,1,'class="nav navbar-nav"') ?>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <li><?php echo Html::link('logout/index/logout', 'Salir') ?></li>
+            </li>
+        </ul>                    
+        </div>
+    </nav>
+</header>

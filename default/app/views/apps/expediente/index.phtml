@@ -1,0 +1,63 @@
+<section class="content">
+<div class="row">
+<?php View::partial('menu_expediente',false,array('expediente_id'=>0)) ?>
+<div class="box box-solid">
+<div class="box-header">
+    <h2 class="box-title">Expedientes <small>Del Mes de <?php echo $meses[date("m")];?></small></h2>
+</div>
+<?php View::content() ?>       
+<div class="form-actions"><?php echo Html::linkAction("crear", 'Nuevo Expediente', 'class="btn btn-primary"') ?> <?php echo Html::linkAction("reportes/".date('Y').'/'.date('m'), 'Reportes', 'class="btn btn-primary"') ?>
+ </div>
+<div class="box-body">
+<table width="95%" border="0" cellpadding="0" cellspacing="0" class="table table-bordered">
+<caption>
+Expedientes
+</caption>
+<thead>
+  <tr>
+  	<th align="left">Nº</th>
+    <th align="left">Tipo</th>
+    <th align="left">Fecha</th>
+    <th align="left">Nombre</th>
+    <th align="left">Direccion</th>
+    <th align="left">Bloques</th>
+    <th >Acciones</th>
+  </tr>
+  </thead>
+  <tbody>
+<?php $n=0;
+foreach($expedientes as $item){ $n++;?>
+  <tr>
+  	<td><?php echo $n?></td>
+
+    <td><?php echo $item->tipo_nombre?></td>
+    <td><?php echo strftime("%d de %B del %Y", strtotime($item->fecha))?></td>
+    <td><?php echo $item->nombre?></td>
+    <td>
+      <?php echo $item->direccion?>
+      <?php echo $item->getUbigeo()->distrito?>
+      <?php echo $item->getUbigeo()->provincia?>
+      <?php echo $item->getUbigeo()->departamento?>
+    </td>
+    <td><?php 
+    $a=0;foreach ($item->get_bloques() as $bloque) {
+      $coma=', ';
+      if($a==0)echo $coma='';
+      echo $coma.$bloque->nombre;
+      $a++;
+        
+    }
+    if($a==0)echo "Sin bloques";?></td>
+    <td align="center">
+      <?php echo Html::linkAction('generar/'.$item->id,'<i class="fa fa-gears" style="font-size:15px;"></i>','')?> 
+      <?php echo Html::linkAction('editar/'.$item->id,'<i class="fa fa-edit" style="font-size:15px;"></i>','')?> 
+      <?php echo Js::linkAction("borrar/$item->id",'<i class="fa fa-close" style="font-size:15px;"></i>','Deseas Eliminar?');?>
+    </td>
+  </tr>
+<?php }?>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>

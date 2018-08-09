@@ -1,0 +1,55 @@
+<?php View::partial('menu_expediente',false,array('expediente_id'=>$expedientes_id)) ?>
+<section class="content">
+<div class="row">
+<div class="col-md-12">
+<div class="box box-solid">
+<div class="box-header">
+    <h2 class="box-title"><?php echo $titulo?> <small><?php echo $titulo_small ?></small></h2>
+</div>
+
+<?php View::content() ?>
+<div class="box-body">
+<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"') ?>
+<?php echo Form::hidden('partidas.id') ?>
+<?php echo Form::hidden('partidas.aclusuarios_id',NULL,Auth::get('id')) ?>
+<?php echo Form::hidden('partidas.estado',NULL,1) ?>
+<?php echo Form::hidden('partidas.presupuestos_id',NULL,$presupuestos_id) ?>
+<?php echo Form::hidden('partidas.titulopartidas_id',NULL,$titulopartidas_id) ?>
+<blockquote>
+    <dl class="dl-horizontal">
+      <dt>Presupuesto: </dt><dd><?php echo $Titulo->getPresupuestos()->nombre?></dd>
+      <dt>Titulo: </dt><dd><?php echo $Titulo->titulo?> </dd>
+    </dl>
+</blockquote>
+<div class="col-sm-10">
+    
+    <div class="form-group">
+    <?php echo Form::label('Partida nombre','partidas.nombre','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::text('partidas.nombre','class="form-control" placeholder="Nombre"')?>
+        </div>
+    </div>
+    
+    <div class="form-group">
+    <?php echo Form::label('Partida medida','partidas.medidas_id','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::dbSelect('partidas.medidas_id','nombre',NULL,'Seleccione','class="form-control"')?>
+        </div>
+    </div>
+
+    
+</div>
+<div class="col-sm-2">
+</div>
+
+</div>
+<div class="box-footer">
+    <?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
+    <?php echo ' <a href="javascript:history.back(1)" class="btn">Volver Atrás</a>'; ?>
+</div>
+
+<?php echo Form::close();?>
+</div>
+</div>
+</div>
+</section>

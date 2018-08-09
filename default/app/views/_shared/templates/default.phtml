@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<?Php 
+$modulo = "Inicio";
+$patrones = array();
+$patrones[0] = '/s/';
+$sustituciones = array();
+$sustituciones[2] = ' ';
+$modulo_title = ucwords(preg_replace($patrones, $sustituciones, $modulo));
+?>  <title><?Php echo $modulo_title?></title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:400,700|Roboto:600" rel="stylesheet">
+       <?php
+        Tag::css('backendnew/bootstrap.min');
+        Tag::css('backendnew/font-awesome.min'); 
+        Tag::css('landig_page'); 
+        Tag::css('responsive_landig_page');    
+        echo Html::includeCss();        
+        ?>
+    </head>
+<body class="hold-transition register-page">
+    <div class="top-bar">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-3">
+                   <ul class="social">
+                       <li><a href=""><i class="fa fa-facebook"></i></a></li>
+                       <li><a href=""><i class="fa fa-twitter"></i></a></li>
+                       <li><a href=""><i class="fa fa-linkedin"></i></a></li>
+                       <li><a href=""><i class="fa fa-google-plus"></i></a></li>
+                   </ul>
+                </div>
+                <div class="col-md-9 col-sm-9 text-right">
+                    <ul>
+                        <li><i class="fa fa-clock-o"></i><span> Mon - Sat: 7:00 - 17:00</span></li>
+                        <li><i class="fa fa-phone"></i><span> + 386 40 111 5555</span></li>
+                        <li><i class="fa fa-envelope-o"></i><span>info@yourdomain.com</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <nav class="navbar navbar-navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navigation" aria-expanded="false">
+                        <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a href="#" class="navbar-brand"><i class="fa fa-maxcdn" style="font-size: 4em;" aria-hidden="true"></i> IBBIM</a>
+                </div>
+                <div class="collapse navbar-collapse" id="navigation">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="active"><a href="">Home</a></li>
+                        <li><a href="">Why Choose Us</a></li>
+                        <li><a href="">About Us</a></li>
+                        <li><a href="">Pricing</a></li>
+                        <li><a href="">Contact</a></li>
+                        <li class="btn-trial"><?php echo Html::link('apps/index','Ingresar',array('class'=>"list-group-item")) ?></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    
+    <?php View::content();
+
+    //View::partial('jquerynew'); ?>
+    <div class="footer">
+        <div class="container text-center">
+            <div class="row">
+                <ul>
+                    <li><a href="">Privacy Policy</a></li>
+                    <li><a href="">Terms & Conditions</a></li>
+                    <li><a href="">Free Trial</a></li>
+                </ul>
+                <p class="copyright">&copy; Copyright 2016 All Rights Reserved <a href="">OnePlusSolution</a> <br> Design by <a href="">Towkir Ahmed Bappy</a> Develop by <a href="">Obaid Hossain</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<?php 
+$modulo = Router::get('module');
+$controller = Router::get('controller');
+$action = Router::get('action');
+?>
+<br>
+<ol class="breadcrumb">
+    <li>
+    	<a href="/<?php echo $modulo.'/index'?>">
+    		<i class="fa fa-dashboard"></i>
+    		<?php echo $modulo;?>
+    	</a>
+   	</li>
+    <li>
+    	<a href="/<?php echo $modulo.'/'.$controller.'/index'?>">
+    		<?php echo $controller;?>
+    	</a>
+    </li>
+    <li class="active"><?php echo $action;?></li>
+
+</ol>

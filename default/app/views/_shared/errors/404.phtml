@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset='<?php echo APP_CHARSET ?>' />
+        <title><?php echo Config::get('config.application.name') ?></title>
+        <?php
+        Tag::css('backend/bootstrap');
+        Tag::css('backend/estilos');
+        echo Html::includeCss();
+        echo Tag::js('jquery/jquery.min');
+        echo Tag::js('jquery/jquery.kumbiaphp');
+        echo Tag::js('bootstrap/bootstrap');
+        echo Tag::js('global');
+        ?>
+        <style>
+            .error
+			{
+				margin:20px;
+				border:#FF9900 1px solid;
+			}
+			.error_item{
+				height:160px;
+			}
+			.offline{
+				float:left;
+				height:150px;
+				margin:10px;
+			}
+			.error_footer{
+				clear:both;
+				
+			}
+        </style>
+    </head>
+    <body>
+        <?php View::partial('backend/cabecera_app') ?>
+        <div class="container">
+            <div id="contenido" class="content">
+            
+            <div class="error">
+            <div class="error_head"></div>
+             <div class="error_body">
+            <img src="/img/avatar3.png" alt="user image" class="offline"/>
+             <!-- chat item -->
+             <div class="error_item">             
+             
+             <small class="text-muted pull-right"><?php echo date("h: i : s")?></small><p class="message">
+             <a href="javascript:history.back(1)" class="name">
+              <h1>Error 404 pagina no enctontrada:</h1></a> Esto puede pasar por:
+             <ul>
+             <li>Ud. no tiene los permisos suficiente</li>
+             <li>Se perdio la conexccion con la base de dato</li>
+             <li>Esta tratando de ingresar algo extraño</li>
+             <li>Si el error persiste ponganse en contacto con soporte@santapatricia.com.pe</li>
+             </ul>
+             </p>
+             </div><!-- /.item -->
+            <div class="error_footer">
+                                    <div class="input-group">
+                                        <div class="input-group-btn"> 
+                                         o pruebe ingresando a : 
+                                        <?php echo Html::link('santacarmela','Santa Carmela','class="btn btn-success"')?>
+                                        
+										<?php echo Html::link('santapatricia/index/bienvenida','Santa patricia','class="btn btn-success"')?>
+                                        </div>
+                                    </div>
+                                </div>
+             </div><!-- /.box (chat box) -->
+
+                         
+                         
+
+               </div>
+            </div>
+            <footer>
+                <p>
+                    <?php echo 'Tiempo: ' . round((microtime(1) - START_TIME), 4) . ' seg.';
+                    echo ', Memoria Usada: ' . number_format(memory_get_usage() / 1048576, 2) . ' MB'; ?>
+                </p>
+            </footer>
+        </div>
+    </body>
+</html>

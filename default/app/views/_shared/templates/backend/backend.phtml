@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+<?Php 
+$modulo = Router::get('module');
+$patrones = array();
+$patrones[0] = '/santa/';
+$sustituciones = array();
+$sustituciones[2] = 'santa ';
+$modulo_title = ucwords(preg_replace($patrones, $sustituciones, $modulo));
+if($modulo!='admin'){
+$t_t=explode(" ",$modulo_title);
+$mini1=substr($t_t[0],0, 1);
+$mini2=substr($t_t[1],0, 1);
+}else{
+   $mini1 = 'Adm';
+   $mini2 = '*';
+}
+?>
+        <title><?Php echo $modulo_title?></title>
+        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+        <?php
+        Tag::css('themes/base/jquery.ui.all');
+        Tag::css('backendnew/bootstrap.min');
+        Tag::css('backendnew/font-awesome');
+        //Tag::css('backendnew/ionicons.min');        
+        Tag::css('backendnew/AdminLTE');
+        Tag::css('dist/css/skins/_all-skins');
+        Tag::css('backendnew/iCheck/flat/blue');
+        Tag::css('backendnew/morris/morris');
+        Tag::css('backendnew/jvectormap/jquery-jvectormap-1.2.2');
+        Tag::css('backendnew/fullcalendar/fullcalendar');
+        Tag::css('backendnew/datepicker/datepicker3');
+        Tag::css('backendnew/daterangepicker/daterangepicker');
+        Tag::css('backendnew/bootstrap-wysihtml5/bootstrap3-wysihtml5.min');
+        //Tag::css('token-input');
+        echo Html::includeCss();
+        
+        echo '<link rel="stylesheet" type="text/css" href="/css/imprimir.css" media="print">';
+        
+        ?>
+        <?php
+        extract(Router::get(), EXTR_OVERWRITE);
+        echo "<script src=\"", PUBLIC_PATH, "javascript/jquery/plugins/jQuery/jquery-2.2.3.min.js\">";?></script>
+    </head>
+<body class="hold-transition sidebar-mini wysihtml5-supported skin-black-light">
+        <div class="wrapper">
+        <!-- header logo: style can be found in header.less -->
+        <?php View::partial('cabecera_admin',false,array('modulo_title'=>$modulo_title,'modulo'=>$modulo,'mini1'=>$mini1,'mini2'=>$mini2)) ?>
+        <?php View::partial('menu_admin',false,array('modulo'=>$modulo)) ?>
+        
+        
+
+            <!-- Right side column. Contains the navbar and content of the page -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">  
+                    <?php View::partial('section_header',false,array('titulo_page'=>$titulo_page,'titulo_small_page'=>$titulo_small_page)) ?>
+
+                </section>
+
+                <!-- Main content -->
+
+                <section class="content">
+                 <div class="row">
+                 <div class="box box">
+                 <?php View::content() ?>
+                 </div>
+                 </div>
+                </section><!-- /.content -->
+            </div><!-- /.right-side -->
+        </div><!-- ./wrapper -->
+
+    <?Php View::partial('jquerynew');?>
+    </body>
+</html>

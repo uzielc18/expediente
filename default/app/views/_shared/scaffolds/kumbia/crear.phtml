@@ -1,0 +1,19 @@
+
+<div class="box-header">
+<h1 class="box-title"><?php echo ucwords("$model"),": <span>$action_name</span>" ?></h1>
+</div>
+
+<div class="form-actions">
+	<a href="../" class="btn">Listado</a>
+</div>
+<?php View::content();?>
+<div class="box-body">
+<?php ModelForm::create($$model)?>
+</div>
+<div class="box-footer">
+</div>
+<script>
+    $(function(){
+        $('form :submit').addClass("btn btn-primary");
+    });
+</script>

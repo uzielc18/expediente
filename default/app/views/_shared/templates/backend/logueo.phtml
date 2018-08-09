@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+
+    <?Php 
+$modulo = Router::get('module');
+$patrones = array();
+$patrones[0] = '/s/';
+$sustituciones = array();
+$sustituciones[2] = ' ';
+$modulo_title = ucwords(preg_replace($patrones, $sustituciones, $modulo));
+if($modulo!='admin'){
+$t_t=explode(" ",$modulo_title);
+$mini1=substr($t_t[0],0, 1);
+$mini2=substr($t_t[1],0, 1);
+}else{
+   $mini1 = 'Adm';
+   $mini2 = '*';
+}
+?>
+
+        <meta charset="UTF-8"/>
+        <title><?php echo Config::get('config.application.name') ?></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
+         <?php
+        Tag::css('themes/base/jquery.ui.all');
+        Tag::css('backendnew/bootstrap');
+        Tag::css('backendnew/font-awesome');       
+        Tag::css('backendnew/AdminLTE');
+        Tag::css('dist/css/skins/_all-skins');
+        Tag::css('backendnew/iCheck/flat/blue');
+        Tag::css('backendnew/morris/morris');
+        Tag::css('backendnew/jvectormap/jquery-jvectormap-1.2.2');
+        Tag::css('backendnew/fullcalendar/fullcalendar');
+        Tag::css('backendnew/datepicker/datepicker3');
+        Tag::css('backendnew/daterangepicker/daterangepicker');
+        Tag::css('backendnew/bootstrap-wysihtml5/bootstrap3-wysihtml5.min');
+        Tag::css('backendnew/estilos');
+        echo Html::includeCss();
+        ?>
+        <?php
+        extract(Router::get(), EXTR_OVERWRITE);
+        echo "<script src=\"", PUBLIC_PATH, "javascript/jquery/plugins/jQuery/jquery-2.2.3.min.js\">";?></script>
+</head>
+<body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <a href="javascript:;"><b><?Php echo $modulo_title?></b></a>
+      </div>
+      <!-- /.login-logo -->
+      <div class="login-box-body">
+        <p class="login-box-msg">Iniciar sesión</p>
+
+        <?php 
+        Session::set('time_session',time());
+        echo Form::open(NULL, 'post') ?>
+          <div class="form-group has-feedback">
+            <?php echo Form::text('login',array("class"=>"form-control",'placeholder'=>'Usuario')) ?>
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <?php echo Form::pass('clave',array("class"=>"form-control",'placeholder'=>'Contraseña')) ?>
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <!-- /.col -->
+            <div class="col-xs-12">
+                <div class="col-xs-6"><?php echo Form::submit('Ingresar', 'class="btn btn-primary btn-block btn-flat"') ?></div>
+                <div class="col-xs-6"><?php echo Html::link('','Cancelar','class="btn btn-secondary btn-block btn-flat"')?></div>                           
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+
+      </div>
+      <!-- /.login-box-body -->
+    </div>
+    <?Php 
+        
+        //echo '<link rel="stylesheet" type="text/css" href="/css/imprimir.css" media="print">';
+        View::partial('jquerynew');?>
+</body>
+</html>

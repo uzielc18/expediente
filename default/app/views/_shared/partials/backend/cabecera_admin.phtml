@@ -1,0 +1,21 @@
+<div id='cabecera' class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand"><span class="icoprin-admin"></span>Modulo de Administracion</a>
+            <div class="nav-collapse">
+                <?php View::renderMenu(Menu::BACKEND,1) ?>
+                <ul class="nav pull-right">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" style="text-transform: capitalize;">
+                            <?php echo Auth::get('nombres') ?>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><?php echo Html::link('logout/index/logout', 'Salir') ?></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

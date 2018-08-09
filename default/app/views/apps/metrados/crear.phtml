@@ -1,0 +1,152 @@
+<?php 
+$exp_id = $partida->getPresupuestos()->getExpedientes()->expedientes_id;
+$mod_id = $modulo->id;
+$bloc_id = $partida->getPresupuestos()->expedientes_id;
+$pres_id = $partida->presupuestos_id;
+View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
+<section class="content">
+<div class="row">
+<div class="col-md-12">
+<div class="box box-solid">
+<div class="box-header">
+    <h2 class="box-title"><?php echo $titulo?></h2>
+</div>
+<blockquote>
+	<dl class="dl-horizontal">
+      <dt>Presupuesto: </dt><dd><?php echo $partida->getPresupuestos()->nombre?></dd>
+      <dt>Titulo: </dt><dd><?php echo $partida->getTitulopartidas()->titulo?></dd>
+      <dt>Medida: </dt><dd><?php echo $partida->getMedidas()->nombre?> (<?php echo $partida->getMedidas()->abr?>)</dd>
+  	</dl>
+</blockquote>
+<div class="box-body">
+	<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
+	<?php echo Form::hidden('detallemetrados.id');?>
+	<?php echo Form::hidden('detallemetrados.partidas_id',NULL,$partida->id);?>
+	<?php echo Form::hidden('detallemetrados.estado',NULL,1);?>
+	<?php echo Form::hidden('detallemetrados.parcial');?>
+	<?php echo Form::hidden('detallemetrados.modulos_id',NULL,$modulo->id);?>
+	
+	<div class="col-sm-10">
+	    <div class="form-group">
+	    <?php echo Form::label('Nombre','detallemetrados.nombre','class="col-sm-3 control-label"');?>
+	        <div class="col-sm-9">
+	            <?php echo Form::text('detallemetrados.nombre','class="form-control" placeholder="nombre"')?>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	    <?php echo Form::label('Nº de veces','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
+	        <div class="col-sm-9">
+	            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	    <?php echo Form::label('Largo','detallemetrados.largo','class="col-sm-3 control-label"');?>
+	        <div class="col-sm-9">
+	            <?php echo Form::text('detallemetrados.largo','class="form-control calcular" placeholder="Largo"')?>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	    <?php echo Form::label('Ancho','detallemetrados.Ancho','class="col-sm-3 control-label"');?>
+	        <div class="col-sm-9">
+	            <?php echo Form::text('detallemetrados.ancho','class="form-control calcular" placeholder="Ancho"')?>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	    	<?php echo Form::label('Altura','detallemetrados.altura','class="col-sm-3 control-label"');?>
+	        <div class="col-sm-9">
+	            <?php echo Form::text('detallemetrados.altura','class="form-control calcular" placeholder="Altura"')?>
+	        </div>
+	    </div>
+	    <div>
+	    	<?php echo Form::submit('Guardar Datos','class="btn btn-primary pull-right"') ?>
+	    </div>
+	</div>
+	<?php echo Form::close();?>
+	<div class="col-sm-2"></div>
+	<div class="col-sm-12">
+		<?Php 
+		
+		echo Form::open('apps/metrados/terminar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
+		echo Form::hidden('partida.id');
+		echo Form::hidden('partida.presupuestos_id');
+		echo Form::hidden('partida.titulopartidas_id');
+		echo Form::hidden('partida.medidas_id');
+		?>
+		<table class="table">
+			<caption>Detalle del metrado </caption>
+			<thead>
+				<tr>
+					<th>Nº</th>
+					<th>Nombre</th>
+					<th>Nº veces</th>
+					<th>Largo</th>
+					<th>Ancho</th>
+					<th>Altura</th>
+					<th>Parcial</th>
+					<th>Accion</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php 
+				$total=0;
+				$n=0;
+				foreach($metrados as $metro){
+					$n++;
+					$largo = $metro->largo ? $metro->largo : 1;
+					$ancho = $metro->ancho ? $metro->ancho : 1;
+					$altura = $metro->altura ? $metro->altura: 1;
+					$total=$total+$metro->parcial;
+					?>
+				<tr>
+					<td><?php echo $n;?></td>
+					<td><?php echo $metro->nombre;?></td>
+					<td><?Php echo $metro->numero_de_veces?></td>
+					<td align="right"><?php echo $metro->largo ? number_format($largo,4): '-'?></td>
+					<td align="right"><?php echo $metro->ancho ? number_format($ancho,4) : '-'?></td>
+					<td align="right"><?php echo $metro->altura ? number_format($altura,4) : '-'?></td>
+					<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
+					<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>');?></td>
+				</tr>
+				<?php }?>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td align="right"><b>Total:</b></td>
+					<td align="right"><?php echo number_format($total,4);echo ' '.$partida->getMedidas()->abr;?></td>
+					<td></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</div>
+<div class="box-footer with-border">
+	<div class="pull-right">
+    <?php 
+    echo Form::hidden('partida.metrado',NULL,$total);
+    echo Form::submit('Terminar','class="btn btn-primary"') ?></div>
+    <?php echo Form::close();?>
+</div>
+<script>
+function calcular() {
+  var veces = $( "#detallemetrados_numero_de_veces" ).val();
+  var largo = $( "#detallemetrados_largo" ).val();
+  var ancho = $( "#detallemetrados_ancho" ).val();
+  var altura = $( "#detallemetrados_altura" ).val();
+  if(!largo){largo=1;}
+  if(!ancho){ancho=1;}
+  if(!altura){altura=1;}
+  return veces*(largo*ancho*altura);
+}
+$( ".calcular" ).change(function() {
+  $("#detallemetrados_parcial" ).val(calcular());
+});
+</script>
+</div>
+</div>
+</div>
+</section>

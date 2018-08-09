@@ -1,0 +1,94 @@
+<div class="box box-solid">
+<?php
+echo Tag::js('jquery/jquery.tokeninput');
+Tag::css('token-input');?>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+    $("#expedientes_ubigeo_id").tokenInput("<?php echo '/'.$module_name.'/ubigeo/resultados'?>",
+    {
+        tokenLimit: 1,minChars: 3,
+        <?php if(!empty($expedientes->ubigeo_id)){?>
+        prePopulate: [
+                {id: <?php echo $expedientes->ubigeo_id?>, name: "<?php echo $expedientes->getUbigeo()->get_resultado()?>"}
+            ]
+        <?php }?>
+    });
+    $("#expedientes_aclempresas_id").tokenInput("<?php echo '/'.$module_name.'/empresas/resultados'?>",
+    {
+        tokenLimit: 1,minChars: 3,
+        <?php if(!empty($expedientes->aclempresas_id)){?>
+        prePopulate: [
+                        {id: <?php echo $expedientes->aclempresas_id?>, name: "<?php echo $expedientes->getAclempresas()->nombre?>"}
+                    ]
+        <?php }?>
+    });
+});
+
+</script>
+<div class="box-header">
+    <h2 class="box-title"><?php echo $titulo?> <small>Del Mes de <?php echo $meses[date("m")];?></small></h2>
+</div>
+
+<?php View::content() ?>
+<div class="box-body">
+<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"') ?>
+<?php echo Form::hidden('expedientes.id') ?>
+<?php echo Form::hidden('expedientes.aclusuarios_id',NULL,Auth::get('id')) ?>
+<?php echo Form::hidden('expedientes.estado',NULL,1) ?>
+<div class="col-sm-10">
+    <div class="form-group">
+    <?php echo Form::label('Codigo','expedientes.codigo_expediente','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::text('expedientes.codigo_expediente','class="form-control" placeholder="Codigo"',$codigo)?>
+        </div>
+    </div>
+    <div class="form-group">
+    <?php echo Form::label('Tipo expediente:','expedientes.tipoexpedientes_id','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::dbSelect('expedientes.tipoexpedientes_id','nombre',NULL,'Seleccione un tipo de expediente','class="form-control"')?>
+        </div>
+    </div>
+    <div class="form-group">
+    <?php echo Form::label('Nombre','expedientes.nombre','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::text('expedientes.nombre','class="form-control" placeholder="Nombre"')?>
+        </div>
+    </div>
+    <div class="form-group">
+    <?php echo Form::label('Direccion','expedientes.direccion','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::text('expedientes.direccion','class="form-control" placeholder="Direccion"')?>
+        </div>
+    </div>
+    <div class="form-group">
+    <?php echo Form::label('Distrito','expedientes.ubigeo_id','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::text('expedientes.ubigeo_id','class="form-control" placeholder="Distrito"')?>
+        </div>
+    </div>
+
+    <div class="form-group">
+    <?php echo Form::label('Cliente','expedientes.aclempresas_id','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::text('expedientes.aclempresas_id','class="form-control" placeholder="Cliente"')?>
+        </div>
+    </div>
+    <div class="form-group">
+    <?php echo Form::label('Fecha','expedientes.fecha','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::date('expedientes.fecha','class="form-control" placeholder="Fecha"')?>
+        </div>
+    </div>    
+</div>
+<div class="col-sm-2">
+</div>
+
+</div>
+<div class="box-footer">
+    <?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
+    <?php echo Html::linkAction('', 'Cancelar', 'class="btn"') ?>
+</div>
+
+<?php echo Form::close();?>
+</div>

@@ -1,0 +1,77 @@
+
+<?php View::partial('menu_expediente',false,array('expediente_id'=>$expedientes_id)) ?>
+<section class="content">
+<div class="row">
+<div class="col-md-12 no-padding">
+<div class="box box-solid">
+<div class="box-header">
+    <h2 class="box-title"><?php echo $titulo?> <small></small></h2>
+</div>
+<div class="box-body">
+	<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
+	<?php echo Form::hidden('presupuestos.id');?>
+	<?php echo Form::hidden('presupuestos.aclusuarios_id',NULL,Auth::get('id'));?>
+	<?php echo Form::hidden('presupuestos.estado',NULL,1);?>
+	<?php echo Form::hidden('presupuestos.expedientes_id',NULL,$expedientes_id)?>
+	<div class="col-sm-8 no-padding">
+	    <div class="form-group">
+	    <?php echo Form::label('Codigo','presupuestos.codigo','class="col-sm-2 control-label"');?>
+	        <div class="col-sm-9">
+	            <?php echo Form::text('presupuestos.codigo','class="form-control" placeholder="Codigo"')?>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	    <?php echo Form::label('Nombre','presupuestos.nombre','class="col-sm-2 control-label"');?>
+	        <div class="col-sm-9">
+	            <?php echo Form::text('presupuestos.nombre','class="form-control" placeholder="Nombre"')?>
+	        </div>
+	    </div>
+	    <!-- <div class="form-group">
+	    <?php //echo Form::label('Expediente','presupuestos.expedientes_id','class="col-sm-2 control-label"');?>
+	        <div class="col-sm-9">
+	           <?php //echo Form::dbSelect('presupuestos.expedientes_id','nombre',array('expedientes','find','conditions: estado=1'),'Seleccione un tipo de expediente','class="form-control"',$expedientes_id)?>
+	        </div>
+	    </div> -->
+	</div>
+	<div class="col-sm-4 no-padding">
+    <div class="box">
+        <div class="box-header">
+          <h4 class="box-title">Listado de presupuestos</h4>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+          <table class="table table-striped">
+            <tbody><tr>
+              <th style="width: 10px">Cod</th>
+              <th>Nombre</th>
+              <th>Acc</th>
+            </tr>
+            <?php 
+            $n=0;
+            foreach($presupuestos_all as $pr){
+            $n++;
+            ?>
+            <tr>
+              <td><?php echo $pr->codigo;?></td>
+              <td><?php echo $pr->nombre?></td>
+              <td align="center">
+                <?php if($id_presupuesto!=$pr->id) echo Html::linkAction('editar/'.$expedientes_id.'/'.$modulo_id.'/'.$bloque_id.'/'.$pr->id,'<i class="fa fa-edit" style="font-size:15px;"></i>','')?> 
+                <?php if($id_presupuesto!=$pr->id) echo Js::linkAction('borrar/'.$expedientes_id.'/'.$modulo_id.'/'.$bloque_id.'/'.$pr->id.'/'.$action_name.'/'.$id_presupuesto,'<i class="fa fa-close" style="font-size:15px;"></i>','Deseas Eliminar?');?></td>
+            </tr>
+            <?php
+            }
+            ?>
+          </tbody>
+        </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>
+</div>
+<div class="box-footer">
+	<?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
+    <?php if($n==0)echo Html::linkAction('crear_predeterminados/'.$expedientes_id, 'Crear default', 'class="btn"') ?>
+</div>
+<?php echo Form::close();?>
+</div>
+</div>

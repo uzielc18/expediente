@@ -1,0 +1,51 @@
+
+<?php View::content()?>
+<div class="box-header">
+    <h1><?php echo ucwords("$model"), ": <span>$action_name</span>" ?></h1>
+</div>
+
+<div class="form-actions">
+	 <?php echo Html::linkAction("crear/", 'Crear registro', 'class=" primary btn"') ?>
+</div>
+<div class="box-body">
+    <?php if ($results->items) : ?>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+        <?php foreach ($columns_view as $field) : ?>
+            <th><?php echo (current($results->items)->get_alias($field))?></th>
+        <?php endforeach?>
+    	<th>Acciones</th>
+        </tr></thead>
+    	<tbody>
+        <?php foreach ($results->items as $item) : ?>
+            <tr>
+                <?php foreach ($columns_view as $field) : ?>
+                <td><?php 
+                if($field=='estado'){
+                    echo $_ESTADOS[$item->$field];
+                }else{
+                echo($item->$field);
+                }?></td>
+                <?php endforeach?>
+    			<td>
+    			<?php echo Html::linkAction("ver/$item->id",'<i class="fa fa-search" style="font-size:20px;"></i>','title="Ver contenido"')?>
+                <?php echo Html::linkAction("editar/$item->id",'<i class="fa fa-edit" style="font-size:20px;"></i>','title="Editar registro"')?>
+    			<?php if($item->estado==3){
+                    echo Js::linkAction("eliminar/$item->id",'<i class="fa fa-trash-o" style="font-size:20px; color:red;"></i>','Deseas Eliminar este registro? esta accion no es reversible',NULL,'title="Eliminar registro"');
+                }else{echo Html::linkAction("borrar/$item->id",'<i class="fa fa-trash" style="font-size:20px;"></i>', 'onclick="return confirm(\'¿Está seguro?\')"');}?>
+    			</td>
+            </tr>
+        <?php endforeach?>
+    	</tbody>
+    </table>
+    <?php View::partial('paginators/bootstrap', false, array('page' => $results ,'url' => Router::get('controller_path').'/index')); ?>
+
+    <?php else : // Si no hay items?>
+    <h2>No hay ningún registro</h2>
+    <?php endif ?>
+
+    <?php //var_dump($results)?>
+</div>
+<div class="box-footer">
+</div>

@@ -1,0 +1,81 @@
+<?php View::partial('menu_expediente',false,array('expediente_id'=>$expediente_padre->id)) ?>
+<section class="content">
+<div class="row">
+<div class="box box-solid">
+<div class="box-header">
+    <h2 class="box-title"><?php echo $titulo?> <small><?php echo $titulo_small ?></small></h2>
+</div>
+
+<?php View::content() ?>
+<div class="box-body">
+<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"') ?>
+<?php echo Form::hidden('expedientes.id') ?>
+<?php echo Form::hidden('expedientes.aclusuarios_id',NULL,Auth::get('id')) ?>
+<?php echo Form::hidden('expedientes.estado',NULL,1) ?>
+<?php echo Form::hidden('expedientes.expedientes_id',NULL,$expediente_padre->id) ?>
+<?php echo Form::hidden('expedientes.codigo_expediente',NULL,$expediente_padre->codigo_expediente) ?>
+<?php echo Form::hidden('expedientes.tipoexpedientes_id',NULL,$expediente_padre->tipoexpedientes_id) ?>
+<?php echo Form::hidden('expedientes.direccion',NULL,$expediente_padre->direccion) ?>
+<?php echo Form::hidden('expedientes.ubigeo_id',NULL,$expediente_padre->ubigeo_id) ?>
+<?php echo Form::hidden('expedientes.aclempresas_id',NULL,$expediente_padre->aclempresas_id) ?>
+<?php echo Form::hidden('expedientes.fecha',NULL,$expediente_padre->fecha) ?>
+<blockquote>
+    <p>Aqui van los bloques del proyecto</p>
+    <small>Cod <?php echo $expediente_padre->codigo_expediente;?> <cite title="Source Title"><?php echo $expediente_padre->nombre?></cite></small>
+</blockquote>
+<div class="col-sm-8 no-padding">
+    
+    <div class="form-group">
+    <?php echo Form::label('Nombre','expedientes.nombre','class="col-sm-2 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::text('expedientes.nombre','class="form-control" placeholder="Nombre"')?>
+        </div>
+    </div>
+
+    
+</div>
+<div class="col-sm-4 no-padding">
+    <div class="box">
+        <div class="box-header">
+          <h4 class="box-title">Listado de Bloques</h4>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body no-padding">
+          <table class="table table-striped">
+            <tbody><tr>
+              <th style="width: 10px">#</th>
+              <th>Nombre</th>
+              <th>Acc</th>
+            </tr>
+            <?php 
+            $n=0;
+            foreach($bloques as $bl){
+            $n++;
+            ?>
+            <tr>
+              <td><?php echo $n;?></td>
+              <td><?php echo $bl->nombre?></td>
+              <td align="center">
+                <?php if($id_bloque!=$bl->id) echo Html::linkAction('editar_bloque/'.$expediente_padre->id.'/'.$modulo_id.'/'.$bl->id,'<i class="fa fa-edit" style="font-size:15px;"></i>','')?> 
+                <?php if($id_bloque!=$bl->id) echo Js::linkAction('borrar_bloque/'.$expediente_padre->id.'/'.$modulo_id.'/'.$bl->id.'/'.$action_name,'<i class="fa fa-close" style="font-size:15px;"></i>','Deseas Eliminar?');?></td>
+            </tr>
+            <?php
+            }
+            ?>
+          </tbody>
+        </table>
+        </div>
+        <!-- /.box-body -->
+    </div>
+</div>
+
+</div>
+<div class="box-footer">
+    <?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
+    <?php echo Html::linkAction('', 'Cancelar', 'class="btn"') ?>
+</div>
+
+<?php echo Form::close();?>
+</div>
+</div>
+</section>

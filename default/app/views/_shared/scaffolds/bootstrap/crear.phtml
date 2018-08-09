@@ -1,0 +1,34 @@
+<div class="box-header">
+     <h1 class="box-title"><?php if(empty($titulo)){echo ucwords("$model"), ": <span>$action_name</span>";}else{echo $titulo;}?></h1>
+</div>
+<?php View::content(); ?>
+<div class="page">
+<?php ModelForm::create($$model) ?>
+<div style="clear: both;margin-bottom: 10px;"></div>
+<div class="actions">
+    <a href="../" class="btn">Listado</a>
+</div>
+</div>
+<style>
+    label + *{
+        float:left;
+        margin-top: 10px;
+    }
+    * + label{
+        clear: left;
+        margin-top: 10px;
+    }
+
+   /* input[type=submit]{
+        clear :both;
+        float: left;
+        margin-left: 220px;
+        margin-top: 10px;
+    }*/
+</style>
+<script>
+    $(function(){
+        $('form.scaffold :submit').addClass("btn btn-primary");
+		$('form.scaffold').addClass("form-horizontal");
+    });
+</script>
