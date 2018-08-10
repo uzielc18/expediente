@@ -1,7 +1,7 @@
 # KumbiaPHP #
 #######
 vendor/*
-/default/app/config/*
+/default/app/config/**
 # NodeJS & Bower Components #
 #############################
 node_modules
