@@ -43,7 +43,7 @@
 							<td><?php echo $item->descripcion?></td>
 							<td><?php echo $item->precio?></td>
 							<td><?php echo $item->peso?></td>
-							<td><?php echo Html::linkAction('editar/'.$item->id,' <i class="fa fa-edit" style="font-size:25px;"></i>');?></td>
+							<td><?php echo Html::linkAction('editar/'.$tipo->id.'/'.$indice->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:25px;"></i>');?></td>
 						</tr>
 						<?php endforeach;?>
 					</tbody>
