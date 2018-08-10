@@ -51,3 +51,4 @@ dwsync.xml
 .komodotools
 default/app/config/databases.ini
 *.ini
+package-lock.json
