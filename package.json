@@ -1,0 +1,27 @@
+{
+  "name": "expediente",
+  "version": "1.0.0",
+  "description": "Tareas para minificar los css y javascript",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "expediente"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uzielc18/expediente.git"
+  },
+  "keywords": [
+    "expediente"
+  ],
+  "author": "uziel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/uzielc18/expediente/issues"
+  },
+  "homepage": "https://github.com/uzielc18/expediente#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.1"
+  }
+}
