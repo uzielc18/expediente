@@ -1,7 +1,7 @@
 # KumbiaPHP #
 #######
 vendor/*
-default/app/config/**
+default/app/config/*
 # NodeJS & Bower Components #
 #############################
 node_modules
@@ -49,3 +49,7 @@ _notes
 dwsync.xml
 *.komodoproject
 .komodotools
+default/app/config/databases.ini
+default/app/config/databases.ini
+*.ini
+*.ini
