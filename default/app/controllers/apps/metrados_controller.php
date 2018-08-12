@@ -39,32 +39,16 @@ class MetradosController extends AppController {
         $this->titulo_small='Todos los detalles';
         $this->metrados=$Detallemetrados->find('conditions: partidas_id='.$partida_id);
         $this->detallemetrados = $Detallemetrados->find((int) $id);
-        if(Input::hasPost('detallemetrados') && $_POST['imagen']){
-            print_r($_POST['imagen']);
-            if (Input::hasPost('detallemetrados')) {
-                if ($this->detallemetrados->save(Input::post('detallemetrados'))) {
-                    Flash::valid('detalle creado Sin imagen');
-                    return Redirect::toAction('crear/'.$partida_id);
-                }
-                //Flash::error('Falló Operación');
-                $this->detallemetrados = Input::post('detallemetrados');
-                return;
-                //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
+        if (Input::hasPost('detallemetrados')) {
+            if ($this->detallemetrados->save(Input::post('detallemetrados'))) {
+                Flash::valid('detalle creado Sin imagen');
+                return Redirect::toAction('crear/'.$partida_id);
             }
-        }else{
-            if (Input::hasPost('detallemetrados')) {
-                if ($this->detallemetrados->saveWithPhoto(Input::post('detallemetrados'))) {
-                    return Redirect::toAction('crear/'.$partida_id);
-                }
-                //Flash::error('Falló Operación');
-                $this->detallemetrados = Input::post('detallemetrados');
-                return;
-                //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
-            }
+            //Flash::error('Falló Operación');
+            $this->detallemetrados = Input::post('detallemetrados');
+            return;
+            //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
         }
-        
-
-		
 	}
 
     public function terminar($exp_id,$mod_id,$bloc_id,$pres_id){    
