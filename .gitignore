@@ -53,3 +53,4 @@ default/app/config/databases.ini
 *.ini
 package-lock.json
 default/app/config/databases.ini
+.directory

@@ -11,6 +11,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 <div class="box-header">
     <h2 class="box-title"><?php echo $titulo?></h2>
 </div>
+<?php View::content();?>
 <blockquote>
 	<dl class="dl-horizontal">
       <dt>Presupuesto: </dt><dd><?php echo $partida->getPresupuestos()->nombre?></dd>
@@ -19,50 +20,88 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
   	</dl>
 </blockquote>
 <div class="box-body">
-	<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
+	<?php echo Form::openMultipart(NULL, 'post', 'role="form" class="form-horizontal"');?>
 	<?php echo Form::hidden('detallemetrados.id');?>
 	<?php echo Form::hidden('detallemetrados.partidas_id',NULL,$partida->id);?>
 	<?php echo Form::hidden('detallemetrados.estado',NULL,1);?>
 	<?php echo Form::hidden('detallemetrados.parcial');?>
 	<?php echo Form::hidden('detallemetrados.modulos_id',NULL,$modulo->id);?>
-	
-	<div class="col-sm-10">
-	    <div class="form-group">
-	    <?php echo Form::label('Nombre','detallemetrados.nombre','class="col-sm-3 control-label"');?>
-	        <div class="col-sm-9">
-	            <?php echo Form::text('detallemetrados.nombre','class="form-control" placeholder="nombre"')?>
-	        </div>
-	    </div>
-	    <div class="form-group">
-	    <?php echo Form::label('Nº de veces','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
-	        <div class="col-sm-9">
-	            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
-	        </div>
-	    </div>
-	    <div class="form-group">
-	    <?php echo Form::label('Largo','detallemetrados.largo','class="col-sm-3 control-label"');?>
-	        <div class="col-sm-9">
-	            <?php echo Form::text('detallemetrados.largo','class="form-control calcular" placeholder="Largo"')?>
-	        </div>
-	    </div>
-	    <div class="form-group">
-	    <?php echo Form::label('Ancho','detallemetrados.Ancho','class="col-sm-3 control-label"');?>
-	        <div class="col-sm-9">
-	            <?php echo Form::text('detallemetrados.ancho','class="form-control calcular" placeholder="Ancho"')?>
-	        </div>
-	    </div>
-	    <div class="form-group">
-	    	<?php echo Form::label('Altura','detallemetrados.altura','class="col-sm-3 control-label"');?>
-	        <div class="col-sm-9">
-	            <?php echo Form::text('detallemetrados.altura','class="form-control calcular" placeholder="Altura"')?>
-	        </div>
-	    </div>
-	    <div>
-	    	<?php echo Form::submit('Guardar Datos','class="btn btn-primary pull-right"') ?>
-	    </div>
+	<div class="col-sm-12">
+		<div class="col-sm-6">
+		    <div class="form-group">
+		    <?php echo Form::label('Nombre','detallemetrados.nombre','class="col-sm-3 control-label"');?>
+		        <div class="col-sm-9">
+		            <?php echo Form::text('detallemetrados.nombre','class="form-control" placeholder="nombre"')?>
+		        </div>
+		    </div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+		    	<?php echo Form::label('Imagen','imagen','class="col-sm-3 control-label"');?>
+		        <div class="col-sm-9">
+		            <?php echo Form::file('imagen','class="form-control calcular" placeholder="Imagen"')?>
+		        </div>
+		    </div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+		    	<?php echo Form::label('Nº de veces','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
+		        <div class="col-sm-9">
+		            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
+		        </div>
+		    </div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+		    	<?php echo Form::label('Factor','detallemetrados.factor','class="col-sm-3 control-label"');?>
+		        <div class="col-sm-9">
+		            <?php echo Form::text('detallemetrados.factor','class="form-control calcular" placeholder="Nº de veces"')?>
+		        </div>
+		    </div>
+		</div>
+		<div class="col-sm-6">
+			<div class="form-group">
+		    	<?php echo Form::label('Cantidad de elementos','detallemetrados.cantidad_elementos','class="col-sm-3 control-label"');?>
+		        <div class="col-sm-9">
+		            <?php echo Form::text('detallemetrados.cantidad_elementos','class="form-control calcular" placeholder="Cantidad de elementos"')?>
+		        </div>
+		    </div>
+		</div>
+		<div class="col-sm-6">
+		    <div class="form-group">
+		    <?php echo Form::label('Largo','detallemetrados.largo','class="col-sm-3 control-label"');?>
+		        <div class="col-sm-9">
+		            <?php echo Form::text('detallemetrados.largo','class="form-control calcular" placeholder="Largo"')?>
+		        </div>
+		    </div>
+		</div>
+		<div class="col-sm-6">
+		    <div class="form-group">
+		    <?php echo Form::label('Ancho','detallemetrados.Ancho','class="col-sm-3 control-label"');?>
+		        <div class="col-sm-9">
+		            <?php echo Form::text('detallemetrados.ancho','class="form-control calcular" placeholder="Ancho"')?>
+		        </div>
+		    </div>
+		</div>
+		<div class="col-sm-6">
+		    <div class="form-group">
+		    	<?php echo Form::label('Altura','detallemetrados.altura','class="col-sm-3 control-label"');?>
+		        <div class="col-sm-9">
+		            <?php echo Form::text('detallemetrados.altura','class="form-control calcular" placeholder="Altura"')?>
+		        </div>
+		    </div>
+		    
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<div class="form-group">
+		    <div class="with-padding pull-right">
+		    	<br>
+		    	<?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
+		    </div>
+		</div>
 	</div>
 	<?php echo Form::close();?>
-	<div class="col-sm-2"></div>
 	<div class="col-sm-12">
 		<?Php 
 		
@@ -77,6 +116,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 			<thead>
 				<tr>
 					<th>Nº</th>
+					<th>Foto</th>
 					<th>Nombre</th>
 					<th>Nº veces</th>
 					<th>Largo</th>
@@ -99,6 +139,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 					?>
 				<tr>
 					<td><?php echo $n;?></td>
+					<td><?php echo $metro->imagen;?></td>
 					<td><?php echo $metro->nombre;?></td>
 					<td><?Php echo $metro->numero_de_veces?></td>
 					<td align="right"><?php echo $metro->largo ? number_format($largo,4): '-'?></td>

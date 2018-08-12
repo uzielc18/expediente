@@ -12,19 +12,21 @@ class MetradosController extends AppController {
         $this->titulo_small='Todos los detalles';
         $this->metrados=$Detallemetrados->find('conditions: partidas_id='.$partida_id);
 		//$this->expedientes_id=$exp_id;
-		if (Input::hasPost('detallemetrados')) {
-
+		//se verifica si se ha enviado via POST los datos
+        if (Input::hasPost('detallemetrados')) {
             $obj = new Detallemetrados();
-            if (!$obj->save(Input::post('detallemetrados'))) {
-                Flash::error('Falló Operación');
-                //se hacen persistente los datos en el formulario
-                $this->detallemetrados = $obj;
-                return;
+            //En caso que falle la operación de guardar
+            if ($obj->saveWithPhoto(Input::post('detallemetrados'))) {
+                //Mensaje de éxito y retorna al listado
+                Flash::valid('detalle creado');
+                return Redirect::toAction('crear/'.$partida_id);
             }
-            
-            return Redirect::toAction('crear/'.$partida_id);   
-            //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
+            //Si falla se hacen persistentes los datos en el formulario
+            Flash::error('Falló Operación');
+            $this->detallemetrados = Input::post('detallemetrados');
+            return;
         }
+       
 	}
 	public function editar($partida_id, $id){
 	    View::select('crear');	
@@ -36,26 +38,37 @@ class MetradosController extends AppController {
         $this->titulo='Crear metrados para la Partida <b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
         $this->titulo_small='Todos los detalles';
         $this->metrados=$Detallemetrados->find('conditions: partidas_id='.$partida_id);
-        //$this->expedientes_id=$exp_id;
-        if (Input::hasPost('detallemetrados')) {
-
-            $obj = new Detallemetrados();
-            if (!$obj->save(Input::post('detallemetrados'))) {
-                Flash::error('Falló Operación');
-                //se hacen persistente los datos en el formulario
-                $this->detallemetrados = $obj;
+        $this->detallemetrados = $Detallemetrados->find((int) $id);
+        if(Input::hasPost('detallemetrados') && $_POST['imagen']){
+            print_r($_POST['imagen']);
+            if (Input::hasPost('detallemetrados')) {
+                if ($this->detallemetrados->save(Input::post('detallemetrados'))) {
+                    Flash::valid('detalle creado Sin imagen');
+                    return Redirect::toAction('crear/'.$partida_id);
+                }
+                //Flash::error('Falló Operación');
+                $this->detallemetrados = Input::post('detallemetrados');
                 return;
+                //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
             }
-            
-            return Redirect::toAction('crear/'.$partida_id);   
-            //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
+        }else{
+            if (Input::hasPost('detallemetrados')) {
+                if ($this->detallemetrados->saveWithPhoto(Input::post('detallemetrados'))) {
+                    return Redirect::toAction('crear/'.$partida_id);
+                }
+                //Flash::error('Falló Operación');
+                $this->detallemetrados = Input::post('detallemetrados');
+                return;
+                //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
+            }
         }
+        
 
-		$this->detallemetrados = $Detallemetrados->find((int) $id);
+		
 	}
 
     public function terminar($exp_id,$mod_id,$bloc_id,$pres_id){    
-        View::select('crear');  
+        //View::select('crear');  
         if (Input::hasPost('partida')) {
 
             $obj = new Partidas();
