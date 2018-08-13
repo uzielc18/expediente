@@ -54,3 +54,4 @@ default/app/config/databases.ini
 package-lock.json
 default/app/config/databases.ini
 .directory
+core/extensions/helpers/expedientes.sublime-workspace
