@@ -4900,6 +4900,10 @@ blockquote{
   font-size: 14px;
   padding: 0px;
 }
+form input:required {
+ border-bottom:1px dotted #ff0000;
+ /* otras propiedades */
+}
 /* 
 * Menu Expdiente
 * -------------- 

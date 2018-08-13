@@ -64,5 +64,22 @@ class MaterialesController extends AppController{
         $this->materiales = $Materiales->find((int) $id);
 
 	}
+	public function resultados(){
+	 	View::template(NULL); 
+		//$this->data[] = [];
+		$q=$_GET['q'];
+		$obj = new Materiales();
+		$results = $obj->find('conditions: (descripcion like "%'.$q.'%") or (nombre like "%'.$q.'%") or (codigo like "%'.$q.'%") AND estado=1');
+		foreach ($results as $value)
+		{
+			$id = $value->id;
+			$name=$value->codigo." ".$value->nombre;
+			$json = array();
+			$json['id'] = $id;
+			$json['name'] = $name;
+			$this->data[] = $json;
+		}
+
+	}
 }
 ?>

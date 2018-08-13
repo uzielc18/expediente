@@ -4,7 +4,7 @@ class Partidas extends ActiveRecord {
     public function initialize() {
         //relaciones
 		$this->has_many('detallemetrados','detalleanalisis','detallestecnicos');
-		$this->belongs_to('titulopartidas','medidas','presupuestos');
+		$this->belongs_to('titulopartidas','medidas','presupuestos','tipopartidas');
     }
 	/*@id recibe el id del presupuesto*/
 	public function get_titulos_partidas_all($id,$titulo){

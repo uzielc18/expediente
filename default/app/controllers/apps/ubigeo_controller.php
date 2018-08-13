@@ -3,15 +3,12 @@ View::template('apps/default_app');
 class UbigeoController extends AppController {
 	
 	public function resultados(){
-	 	View::template(NULL); 
-		//$this->data[] = [];
+	 	View::template(NULL);
 		$q=$_GET['q'];
 		$obj = new Ubigeo();
 		$results = $obj->find('conditions: distrito like "%'.$q.'%"');
 		foreach ($results as $value)
 		{
-
-			//$id=$value->departamento."-".$value->provincia."-".$value->distrito;
 			$id = $value->id;
 			$name=$value->departamento." ".$value->provincia." ".$value->distrito;
 			$json = array();

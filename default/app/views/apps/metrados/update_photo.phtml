@@ -1,0 +1,84 @@
+<?php 
+$exp_id = $partida->getPresupuestos()->getExpedientes()->expedientes_id;
+$mod_id = $modulo->id;
+$bloc_id = $partida->getPresupuestos()->expedientes_id;
+$pres_id = $partida->presupuestos_id;
+View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
+<section class="content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-solid">
+				<div class="box-header">
+				    <h2 class="box-title"><?php echo $titulo?></h2>
+				</div>
+				<?php View::content();?>
+				<div class="col-sm-9">
+					<blockquote>
+						<dl class="dl-horizontal">
+					      <dt>Presupuesto: </dt><dd><?php echo $partida->getPresupuestos()->nombre?></dd>
+					      <dt>Titulo: </dt><dd><?php echo $partida->getTitulopartidas()->titulo?></dd>
+					      <dt>Medida: </dt><dd><?php echo $partida->getMedidas()->nombre?> (<?php echo $partida->getMedidas()->abr?>)</dd>
+					      <dt>Tipo Partida</dt><dd><?Php echo $partida->getTipopartidas()->nombre?></dd>
+					  	</dl>
+					</blockquote>
+				</div>
+				<div class="col-sm-3">
+					
+				</div>
+				<div class="box-body">
+					<?php echo Form::openMultipart(NULL, 'post', 'role="form" class="form-horizontal"');?>
+					<?php echo Form::hidden('detallemetrados.id');?>
+					<?php echo Form::hidden('detallemetrados.partidas_id',NULL,$partida->id);?>
+					<?php echo Form::hidden('detallemetrados.estado',NULL,1);?>
+					<?php echo Form::hidden('detallemetrados.parcial');?>
+					<?php echo Form::hidden('detallemetrados.modulos_id',NULL,$modulo->id);?>
+					<div class="col-sm-12">
+						<div class="col-sm-6">
+						    <div class="form-group">
+						    <?php echo Form::label('Nombre','detallemetrados.nombre','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo $detallemetrados->nombre;?>
+						        </div>
+						    </div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+						    	<?php echo Form::label('Imagen','imagen','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::file('imagen','class="form-control calcular" placeholder="Imagen" required accept="image/*"')?>
+						       		<span class="help-block">ayuda</span>
+						        </div>
+
+								
+						    </div>
+						</div>
+						
+					</div>
+
+					<div class="col-sm-12">
+						<div class="form-group">
+						    <div class="with-padding">
+						    	<?php echo Html::linkAction('delete_potho/'.$partida->id.'/'.$detallemetrados->id,'Elimnar la foto existente','class="btn btn-danger"')?>
+						    	<?php echo Html::linkAction('editar/'.$partida->id.'/'.$detallemetrados->id,'ver partida','class="btn btn-info"')?>
+
+						    	<?php echo Form::submit('Actualizar la foto','class="btn btn-primary"') ?>
+						    </div>
+						</div>
+					</div>
+					<div class="col-sm-12">
+						<div class="thumbnail">
+							<?php 
+							 if($detallemetrados->imagen)echo Html::img('upload/'.$detallemetrados->imagen,'producto -info','class="margin" style=""'); ?>
+						</div>
+					</div>
+					<?php echo Form::close();?>
+				</div>
+				<div class="box-footer with-border">
+					<div class="pull-right">
+				    </div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</section>
