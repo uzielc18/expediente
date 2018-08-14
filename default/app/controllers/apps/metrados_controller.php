@@ -13,6 +13,7 @@ class MetradosController extends AppController {
         $this->titulo='Crear metrados para la Partida <b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
         $this->titulo_small='Todos los detalles';
         $this->metrados=$Detallemetrados->find('conditions: partidas_id='.$partida_id);
+        $this->totales = $Detallemetrados->totales_partidas($partida_id);
         //$this->expedientes_id=$exp_id;
         //se verifica si se ha enviado via POST los datos
         if (Input::hasPost('detallemetrados')) {
@@ -49,6 +50,7 @@ class MetradosController extends AppController {
         $this->titulo='Crear metrados para la Partida <b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
         $this->titulo_small='Todos los detalles';
         $this->metrados=$Detallemetrados->find('conditions: partidas_id='.$partida_id);
+        $this->totales = $Detallemetrados->totales_partidas($partida_id);
         $this->detallemetrados = $Detallemetrados->find((int) $id);
         if (Input::hasPost('detallemetrados')) {
             if ($this->detallemetrados->save(Input::post('detallemetrados'))) {
