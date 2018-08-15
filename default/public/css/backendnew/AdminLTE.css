@@ -4904,6 +4904,9 @@ form input:required {
  border-bottom:1px dotted #ff0000;
  /* otras propiedades */
 }
+#ver_reporte>table>tbody>tr>td>a.__no_mostrar{
+  display: none;
+}
 /* 
 * Menu Expdiente
 * -------------- 

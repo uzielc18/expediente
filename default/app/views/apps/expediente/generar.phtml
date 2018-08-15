@@ -73,7 +73,7 @@
                       if($modulo->id==1)
                       {
                         $tr_p.=html::link('apps/metrados/crear/'.$partida->id,' <i class="fa fa-plus-square"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
-                        $tr_p.=$partida->get_tabla_detalle_metrados();
+                        $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detallemetrados)."<div>";
                       }
                       if($modulo->id==2)
                       {

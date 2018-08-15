@@ -64,41 +64,27 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 					<?php echo Form::hidden('detallemetrados.estado',NULL,1);?>
 					<?php echo Form::hidden('detallemetrados.parcial');?>
 					<?php echo Form::hidden('detallemetrados.modulos_id',NULL,$modulo->id);?>
-					<div class="col-sm-12">
-						<?php if($codigo_tipo_de_partida === 'AC'){?>
+					<div class="row">
+					<?php if($codigo_tipo_de_partida === 'AC'){?>
 						<div class="col-sm-6">
 						    <div class="form-group">
-						    <?php echo Form::label('Material','detallemetrados.materiales_id','class="col-sm-3 control-label"');?>
-						        <div class="col-sm-9">
-						            <?php echo Form::text('detallemetrados.materiales_id','class="form-control" placeholder="nombre" required')?>
-						        </div>
-						    </div>
-						</div>
-
-						<?php }else{?>
-						<div class="col-sm-6">
-						    <div class="form-group">
-						    <?php echo Form::label('Nombre','detallemetrados.nombre','class="col-sm-3 control-label"');?>
+						    <?php echo Form::label('Elemento','detallemetrados.nombre','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
 						            <?php echo Form::text('detallemetrados.nombre','class="form-control" placeholder="nombre" required')?>
 						        </div>
 						    </div>
 						</div>
-						<?php } ?>
-						<?php if($codigo_tipo_de_partida === 'AC'){?>
-						<?php if($crear){?>
 						<div class="col-sm-6">
 							<div class="form-group">
-						    	
 						    	<?php echo Form::label('Imagen','imagen','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
-						            <?php echo Form::file('imagen','class="form-control" placeholder="Imagen" required accept="image/*"')?>
+						            <?php echo $crear ? Form::file('imagen','class="form-control" placeholder="Imagen" required accept="image/*"'):$detallemetrados->imagen?>
+						            <br>
 						            <span class="help-block no-margin">Formatos permitidos jpg, png, gif, jpeg Max 3MB</span>
-						        </div>
-								
-						    </div>
+						        </div>							
+						    </div>	
 						</div>
-						<?php }?>
+						
 						<div class="col-sm-6">
 							<div class="form-group">
 						    	<?php echo Form::label('Tipo material','detallemetrados.tipo_material','class="col-sm-3 control-label"');?>
@@ -107,20 +93,11 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						        </div>
 						    </div>
 						</div>
-						<?php }?>
 						<div class="col-sm-6">
-							<div class="form-group">
-						    	<?php echo Form::label('Nº de veces','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
+						    <div class="form-group">
+						    <?php echo Form::label('Material','detallemetrados.materiales_id','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
-						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
-						        </div>
-						    </div>
-						</div>
-						<div class="col-sm-6">
-							<div class="form-group">
-						    	<?php echo Form::label('Factor','detallemetrados.factor','class="col-sm-3 control-label"');?>
-						        <div class="col-sm-9">
-						            <?php echo Form::text('detallemetrados.factor','class="form-control calcular" placeholder="Nº de veces"')?>
+						            <?php echo Form::text('detallemetrados.materiales_id','class="form-control" placeholder="nombre" required')?>
 						        </div>
 						    </div>
 						</div>
@@ -133,13 +110,33 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						    </div>
 						</div>
 						<div class="col-sm-6">
-						    <div class="form-group">
-						    <?php echo Form::label('Largo','detallemetrados.largo','class="col-sm-3 control-label"');?>
+							<div class="form-group">
+						    	<?php echo Form::label('Nº de veces del tipo','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
-						            <?php echo Form::text('detallemetrados.largo','class="form-control calcular" placeholder="Largo"')?>
+						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
 						        </div>
 						    </div>
 						</div>
+
+					<?php }else{?>
+						<div class="col-sm-6">
+						    <div class="form-group">
+						    <?php echo Form::label('Nombre','detallemetrados.nombre','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::text('detallemetrados.nombre','class="form-control" placeholder="nombre" required')?>
+						        </div>
+						    </div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+						    	<?php echo Form::label('Nº de veces','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
+						        </div>
+						    </div>
+						</div>
+						<?php } ?>
+						<?php if($codigo_tipo_de_partida==='NN'){?>
 						<div class="col-sm-6">
 						    <div class="form-group">
 						    <?php echo Form::label('Ancho','detallemetrados.Ancho','class="col-sm-3 control-label"');?>
@@ -154,11 +151,28 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						        <div class="col-sm-9">
 						            <?php echo Form::text('detallemetrados.altura','class="form-control calcular" placeholder="Altura"')?>
 						        </div>
-						    </div>
-						    
+						    </div>						
 						</div>
+						<?php }?>
+						<div class="col-sm-6">
+							<div class="form-group">
+						    	<?php echo Form::label('Factor','detallemetrados.factor','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::text('detallemetrados.factor','class="form-control calcular" placeholder="Factor"')?>
+						        </div>
+						    </div>
+						</div>
+						<div class="col-sm-6">
+						    <div class="form-group">
+						    <?php echo Form::label('Largo','detallemetrados.largo','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::text('detallemetrados.largo','class="form-control calcular" placeholder="Largo"')?>
+						        </div>
+						    </div>
+						</div>
+						
 					</div>
-					<div class="col-sm-12">
+					<div class="col-sm-12" style="border-bottom: solid #ccc 1px;">
 						<div class="form-group">
 						    <div class="with-padding pull-right">
 						    	<br>
@@ -168,7 +182,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						</div>
 					</div>
 					<?php echo Form::close();?>
-					<div class="col-sm-12">
+					<div class="col-sm-12 with-padding" >
 						<?Php 
 						
 						echo Form::open('apps/metrados/terminar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
@@ -176,39 +190,68 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						echo Form::hidden('partida.presupuestos_id');
 						echo Form::hidden('partida.titulopartidas_id');
 						echo Form::hidden('partida.medidas_id');
+						echo Form::hidden('partida.tipopartidas_id');
 						?>
+						<div id="reporte-detalles">
 						<table class="table">
 							<caption>Detalle del metrado </caption>
 							<thead>
+							<?php if($codigo_tipo_de_partida==='AC'){?>
+								<tr>
+									<th>Codigo</th>
+									<th>Foto</th>
+									<th>Elemento</th>
+									<th>Tipo</th>
+									<th>Nº veces Tipo</th>
+									<th>Cantidad de elemento</th>
+									<th>Largo</th>
+									<th>Factor</th>
+									<th>Parcial</th>
+									<th>Accion</th>
+								</tr>
+							<?php }else{?>
 								<tr>
 									<th>Nº</th>
-									<?php if($codigo_tipo_de_partida === 'AC'){?><th>Foto</th><?Php }?>
 									<th>Nombre</th>
 									<th>Nº veces</th>
 									<th>Largo</th>
 									<th>Ancho</th>
 									<th>Altura</th>
+									<th>Factor</th>
 									<th>Parcial</th>
-									<th>Accion</th>
+									<th class="no_mostrar">Accion</th>
 								</tr>
+							<?php }?>
 							</thead>
 							<tbody>
-								<?php 
-								$total=0;
-								$n=0;
-								foreach($metrados as $metro){
-									$n++;
-									$largo = $metro->largo ? $metro->largo : 1;
-									$ancho = $metro->ancho ? $metro->ancho : 1;
-									$altura = $metro->altura ? $metro->altura: 1;
-									$total=$total+$metro->parcial;
-									?>
+							<?php 
+							$total=0;
+							$n=0;
+							foreach($metrados as $metro){
+								$n++;
+								$largo = $metro->largo ? $metro->largo : 1;
+								$ancho = $metro->ancho ? $metro->ancho : 1;
+								$altura = $metro->altura ? $metro->altura: 1;
+								$total=$total+$metro->parcial;
+								?>
+								<?php if($codigo_tipo_de_partida==="AC"){?>
+								<tr>
+									<td><?php echo $metro->getMateriales()->codigo;?></td>
+									<td class="thumbnail"><?php echo $metro->imagen ? Html::img('upload/'.$metro->imagen,'producto -info','class="margin" style="width: 100px;"'): '<img src="/img/150x100.png" alt="...">'; ?></td>
+									<td><?php echo $metro->getMateriales()->nombre;?></td>
+									<td><?php echo $metro->tipo_material ?></td>
+									<td align="center"><?Php echo $metro->numero_de_veces?></td>
+									<td align="center"><?php echo $metro->cantidad_elementos?></td>
+									<td align="right"><?php echo $metro->largo ? number_format($largo,4): '-'?></td>
+
+									<td  align="center"><?php echo $metro->factor ?></td>
+									<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
+									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?></td>
+								</tr>
+								<?php }else{ ?>
 								<tr>
 									<td><?php echo $n;?></td>
-									<?php if($codigo_tipo_de_partida === 'AC'){?>
-										<td class="thumbnail"><?php 
-											echo $metro->imagen ? Html::img('upload/'.$metro->imagen,'producto -info','class="margin" style="width: 100px;"'): '<img src="/img/150x100.png" alt="...">'; ?></td><?Php }?>
-									<td><?php echo $codigo_tipo_de_partida==='AC' ? $metro->getMateriales()->codigo.' '.$metro->getMateriales()->nombre : $metro->nombre;?></td>
+									<td><?php echo $metro->nombre;?></td>
 									<td><?Php echo $metro->numero_de_veces?></td>
 									<td align="right"><?php echo $metro->largo ? number_format($largo,4): '-'?></td>
 									<td align="right"><?php echo $metro->ancho ? number_format($ancho,4) : '-'?></td>
@@ -217,38 +260,41 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>');?></td>
 								</tr>
 								<?php }?>
+
+							<?php }?>
 							</tbody>
 							<tfoot>
+								<?php if($codigo_tipo_de_partida==="AC"){?>
 								<tr>
-									<td colspan="9">
-										<table class="table table-bordered">
+									<td colspan="10">
+										<table class="table">
 											<tbody>
 												<tr>
-													<th>Material</th>
+													<td align="right"><b>Material:</b></td>
 													<?php foreach($totales as $tm){?>
-													<th><?php echo $tm->nombre?></th>
+													<td align="right"><b><?php echo $tm->nombre?></b></td>
 													<?php }?>
 												</tr>
 												<tr>
-													<th>Parcial</th>
+													<td align="right"><b>Parcial:</b></td>
 													<?php foreach($totales as $tp){?>
 													<td align="right"><?Php echo number_format($tp->parcial,4)?></td>
 													<?php }?>
 												</tr>
 												<tr>
-													<th>Kilogramos del acero</th>
+													<td align="right"><b>Kilogramos del acero</b></td>
 													<?php foreach($totales as $tk){?>
 													<td align="right"><?php echo number_format($tk->peso,4)?></td>
 													<?php }?>
 												</tr>
 												<tr>
-													<th>Kilos total</th>
+													<td align="right"><b>Kilos total</b></td>
 													<?php foreach($totales as $tkt){?>
 													<td align="right"><?php echo number_format($tkt->kilos,4)?></td>
 													<?php }?>
 												</tr>
 												<tr>
-													<th>Nº de varillas de acero de 9ml</th>
+													<td align="right"><b>Nº de varillas de acero de 9ml</b></td>
 													<?php foreach($totales as $tv){?>
 													<td align="right"><?php echo number_format($tv->cantidad_varilla,4)?></td>
 													<?php }?>
@@ -257,6 +303,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 										</table>
 									</td>
 								</tr>
+							<?php }else{?>
 								<tr>
 									<td></td>
 									<td></td>
@@ -268,18 +315,24 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 									<td align="right"><?php echo number_format($total,4);echo ' '.$partida->getMedidas()->abr;?></td>
 									<td></td>
 								</tr>
+							<?php }?>
 							</tfoot>
 						</table>
+						</div>
 					</div>
 				</div>
 				<div class="box-footer with-border">
 					<div class="pull-right">
 				    <?php 
 				    echo Form::hidden('partida.metrado',NULL,$total);
+				    echo Form::hidden('partida.detallemetrados');
 				    echo Form::submit('Terminar','class="btn btn-primary"') ?></div>
 				    <?php echo Form::close();?>
 				</div>
-				<script>
+				<script type="text/javascript">
+					$(document).ready(function(){
+					    $('#partida_detallemetrados').val($("#reporte-detalles").html());
+					});
 					function calcular() {
 					  var veces = $( "#detallemetrados_numero_de_veces" ).val();
 					  var largo = $( "#detallemetrados_largo" ).val();
@@ -294,6 +347,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 					}
 					$( ".calcular" ).change(function() {
 					  $("#detallemetrados_parcial" ).val(calcular());
+					  
 					});
 				</script>
 			</div>

@@ -113,7 +113,10 @@ class MetradosController extends AppController {
         if (Input::hasPost('partida')) {
 
             $obj = new Partidas();
-            if (!$obj->save(Input::post('partida'))) {
+            $datos = Input::post('partida');
+            $datos['detallemetrados']=base64_encode($datos['detallemetrados']);
+            print_r($datos);
+            if (!$obj->save($datos)) {
                 Flash::error('Falló Operación');
                 //se hacen persistente los datos en el formulario
                 $this->partidas = $obj;
