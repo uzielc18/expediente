@@ -67,18 +67,22 @@
                       $tr_p.='<span class="pull-right">'.Html::link('apps/partidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$partida->titulo_id.'/'.$partida->id,' <i class="fa fa-edit"></i>','title="Editar Partida"').'</span>';
                       $tr_p.='</td>';
                       $tr_p.='<td align="center">'.$partida->getMedidas()->codigos.'</td>';
-                      $tr_p.='<td align="right">'.$partida->metrado_parcial.'</td></tr>';
+                      $tr_p.='<td align="right">'.$partida->parcial.'</td></tr>';
                       $tr_p.='<tr style="display: none;" id="detalle-'.$partida->id.'">';
                       $tr_p.='<td colspan="4">';
                       if($modulo->id==1)
                       {
-                        $tr_p.=html::link('apps/metrados/crear/'.$partida->id,' <i class="fa fa-plus-square"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
+                        $error_de_partida=$partida->get_correcto($partida->id,'detallemetrados');
+                        $tr_p.=html::link('apps/metrados/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
+                        if(!$error_de_partida) $tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
                         $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detallemetrados)."<div>";
                       }
                       if($modulo->id==2)
                       {
-                        $tr_p.=html::link('apps/analisis/crear/'.$partida->id,' <i class="fa fa-plus-square"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
-                        $tr_p.=$partida->get_tabla_detalle_metrados();
+                        $error_de_partida=$partida->get_correcto($partida->id,'detalleanalisis');
+                        $tr_p.=html::link('apps/analisis/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
+                        if(!$error_de_partida)$tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
+                        $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detalleanalisis)."<div>";
                       }
                       $tr_p.='</td></tr>';
                     }

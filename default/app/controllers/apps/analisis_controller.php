@@ -6,7 +6,7 @@ class AnalisisController extends AppController {
 		$Detalleanalisis = new Detalleanalisis();
         $Partidas = new Partidas();
         $Modulos = new Modulos();
-        $this->modulo=$Modulos->find_first('conditions: codigo="METRADO"');
+        $this->modulo=$Modulos->find_first('conditions: codigo="ACU"');
         $this->partida=$Partidas->find((int)$partida_id);
 		$this->titulo='Analisis de costos unitarios <b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
         $this->titulo_small='Todos los detalles';
@@ -31,7 +31,7 @@ class AnalisisController extends AppController {
 		$Detalleanalisis = new Detalleanalisis();
         $Partidas = new Partidas();
         $Modulos = new Modulos();
-        $this->modulo=$Modulos->find_first('conditions: codigo="METRADO"');
+        $this->modulo=$Modulos->find_first('conditions: codigo="ACU"');
         $this->partida=$Partidas->find((int)$partida_id);
         $this->titulo='Crear analisis para la Partida <b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
         $this->titulo_small='Todos los detalles';
@@ -54,12 +54,16 @@ class AnalisisController extends AppController {
 		$this->detalleanalisis = $Detalleanalisis->find((int) $id);
 	}
 
+    
     public function terminar($exp_id,$mod_id,$bloc_id,$pres_id){    
-        View::select('crear');  
+        //View::select('crear');  
         if (Input::hasPost('partida')) {
 
             $obj = new Partidas();
-            if (!$obj->save(Input::post('partida'))) {
+            $datos = Input::post('partida');
+            $datos['detalleanalisis']=base64_encode($datos['detalleanalisis']);
+            print_r($datos);
+            if (!$obj->save($datos)) {
                 Flash::error('Falló Operación');
                 //se hacen persistente los datos en el formulario
                 $this->partidas = $obj;

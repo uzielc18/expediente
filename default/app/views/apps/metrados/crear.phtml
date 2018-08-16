@@ -127,6 +127,21 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						        </div>
 						    </div>
 						</div>
+						<?php } ?>
+
+
+						<?php if($codigo_tipo_de_partida==='FL'){?>
+						<div class="col-sm-6">
+							<div class="form-group">
+						    	<?php echo Form::label('Cantidad','detallemetrados.cantidad_elementos','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::text('detallemetrados.cantidad_elementos','class="form-control calcular" placeholder="Cantidad de elementos"')?>
+						        </div>
+						    </div>
+						</div>
+						<?php }?>
+
+						<?php if($codigo_tipo_de_partida==='NN'){?>
 						<div class="col-sm-6">
 							<div class="form-group">
 						    	<?php echo Form::label('Nº de veces','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
@@ -135,8 +150,6 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						        </div>
 						    </div>
 						</div>
-						<?php } ?>
-						<?php if($codigo_tipo_de_partida==='NN'){?>
 						<div class="col-sm-6">
 						    <div class="form-group">
 						    <?php echo Form::label('Ancho','detallemetrados.Ancho','class="col-sm-3 control-label"');?>
@@ -153,7 +166,6 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						        </div>
 						    </div>						
 						</div>
-						<?php }?>
 						<div class="col-sm-6">
 							<div class="form-group">
 						    	<?php echo Form::label('Factor','detallemetrados.factor','class="col-sm-3 control-label"');?>
@@ -170,6 +182,8 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						        </div>
 						    </div>
 						</div>
+
+						<?php }?>
 						
 					</div>
 					<div class="col-sm-12" style="border-bottom: solid #ccc 1px;">
@@ -209,7 +223,8 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 									<th>Parcial</th>
 									<th>Accion</th>
 								</tr>
-							<?php }else{?>
+							<?php }
+							if($codigo_tipo_de_partida==="NN"){?>
 								<tr>
 									<th>Nº</th>
 									<th>Nombre</th>
@@ -219,7 +234,15 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 									<th>Altura</th>
 									<th>Factor</th>
 									<th>Parcial</th>
-									<th class="no_mostrar">Accion</th>
+									<th>Accion</th>
+								</tr>
+							<?php }?>
+							<?php if($codigo_tipo_de_partida==="FL"){?>
+								<tr>
+									<th>Nº</th>
+									<th>Nombre</th>
+									<th>Cantidad</th>
+									<th>Accion</th>
 								</tr>
 							<?php }?>
 							</thead>
@@ -248,7 +271,16 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 									<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
 									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?></td>
 								</tr>
-								<?php }else{ ?>
+								<?php }
+								if($codigo_tipo_de_partida==="FL"){?>
+								<tr>
+									<td><?php echo $n;?></td>
+									<td><?php echo $metro->nombre;?></td>
+									<td align="right"><?php echo $metro->cantidad_elementos;?></td>
+									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?></td>
+								</tr>
+								<?Php }
+								if($codigo_tipo_de_partida==="NN"){?>
 								<tr>
 									<td><?php echo $n;?></td>
 									<td><?php echo $metro->nombre;?></td>
@@ -257,7 +289,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 									<td align="right"><?php echo $metro->ancho ? number_format($ancho,4) : '-'?></td>
 									<td align="right"><?php echo $metro->altura ? number_format($altura,4) : '-'?></td>
 									<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
-									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>');?></td>
+									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?></td>
 								</tr>
 								<?php }?>
 
@@ -303,7 +335,8 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 										</table>
 									</td>
 								</tr>
-							<?php }else{?>
+							<?php }
+							if($codigo_tipo_de_partida==="NN"){?>
 								<tr>
 									<td></td>
 									<td></td>
