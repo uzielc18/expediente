@@ -67,7 +67,8 @@
                       $tr_p.='<span class="pull-right">'.Html::link('apps/partidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$partida->titulo_id.'/'.$partida->id,' <i class="fa fa-edit"></i>','title="Editar Partida"').'</span>';
                       $tr_p.='</td>';
                       $tr_p.='<td align="center">'.$partida->getMedidas()->codigos.'</td>';
-                      $tr_p.='<td align="right">'.$partida->parcial.'</td></tr>';
+                      if($modulo->id==1)$tr_p.='<td align="right">'.$partida->metrado.'</td></tr>';
+                      if($modulo->id==2)$tr_p.='<td align="right">'.$partida->parcial.'</td></tr>';
                       $tr_p.='<tr style="display: none;" id="detalle-'.$partida->id.'">';
                       $tr_p.='<td colspan="4">';
                       if($modulo->id==1)
@@ -104,7 +105,7 @@
                     <th>item</th>
                     <th>Descripcion</th>
                     <th>Unid</th>
-                    <th align="right">Metrado</th>
+                    <th align="right"><?php if($modulo->id==='1') echo 'Metrado';?><?php if($modulo->id==='2') echo 'Total';?></th>
                   </tr>
                 </thead>
                 <tbody>
