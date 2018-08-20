@@ -9,7 +9,7 @@ $(document).ready(function()
         tokenLimit: 1,minChars: 3,
         <?php if(!empty($detallemetrados->materiales_id)){?>
         prePopulate: [
-                {id: <?php echo $detallemetrados->materiales_id?>, name: "<?php echo $detallemetrados->getMateriales()->codigo.' '.$detallemetrados->getMateriales()->nombre?>"}
+                {id: <?php echo $detallemetrados->materiales_id?>, name: "<?php echo $detallemetrados->getMateriales()->getCodigoCompleto().' '.$detallemetrados->getMateriales()->nombre?>"}
             ]
         <?php }?>
     });
@@ -259,7 +259,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 								?>
 								<?php if($codigo_tipo_de_partida==="AC"){?>
 								<tr>
-									<td><?php echo $metro->getMateriales()->codigo;?></td>
+									<td><?php echo $metro->getMateriales()->getCodigoCompleto();?></td>
 									<td class="thumbnail"><?php echo $metro->imagen ? Html::img('upload/'.$metro->imagen,'producto -info','class="margin" style="width: 100px;"'): '<img src="/img/150x100.png" alt="...">'; ?></td>
 									<td><?php echo $metro->getMateriales()->nombre;?></td>
 									<td><?php echo $metro->tipo_material ?></td>

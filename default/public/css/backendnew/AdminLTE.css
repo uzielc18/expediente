@@ -4923,6 +4923,7 @@ form input:required {
 .menu_expediente_a:hover{
   background-color: #1e282c !important;
 }
+body.siderbar-mini>div.wrapper>div.content-wrapper>aside.main-sidebar>section.sidebar>div.menu_expediente div.box div.box-header h3.box-title span{display: none;}
 /*
  * Misc: print
  * -----------

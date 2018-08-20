@@ -6,12 +6,14 @@ class AnalisisController extends AppController {
 		$Detalleanalisis = new Detalleanalisis();
         $Partidas = new Partidas();
         $Modulos = new Modulos();
+        $Tipomateriales = new Tipomateriales();
         $this->modulo=$Modulos->find_first('conditions: codigo="ACU"');
         $this->partida=$Partidas->find((int)$partida_id);
 		$this->titulo='Analisis de costos unitarios <b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
         $this->titulo_small='Todos los detalles';
         $this->analisis=$Detalleanalisis->find('conditions: partidas_id='.$partida_id);
-		//$this->expedientes_id=$exp_id;
+		$this->tipos=$Tipomateriales->find("conditions: tipomateriales_id is null");
+        //$this->expedientes_id=$exp_id;
 		if (Input::hasPost('detalleanalisis')) {
 
             $obj = new Detalleanalisis();
@@ -31,11 +33,13 @@ class AnalisisController extends AppController {
 		$Detalleanalisis = new Detalleanalisis();
         $Partidas = new Partidas();
         $Modulos = new Modulos();
+        $Tipomateriales = new Tipomateriales();
         $this->modulo=$Modulos->find_first('conditions: codigo="ACU"');
         $this->partida=$Partidas->find((int)$partida_id);
         $this->titulo='Crear analisis para la Partida <b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
         $this->titulo_small='Todos los detalles';
-        $this->analisis=$Detalleanalisis->find('conditions: partidas_id='.$partida_id);
+        $this->analisis=$Detalleanalisis->find('conditions: partidas_id='.$partida_id);        
+        $this->tipos=$Tipomateriales->find("conditions: tipomateriales_id is null");
         //$this->expedientes_id=$exp_id;
         if (Input::hasPost('detalleanalisis')) {
 

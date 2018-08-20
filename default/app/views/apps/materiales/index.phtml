@@ -38,7 +38,7 @@
 						$n++;?>
 						<tr>
 							<td><?php echo $n;?></td>
-							<td><?php echo $item->codigo?></td>
+							<td><?php echo $item->getCodigoCompleto();?>.<?php echo $item->codigo?></td>
 							<td><?php echo $item->nombre?></td>
 							<td><?php echo $item->descripcion?></td>
 							<td><?php echo $item->precio?></td>
@@ -55,5 +55,5 @@
   </div>
 </div>
 <div class="box-footer">
-	foot
+	
 </div>

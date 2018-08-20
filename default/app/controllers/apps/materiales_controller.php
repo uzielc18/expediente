@@ -23,6 +23,7 @@ class MaterialesController extends AppController{
 		$TipoMateriales = new Tipomateriales();		
 		$this->tipo = $TipoMateriales->find((int)$tipomateriales_id);
 		$this->indices_id = $indices_id;
+		$this->codigo_new=$Materiales->get_codigo($indices_id);
 		if (Input::hasPost('materiales')) {
 
             $obj = $Materiales;
@@ -73,13 +74,18 @@ class MaterialesController extends AppController{
 		foreach ($results as $value)
 		{
 			$id = $value->id;
-			$name=$value->codigo." ".$value->nombre;
+			$name=$value->getCodigoCompleto()." ".$value->nombre;
 			$json = array();
 			$json['id'] = $id;
 			$json['name'] = $name;
 			$this->data[] = $json;
 		}
 
+	}
+	public function get_new_codigo($tipo){
+		View::template(NULL); 
+		$Materiales = new Materiales();
+		$this->new_codigo=$Materiales->get_codigo($tipo);
 	}
 }
 ?>

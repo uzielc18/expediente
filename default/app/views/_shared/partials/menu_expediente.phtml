@@ -23,7 +23,7 @@ $registros= $Ex->getTipoExp();
             <?php foreach($registros as $reg){?>
             <div class="box box-solid no-padding">
               <div class="box-header with-border no-padding">
-                <h3 class="box-title" style="color: #fff;"><?php echo $reg->nombre?></h3>
+                <h3 class="box-title" style="color: #fff;"><i class="fa fa-folder-open"></i><span><?php echo $reg->nombre?></span></h3>
                 <div class="box-tools">
                   <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                   </button>
@@ -32,7 +32,11 @@ $registros= $Ex->getTipoExp();
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
                   <?Php foreach($Ex->find('conditions: expedientes_id IS NULL AND tipoexpedientes_id='.$reg->id) as $expediente){?>
-                  <li <?php echo $expediente_id==$expediente->id ? 'class="active"': '';?>><a href="/apps/expediente/generar/<?php echo $expediente->id ?>" <?php echo $expediente_id==$expediente->id ? 'style="color:#fff;"': '';?> class="menu_expediente_a"><i class="fa fa-inbox"></i><?php echo $expediente->nombre;?></a></li>
+                  <li <?php echo $expediente_id==$expediente->id ? 'class="active"': '';?>>
+                    <a href="/apps/expediente/generar/<?php echo $expediente->id ?>" <?php echo $expediente_id==$expediente->id ? 'style="color:#fff;"': '';?> class="menu_expediente_a">
+                      <i class="fa fa-file-excel-o"></i><span><?php echo $expediente->nombre;?></span>
+                    </a>
+                  </li>
                   <?php }?>
                 </ul>
               </div>

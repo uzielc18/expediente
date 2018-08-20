@@ -1,5 +1,6 @@
 
 <?php View::partial('menu_expediente',false,array('expediente_id'=>$expediente->id)) ?>
+
 <section class="content">
 <div class="row">
 <div class="col-md-12">
@@ -9,7 +10,7 @@
     $presupuesto_id=$presupuesto? $presupuesto->id : 0;
     ?>
     <div class="box-header">
-        <div style="text-align: center;"><h2 class="box-title"><i class="<?php echo $modulo->icono?>"> </i> <?php echo $modulo->descripcion?></h2></div>
+        <div style="text-align: center;"><h2 class="box-title"><i class="<?php echo $modulo->icono?>"> </i> <?php echo $modulo->descripcion?>  <?php echo html::linkAction('ordenar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto_id,'ordenar','class="btn btn-xs"');?></h2></div>
         <dl class="dl-horizontal">
           <dt>Presupuesto</dt>
           <dd><?php echo $expediente->nombre?></dd>
@@ -98,8 +99,8 @@
               }
               
               ?>
-
-              <table class="table table-bordered">
+              
+              <table id="generar_table" class="table table-bordered">
                 <thead>
                   <tr>
                     <th>item</th>

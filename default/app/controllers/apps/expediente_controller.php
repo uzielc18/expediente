@@ -263,6 +263,41 @@ class ExpedienteController extends AdminController {
         return Redirect::toAction($act.'/'.$exp_id.'/'.$modulo_id);
 	}
 
+	public function ordenar($id, $modulo_id=NULL, $bloque_id=NULL, $presupuesto_id=NULL)
+	{
+		$this->titulo="Oderan las partidas";
+		$Expedientes = new Expedientes();
+		$Modulos = new Modulos();
+		$Presupuestos = new Presupuestos();
+		$Partidas = New Partidas();
+		$Detallemetrados = New Detallemetrados();
+		$Titulopartidas =  new Titulopartidas();
+
+		/*Obtiene el expedieten princiapl*/
+		$this->expediente = $Expedientes->find((int) $id);
+		$b_id = $bloque_id ? $bloque_id : $Expedientes->minimum('id', 'conditions: estado=1 AND expedientes_id='.$id);		
+		$m_id = $modulo_id ? $modulo_id : 1;
+		$this->bloque= False;
+		if($b_id){
+			$this->bloque = $Expedientes->find((int)$b_id);
+			/*Si existe un Bloque el $id = $b_id los detalles a mostrar ahora son del bloqeu seleccionado*/
+			$id=$b_id;
+		}
+		/*Obtiene los sub presupuesto (tabla:Presupuestos)*/
+		$p_id = $presupuesto_id ? $presupuesto_id : $Presupuestos->minimum('id', 'conditions: estado=1 AND expedientes_id='.$id);
+		//$this->presupuestos = $Presupuestos->find('conditions: estado=1 AND expedientes_id='.$id);
+		$this->presupuesto = False;
+		$this->partidas_nuevo=0;
+		if($p_id)$this->partidas_nuevo=$Partidas->count('id','conditions: presupuestos_id='.$p_id);
+		$this->array_titulo=[];
+		if($p_id){
+			$this->partidas = $Partidas;
+			$this->array_titulo = $Titulopartidas->get_array_titulos($p_id);
+			$this->presupuesto = $Presupuestos->find((int)$p_id);
+		}
+
+	}
+
 }
 
 ?>

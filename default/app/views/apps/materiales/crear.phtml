@@ -1,13 +1,12 @@
 <div class="box-header">
 	<h2 class="box-title"><?php echo $titulo?> <?php echo $tipo->nombre ?></h2>
 </div>
+<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
+	    <?php echo Form::hidden('materiales.id');?>
+	    <?php echo Form::hidden('materiales.estado',NULL,1);?>
 <div class="box-body">
 	<div class="row">
 		<div class="col-sm-10">
-	    <?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
-	    <?php echo Form::hidden('materiales.id');?>
-	    <?php echo Form::hidden('materiales.estado',NULL,1);?>
-
 	    <div class="form-group">
 	    	<?php echo Form::label('Indice Unificado','materiales.tipomateriales_id','class="col-sm-2 control-label"');?>
 	        <div class="col-sm-10">
@@ -17,7 +16,9 @@
 	    <div class="form-group">
 	    	<?php echo Form::label('Codigo','materiales.codigo','class="col-sm-2 control-label"');?>
 	        <div class="col-sm-10">
-	        	<?php echo Form::text('materiales.codigo','class="form-control calcular" placeholder="Codigo"')?>
+	        	<div>
+	        	  <?php echo Form::text('materiales.codigo','class="form-control calcular" placeholder="Codigo"',$codigo_new)?>
+	        	</div>
 	        </div>
 	    </div>
 	    <div class="form-group">
@@ -56,18 +57,37 @@
 	        	<?php echo Form::dbSelect('materiales.especificadegastos_id','nombre',array('especificadegastos','find','conditions: estado=1'),'Seleccione','class="form-control"')?>
 	        </div>
 	    </div>
-	    <div class="form-group">
+	    
+		
+		</div>
+	</div>	
+</div>
+<div class="box-footer padding">
+	<div>
 	    	<div class="pull-right">
 	    		<?php echo Html::linkAction('index/'.$tipo->id.'/'.$indices_id,'Regresar al listado','class="btn"');?>
 	    		<?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
 	    	</div>	
 	    </div>
-		<?php echo Form::close();?>
-		</div>
-		<div class="col-sm-3"></div>
-	</div>	
-</div>
-<div class="box-footer">
-	
 </div>		
-			
+<?php echo Form::close();?>
+<script type="text/javascript">
+	$("#materiales_tipomateriales_id").change(function(event) {
+		var str = "";
+	    $( "select option:selected" ).each(function() {
+	      str += $( this ).val() + " ";
+	    });
+	    $.ajax({
+	    	url: '/apps/materiales/get_new_codigo/'+str,
+	    })
+	    .done(function(v) {
+	    	 $("#materiales_codigo").val(v);
+	    })
+	    .fail(function() {
+	    	console.log("error");
+	    });
+	    
+	   
+	
+	});
+</script>
