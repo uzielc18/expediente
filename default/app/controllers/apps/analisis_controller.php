@@ -79,5 +79,12 @@ class AnalisisController extends AppController {
             return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
         }
     }
+
+    public function calcular_flete($partida_id){
+        $Detalleanalisis = new Detalleanalisis();
+        $Partidas = new Partidas();
+        "SELECT partidas.presupuestos_id, materiales.id, materiales.nombre, materiales.tipomateriales_id, materiales.codigo, sum(detalleanalisis.cantidad) ascantidad FROM detalleanalisis INNER JOIN materiales on detalleanalisis.materiales_id=materiales.id INNER JOIN partidas ON partidas.id =detalleanalisis.partidas_id AND partidas.presupuestos_id=1 GROUP by detalleanalisis.materiales_id"
+
+    }
 }
 ?>

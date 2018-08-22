@@ -63,7 +63,7 @@ class MetradosController extends AppController {
             //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
         }
     }
-    public function update_photo($partida_id, int $id)//validación 'int' con php7
+    public function update_photo($partida_id, $id)//validación 'int' con php7
     {
         $Detallemetrados = new Detallemetrados();
         $Partidas = new Partidas();
