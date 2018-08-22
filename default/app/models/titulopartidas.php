@@ -37,5 +37,8 @@ class Titulopartidas extends ActiveRecord {
     	return titulos_sub($presupuestos_id,NUll);
     	
     }
+    public function get_json_titulos($presupuestos_id){
+        return json_encode($this->get_array_titulos($presupuestos_id));
+    }
 }
 ?>
