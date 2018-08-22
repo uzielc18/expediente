@@ -190,7 +190,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						<div class="form-group">
 						    <div class="with-padding pull-right">
 						    	<br>
-						    	<?php if(!$crear)echo Html::linkAction('update_photo/'.$partida->id.'/'.$detallemetrados->id,'Editar imagen','class="btn"');?>
+						    	<?php if(!$crear && $codigo_tipo_de_partida==='AC')echo Html::linkAction('update_photo/'.$partida->id.'/'.$detallemetrados->id,'Editar imagen','class="btn"');?>
 						    	<?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
 						    </div>
 						</div>
@@ -288,6 +288,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 									<td align="right"><?php echo $metro->largo ? number_format($largo,4): '-'?></td>
 									<td align="right"><?php echo $metro->ancho ? number_format($ancho,4) : '-'?></td>
 									<td align="right"><?php echo $metro->altura ? number_format($altura,4) : '-'?></td>
+									<td  align="center"><?php echo $metro->factor ?></td>
 									<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
 									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?></td>
 								</tr>

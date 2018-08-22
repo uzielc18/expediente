@@ -17,7 +17,17 @@ class Partidas extends ActiveRecord {
 
 	}
 	public function get_correcto($id,$tabla='detallemetrados'){
-		return $this->find_by_sql("SELECT if(max(partidas.fecha_in)>max(".$tabla.".fecha_in) AND max(partidas.fecha_in)>max(".$tabla.".fecha_at),TRUE,FALSE) correcto,max(partidas.fecha_in) as fecha_partida,max(".$tabla.".fecha_in) as fecha_detalle_in,max(".$tabla.".fecha_at) as fecha_detalle_at FROM partidas INNER JOIN ".$tabla." ON ".$tabla.".partidas_id = partidas.id WHERE partidas.id=".$id)->correcto;
+		if($this->find_by_sql("select count(id) as c FROM ".$tabla." WHERE  ".$tabla.".partidas_id=".$id)->c>0){
+			$correcto = $this->find_by_sql("SELECT if(max(partidas.fecha_in)>max(".$tabla.".fecha_in) AND max(partidas.fecha_in)>max(".$tabla.".fecha_at),TRUE,FALSE) correcto,max(partidas.fecha_in) as fecha_partida,max(".$tabla.".fecha_in) as fecha_detalle_in,max(".$tabla.".fecha_at) as fecha_detalle_at FROM partidas INNER JOIN ".$tabla." ON ".$tabla.".partidas_id = partidas.id WHERE partidas.id=".$id)->correcto;
+			if(!$correcto){
+				$correcto = $this->find_by_sql("SELECT if(max(partidas.fecha_in)>max(".$tabla.".fecha_at),TRUE,FALSE) as correcto FROM partidas INNER JOIN ".$tabla." ON ".$tabla.".partidas_id = partidas.id WHERE partidas.id=".$id)->correcto;
+			}
+		}else{
+			$correcto = TRUE;
+		}
+		
+
+		return $correcto;
 	}
 }
 ?>

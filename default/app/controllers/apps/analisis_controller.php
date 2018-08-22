@@ -13,6 +13,7 @@ class AnalisisController extends AppController {
         $this->titulo_small='Todos los detalles';
         $this->analisis=$Detalleanalisis->find('conditions: partidas_id='.$partida_id);
 		$this->tipos=$Tipomateriales->find("conditions: tipomateriales_id is null");
+        $this->total_parcial_partida=$Detalleanalisis->sum('parcial','conditions: partidas_id='.$partida_id);
         //$this->expedientes_id=$exp_id;
 		if (Input::hasPost('detalleanalisis')) {
 
@@ -40,6 +41,7 @@ class AnalisisController extends AppController {
         $this->titulo_small='Todos los detalles';
         $this->analisis=$Detalleanalisis->find('conditions: partidas_id='.$partida_id);        
         $this->tipos=$Tipomateriales->find("conditions: tipomateriales_id is null");
+        $this->total_parcial_partida=$Detalleanalisis->sum('parcial','conditions: partidas_id='.$partida_id);
         //$this->expedientes_id=$exp_id;
         if (Input::hasPost('detalleanalisis')) {
 
