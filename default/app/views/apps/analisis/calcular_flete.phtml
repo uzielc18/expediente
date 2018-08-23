@@ -38,11 +38,11 @@ $pres_id = $partida->presupuestos_id;?>
 				</blockquote>
 				<?Php 
 				echo Form::open('calcular_flete/'.$partida->id.'/'.$pres_id);
-				echo Form::hidden('partida.id');
-				echo Form::hidden('partida.presupuestos_id');
-				echo Form::hidden('partida.titulopartidas_id');
-				echo Form::hidden('partida.tipopartidas_id');
-				echo Form::hidden('partida.medidas_id');
+				echo Form::hidden('calculoflete.id');
+				echo Form::hidden('calculoflete.presupuestos_id');
+				echo Form::hidden('calculoflete.titulopartidas_id');
+				echo Form::hidden('calculoflete.tipopartidas_id');
+				echo Form::hidden('calculoflete.medidas_id');
 				?>
 				<div class="box-body">
 					<?php print_r($array)?>
