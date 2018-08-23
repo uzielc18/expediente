@@ -37,7 +37,7 @@ $pres_id = $partida->presupuestos_id;?>
 				  	</dl>
 				</blockquote>
 				<?Php 
-				echo Form::open('apps/analisis/terminar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
+				echo Form::open('calcular_flete/'.$partida->id.'/'.$pres_id);
 				echo Form::hidden('partida.id');
 				echo Form::hidden('partida.presupuestos_id');
 				echo Form::hidden('partida.titulopartidas_id');
