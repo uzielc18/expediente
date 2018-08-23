@@ -1,0 +1,155 @@
+<?php
+echo Tag::js('jquery/jquery.tokeninput');
+Tag::css('token-input');?>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+    $("#detalleanalisis_materiales_id").tokenInput("<?php echo '/'.$module_name.'/materiales/resultados'?>",
+    {
+        tokenLimit: 1,minChars: 3,
+        <?php if(!empty($detalleanalisis->materiales_id)){?>
+        prePopulate: [
+                {id: <?php echo $detalleanalisis->materiales_id?>, name: "<?php echo $detalleanalisis->getMateriales()->getCodigoCompleto().' '.$detalleanalisis->getMateriales()->nombre?>"}
+            ]
+        <?php }?>
+    });
+});
+
+</script>
+<?php 
+$exp_id = $partida->getPresupuestos()->getExpedientes()->expedientes_id;
+$mod_id = $modulo->id;
+$bloc_id = $partida->getPresupuestos()->expedientes_id;
+$pres_id = $partida->presupuestos_id;?>
+<section class="content">
+	<div class="row">
+	<?php View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
+		<div class="col-md-12">
+			<div class="box box-solid">
+				<div class="box-header">
+				    <h2 class="box-title"><?php echo $titulo?></h2>
+				</div>
+				<blockquote>
+					<dl class="dl-horizontal">
+				      <dt>Presupuesto: </dt><dd><?php echo $partida->getPresupuestos()->nombre?></dd>
+				      <dt>Titulo: </dt><dd><?php echo $partida->getTitulopartidas()->titulo?></dd>
+				      <dt>Medida: </dt><dd><?php echo $partida->getMedidas()->nombre?> (<?php echo $partida->getMedidas()->abr?>)</dd>
+				  	</dl>
+				</blockquote>
+				<?Php 
+				echo Form::open('apps/analisis/terminar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
+				echo Form::hidden('partida.id');
+				echo Form::hidden('partida.presupuestos_id');
+				echo Form::hidden('partida.titulopartidas_id');
+				echo Form::hidden('partida.tipopartidas_id');
+				echo Form::hidden('partida.medidas_id');
+				?>
+				<div class="box-body">
+					<?php print_r($array)?>
+					<div class="col-sm-12">
+						<br>
+						
+						<div id="reporte-detalleanalisis">
+							<table class="table">
+								<caption>Detalle de flete</caption>
+								<thead>
+									<tr>
+										<th>DESCRIPCION DE INSUMOS</th>
+										<th>TOTAL KG</th>
+										<th>TOTAL EN TM</th>
+										<th>ORIGEN</th>
+										<th>DESTINO</th>
+										<th>FACTOR/TIPO/CARRETERA</th>
+										<th>DISTANCIA KM</th>
+										<th>S/ X TM</th>
+										<th title="FACTOR DE RETORNO AL VACIO">FRV</th>
+										<th>S/ TM x FRV</th>
+										<th>Rajuste K1</th>
+										<th>Sub TOTAL x TM</th>
+										<th>Costo de KM x TM</th>
+										<th>TOTAL</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>
+											<table class="table table-condensed">
+												<thead>
+													<tr><th>Nombre</th><th>U</th><th>Peso</th><th>Cant.</th><th>act</th></tr>
+												</thead>
+												<tbody id="body_array">
+													
+												</tbody>
+											</table>
+										</td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tbody>
+								<tfoot>
+									
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="box-footer with-border">
+					
+				</div>
+				<?php echo Form::close()?>
+				<script type="text/javascript">
+				$(document).ready(function(){
+					var array_datos=<?Php echo $array;?>;
+					function getdatos(a){
+						$("#body_array").html("");
+						a.forEach(function(element){
+							console.log(element);
+							var tr="<tr id='tr-"+element.id+"'><td>"+element.nombre+"</td><td>"+element.abr+"</td><td>"+element.peso+"</td><td>"+element.cantidad+"</td><td> <a href='javascript:;' class='eliminar_element' data-item='"+element.id+"'><i class='fa fa-trash' style='font-size:15px;'></a></td></tr>";
+						  $("#body_array").append(tr);
+						});
+					}
+
+					function eliminarPorId(id){
+					  array_datos.forEach(function(currentValue, index, arr){
+					  	console.log(array_datos[index].id,'===',id);
+					  if(array_datos[index].id===id){
+					      array_datos.splice(index, 1);
+					      console.log(array_datos);
+					      $("#tr-"+id).attr('style', 'display: none');
+					   }
+					  })
+					}
+
+					getdatos(array_datos);
+					$('.eliminar_element').click(function(event) {
+						var val = $(this).attr('data-item');
+						console.log(val);
+						eliminarPorId(val);
+					});
+
+					$('#partida_detalleanalisis').val($("#reporte-detalleanalisis").html());
+				});
+				function calcular() {
+				  var cantidad = $( "#detalleanalisis_cantidad" ).val();
+				  var precio = $( "#detalleanalisis_precio" ).val();
+				  return cantidad*precio;
+				}
+				$(".calcular").change(function() {
+				  $("#detalleanalisis_parcial" ).val(calcular());
+				});
+				</script>
+			</div>
+		</div>
+	</div>
+</section>

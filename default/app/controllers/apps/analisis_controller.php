@@ -80,10 +80,24 @@ class AnalisisController extends AppController {
         }
     }
 
-    public function calcular_flete($partida_id){
+    public function calcular_flete($partida_id, $detalleanalisis_id,$id=0){
         $Detalleanalisis = new Detalleanalisis();
         $Partidas = new Partidas();
-        "SELECT partidas.presupuestos_id, materiales.id, materiales.nombre, materiales.tipomateriales_id, materiales.codigo, sum(detalleanalisis.cantidad) ascantidad FROM detalleanalisis INNER JOIN materiales on detalleanalisis.materiales_id=materiales.id INNER JOIN partidas ON partidas.id =detalleanalisis.partidas_id AND partidas.presupuestos_id=1 GROUP by detalleanalisis.materiales_id"
+        $Modulos = new Modulos();
+        $Materiales = new Materiales();
+        $Calculoflete = new Calculoflete();
+        $this->modulo=$Modulos->find_first('conditions: codigo="ACU"');
+        $this->partida=$Partidas->find((int)$partida_id);
+        $this->titulo='Calcular el flete para <b>'.$this->partida->getPresupuestos()->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
+
+        //$Materiales->getMaterialesPresupuesto($this->partida->presupuestos_id);
+        $this->array=json_encode($Materiales->getMaterialesPresupuesto($this->partida->presupuestos_id));
+        if (!$obj->save(Input::post('calculoflete'))) {
+                Flash::error('Falló Operación');
+                //se hacen persistente los datos en el formulario
+                $this->detalleanalisis = $obj;
+                return;
+            }
 
     }
 }

@@ -156,7 +156,11 @@ $pres_id = $partida->presupuestos_id;?>
 												<td align="right">S/ <?php echo $item->precio ? number_format($precio,4) : '-'?></td>
 												<td align="right">S/ <?php echo number_format($item->parcial,4);?></td>
 												<td align="center">
-													<?php echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:15px;"></i>');?></td>
+													<?php 
+													echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:15px;"></i>');
+													if($partida->getTipopartidas()->codigo==='FL'){
+														echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id,' <i class="fa fa-road" style="font-size:15px;"></i>');
+													};?></td>
 											</tr>
 									<?php   } 
 										}?>
