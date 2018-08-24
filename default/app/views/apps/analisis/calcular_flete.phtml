@@ -39,34 +39,34 @@ $pres_id = $partida->presupuestos_id;?>
 				<?Php 
 				echo Form::open('calcular_flete/'.$partida->id.'/'.$pres_id);
 				echo Form::hidden('calculoflete.id');
-				echo Form::hidden('calculoflete.presupuestos_id');
-				echo Form::hidden('calculoflete.titulopartidas_id');
-				echo Form::hidden('calculoflete.tipopartidas_id');
-				echo Form::hidden('calculoflete.medidas_id');
+				echo Form::hidden('calculoflete.detalleanalisis_id');
+				echo Form::textArea('calculoflete.items');
+				echo Form::text('calculoflete.totalkg');
 				?>
+				<?php echo Form::submit('Calcular la suma ') ?>
+				<?php echo Form::close()?>
 				<div class="box-body">
 					<?php print_r($array)?>
 					<div class="col-sm-12">
-						<br>
-						
+						<br />						
 						<div id="reporte-detalleanalisis">
-							<table class="table">
+							<table class="table table-condensed" style="font-size: 12px;">
 								<caption>Detalle de flete</caption>
 								<thead>
 									<tr>
 										<th>DESCRIPCION DE INSUMOS</th>
-										<th>TOTAL KG</th>
-										<th>TOTAL EN TM</th>
+										<th>KG</th>
+										<th>TM</th>
 										<th>ORIGEN</th>
 										<th>DESTINO</th>
-										<th>FACTOR/TIPO/CARRETERA</th>
-										<th>DISTANCIA KM</th>
+										<th>F/TIPO/CARRETERA</th>
+										<th>KM</th>
 										<th>S/ X TM</th>
 										<th title="FACTOR DE RETORNO AL VACIO">FRV</th>
 										<th>S/ TM x FRV</th>
 										<th>Rajuste K1</th>
-										<th>Sub TOTAL x TM</th>
-										<th>Costo de KM x TM</th>
+										<th>S/. TM</th>
+										<th>KM x TM</th>
 										<th>TOTAL</th>
 									</tr>
 								</thead>
@@ -75,7 +75,7 @@ $pres_id = $partida->presupuestos_id;?>
 										<td>
 											<table class="table table-condensed">
 												<thead>
-													<tr><th>Nombre</th><th>U</th><th>Peso</th><th>Cant.</th><th>act</th></tr>
+													<tr><th>Nombre</th><th>U</th><th>Peso</th><th>Cant.</th><th>T</th><th>act</th></tr>
 												</thead>
 												<tbody id="body_array">
 													
@@ -107,28 +107,35 @@ $pres_id = $partida->presupuestos_id;?>
 				<div class="box-footer with-border">
 					
 				</div>
-				<?php echo Form::close()?>
 				<script type="text/javascript">
 				$(document).ready(function(){
 					var array_datos=<?Php echo $array;?>;
+					var total_kg=0;
 					function getdatos(a){
 						$("#body_array").html("");
 						a.forEach(function(element){
 							console.log(element);
-							var tr="<tr id='tr-"+element.id+"'><td>"+element.nombre+"</td><td>"+element.abr+"</td><td>"+element.peso+"</td><td>"+element.cantidad+"</td><td> <a href='javascript:;' class='eliminar_element' data-item='"+element.id+"'><i class='fa fa-trash' style='font-size:15px;'></a></td></tr>";
+							var tr="<tr id='tr-"+element.id+"'><td>"+element.nombre+"</td><td>"+element.abr+"</td><td>"+element.peso+"</td><td>"+element.cantidad+"</td><td>"+Number(element.t).toFixed(2)+"</td><td><a href='javascript:;' class='eliminar_element' data-item='"+element.id+"'><i class='fa fa-trash' style='font-size:15px;'></a></td></tr>";
+
+							total_kg = total_kg + Number(element.t);
 						  $("#body_array").append(tr);
 						});
+						$('#calculoflete_totalkg').val(total_kg);
+						$('#calculoflete_items').val(JSON.stringify(array_datos));
 					}
 
 					function eliminarPorId(id){
 					  array_datos.forEach(function(currentValue, index, arr){
 					  	console.log(array_datos[index].id,'===',id);
-					  if(array_datos[index].id===id){
-					      array_datos.splice(index, 1);
-					      console.log(array_datos);
-					      $("#tr-"+id).attr('style', 'display: none');
-					   }
-					  })
+						if(array_datos[index].id===id){
+							total_kg = total_kg - array_datos[index].t;
+						    array_datos.splice(index, 1);
+						    //console.log(array_datos);
+						    $('#calculoflete_totalkg').val(total_kg);
+						    $('#calculoflete_items').val(JSON.stringify(array_datos));
+						    $("#tr-"+id).attr('style', 'display: none');
+						}
+					  });
 					}
 
 					getdatos(array_datos);

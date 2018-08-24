@@ -92,12 +92,17 @@ class AnalisisController extends AppController {
 
         //$Materiales->getMaterialesPresupuesto($this->partida->presupuestos_id);
         $this->array=json_encode($Materiales->getMaterialesPresupuesto($this->partida->presupuestos_id));
-        if (!$obj->save(Input::post('calculoflete'))) {
+        if (Input::hasPost('calculoflete')) {
+            $obj = new Calculoflete();            
+            $datos = Input::post('calculoflete');
+            $datos['totaltn'] = ($datos['totalkg']/1000);
+        if (!$obj->save($datos)) {
                 Flash::error('Falló Operación');
                 //se hacen persistente los datos en el formulario
                 $this->detalleanalisis = $obj;
                 return;
             }
+        }
 
     }
 }

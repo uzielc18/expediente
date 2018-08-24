@@ -18,7 +18,7 @@ class Materiales extends ActiveRecord {
      }
 
      public function getMaterialesPresupuesto($presupuestos_id){
-        return $this->find_all_by_sql("SELECT materiales.id, materiales.nombre, medidas.abr, materiales.codigo, sum(detalleanalisis.cantidad) as cantidad, materiales.peso FROM detalleanalisis INNER JOIN materiales on detalleanalisis.materiales_id=materiales.id INNER JOIN medidas ON medidas.id=materiales.medidas_id INNER JOIN partidas ON partidas.id =detalleanalisis.partidas_id AND partidas.presupuestos_id=".$presupuestos_id." GROUP by detalleanalisis.materiales_id");
+        return $this->find_all_by_sql("SELECT materiales.id, materiales.nombre, medidas.abr, materiales.codigo, sum(detalleanalisis.cantidad) as cantidad, materiales.peso, (sum(cantidad)*materiales.peso) as t FROM detalleanalisis INNER JOIN materiales on detalleanalisis.materiales_id=materiales.id INNER JOIN medidas ON medidas.id=materiales.medidas_id INNER JOIN partidas ON partidas.id =detalleanalisis.partidas_id AND partidas.presupuestos_id=".$presupuestos_id." GROUP by detalleanalisis.materiales_id");
      }
 }
 ?>
