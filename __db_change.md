@@ -6,3 +6,7 @@ ADD COLUMN `detalleanalisis` TEXT NULL DEFAULT NULL AFTER `detallestecnicos`;
 
 ALTER TABLE `expedientes`.`calculoflete` 
 CHANGE COLUMN `items` `items` TEXT NULL DEFAULT NULL ;
+-- cambio en casa ok en upeu ok falta en la nube---
+
+agregar autoincrementable en calculoflete id
+--- cabio upeu ok falta casa y nube-----
