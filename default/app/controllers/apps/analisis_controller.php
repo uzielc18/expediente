@@ -86,6 +86,9 @@ class AnalisisController extends AppController {
         $Modulos = new Modulos();
         $Materiales = new Materiales();
         $Calculoflete = new Calculoflete();
+        $this->id=$id;
+        if($id!=0)$this->calculoflete=$Calculoflete->find((int) $id);
+        $this->detalleanalisis_id=$detalleanalisis_id;
         $this->modulo=$Modulos->find_first('conditions: codigo="ACU"');
         $this->partida=$Partidas->find((int)$partida_id);
         $this->titulo='Calcular el flete para <b>'.$this->partida->getPresupuestos()->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
@@ -96,11 +99,13 @@ class AnalisisController extends AppController {
             $obj = new Calculoflete();            
             $datos = Input::post('calculoflete');
             $datos['totaltn'] = ($datos['totalkg']/1000);
-        if (!$obj->save($datos)) {
-                Flash::error('Falló Operación');
-                //se hacen persistente los datos en el formulario
-                $this->detalleanalisis = $obj;
-                return;
+            if(!$obj->save($datos)) {
+                    Flash::error('Falló Operación');
+                    //se hacen persistente los datos en el formulario
+                    $this->calculoflete = $obj;
+                    return;
+                }else{
+                return Redirect::to('apps/analisis/calcular_flete/'.$partida_id.'/'.$detalleanalisis_id.'/'.$obj->id);   
             }
         }
 

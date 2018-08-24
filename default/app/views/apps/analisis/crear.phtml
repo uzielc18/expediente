@@ -160,7 +160,7 @@ $pres_id = $partida->presupuestos_id;?>
 													echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:15px;"></i>');
 													if($partida->getTipopartidas()->codigo==='FL'){
 														echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id,' <i class="fa fa-road" style="font-size:15px;"></i>');
-													};?></td>
+													};?><?php echo $item->get_calculoflete();?></td>
 											</tr>
 									<?php   } 
 										}?>

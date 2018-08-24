@@ -37,9 +37,9 @@ $pres_id = $partida->presupuestos_id;?>
 				  	</dl>
 				</blockquote>
 				<?Php 
-				echo Form::open('calcular_flete/'.$partida->id.'/'.$pres_id);
+				echo Form::open();
 				echo Form::hidden('calculoflete.id');
-				echo Form::hidden('calculoflete.detalleanalisis_id');
+				echo Form::hidden('calculoflete.detalleanalisis_id',NULL,$detalleanalisis_id);
 				echo Form::textArea('calculoflete.items');
 				echo Form::text('calculoflete.totalkg');
 				?>
@@ -107,9 +107,10 @@ $pres_id = $partida->presupuestos_id;?>
 				<div class="box-footer with-border">
 					
 				</div>
+
 				<script type="text/javascript">
 				$(document).ready(function(){
-					var array_datos=<?Php echo $array;?>;
+					var array_datos=<?Php echo $id==0 ? $array : $calculoflete->items;?>;
 					var total_kg=0;
 					function getdatos(a){
 						$("#body_array").html("");
