@@ -159,8 +159,8 @@ $pres_id = $partida->presupuestos_id;?>
 													<?php 
 													echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:15px;"></i>');
 													if($partida->getTipopartidas()->codigo==='FL'){
-														echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id,' <i class="fa fa-road" style="font-size:15px;"></i>');
-													};?><?php echo $item->get_calculoflete();?></td>
+														echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id.'/'.$item->get_calculoflete(),' <i class="fa fa-road" style="font-size:15px;"></i>');
+													};?></td>
 											</tr>
 									<?php   } 
 										}?>

@@ -110,5 +110,13 @@ class AnalisisController extends AppController {
         }
 
     }
+    public function eliminar_calculo_flete($partida_id, $detalleanalisis_id,$id){
+        $obj = new Calculoflete();
+        if (!$obj->delete($id)) {
+            Flash::error('Falló Operación');
+        }
+        //enrutando al index para listar los articulos
+        Redirect::toAction('calcular_flete/'.$partida_id.'/'.$detalleanalisis_id);
+    }
 }
 ?>

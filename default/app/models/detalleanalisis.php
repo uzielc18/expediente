@@ -7,7 +7,9 @@ class Detalleanalisis extends ActiveRecord {
 		$this->belongs_to('aclusuarios','medidas','materiales');
     }
 	public function get_calculoflete(){
-		return $this->find_by_sql('select id from calculoflete WHERE detalleanalisis_id='.$this->id.' limit 0,1')->id;
+		//echo "'select id from calculoflete WHERE detalleanalisis_id='.$this->id.' limit 0,1'";
+		$r = $this->find_by_sql('select calculoflete.id as id_unico from calculoflete WHERE detalleanalisis_id='.$this->id.' limit 0,1');
+		return $r->id_unico;
 	}
 }
 ?>

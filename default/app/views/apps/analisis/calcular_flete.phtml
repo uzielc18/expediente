@@ -1,21 +1,3 @@
-<?php
-echo Tag::js('jquery/jquery.tokeninput');
-Tag::css('token-input');?>
-<script type="text/javascript">
-$(document).ready(function() 
-{
-    $("#detalleanalisis_materiales_id").tokenInput("<?php echo '/'.$module_name.'/materiales/resultados'?>",
-    {
-        tokenLimit: 1,minChars: 3,
-        <?php if(!empty($detalleanalisis->materiales_id)){?>
-        prePopulate: [
-                {id: <?php echo $detalleanalisis->materiales_id?>, name: "<?php echo $detalleanalisis->getMateriales()->getCodigoCompleto().' '.$detalleanalisis->getMateriales()->nombre?>"}
-            ]
-        <?php }?>
-    });
-});
-
-</script>
 <?php 
 $exp_id = $partida->getPresupuestos()->getExpedientes()->expedientes_id;
 $mod_id = $modulo->id;
@@ -36,25 +18,106 @@ $pres_id = $partida->presupuestos_id;?>
 				      <dt>Medida: </dt><dd><?php echo $partida->getMedidas()->nombre?> (<?php echo $partida->getMedidas()->abr?>)</dd>
 				  	</dl>
 				</blockquote>
+				
+				<div class="box-body">
 				<?Php 
-				echo Form::open();
+				echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');
 				echo Form::hidden('calculoflete.id');
 				echo Form::hidden('calculoflete.detalleanalisis_id',NULL,$detalleanalisis_id);
-				echo Form::textArea('calculoflete.items');
-				echo Form::text('calculoflete.totalkg');
+				echo Form::hidden('calculoflete.items');
+				echo Form::hidden('calculoflete.totalkg');
 				?>
-				<?php echo Form::submit('Calcular la suma ') ?>
+				<div class="row padding">
+					<div class="col-md-6">
+						<div class="form-group">
+					    <?php echo Form::label('Origen','calculoflete.origen','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('calculoflete.origen','class="form-control" placeholder="Origen"')?>
+					        </div>
+					    </div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+					    <?php echo Form::label('Destino','calculoflete.destino','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('calculoflete.destino','class="form-control" placeholder="Destino"')?>
+					        </div>
+					    </div>						
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+					    <?php echo Form::label('Factor Carretera','calculoflete.factor_tipo_carretera','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('calculoflete.factor_tipo_carretera','class="form-control" placeholder="Factor Carretera"')?>
+					        </div>
+					    </div>						
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+					    <?php echo Form::label('Distancia virtual','calculoflete.distancia_virtual','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('calculoflete.distancia_virtual','class="form-control" placeholder="Distancia virtual"')?>
+					        </div>
+					    </div>
+						
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+					    <?php echo Form::label('Precio x TM','calculoflete.preciotn','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('calculoflete.preciotn','class="form-control" placeholder="Precio x TM"')?>
+					        </div>
+					    </div>
+						
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+					    <?php echo Form::label('Factor retorno','calculoflete.factor_retorno','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('calculoflete.factor_retorno','class="form-control" placeholder="Factor retorno"')?>
+					        </div>
+					    </div>
+						
+					</div>
+					<div class="col-md-6">
+						<div class="form-group">
+					    <?php echo Form::label('Reajuste K1','calculoflete.reajustek1','class="col-sm-3 control-label"');?>
+					        <div class="col-sm-9">
+					            <?php echo Form::text('calculoflete.reajustek1','class="form-control" placeholder="Reajuste K1"')?>
+					        </div>
+					    </div>
+						
+					</div>
+					
+				</div>
+				<div class="col-md-12">
+					<div class="pull-right">
+					<?php echo Form::submit('Calcular la suma','class="btn btn-info"').' ';
+					echo Html::linkAction('eliminar_calculo_flete/'.$partida->id.'/'.$detalleanalisis_id.'/'.$id,'Recargar Matariales','class="btn btn-success"');?>
+					</div>
+				</div>
 				<?php echo Form::close()?>
-				<div class="box-body">
-					<?php print_r($array)?>
-					<div class="col-sm-12">
-						<br />						
+					<div class="col-sm-12">					
 						<div id="reporte-detalleanalisis">
 							<table class="table table-condensed" style="font-size: 12px;">
 								<caption>Detalle de flete</caption>
 								<thead>
 									<tr>
-										<th>DESCRIPCION DE INSUMOS</th>
+										<th colspan="13">DESCRIPCION DE INSUMOS</th>
+									</tr>
+									<tr>
+										<td colspan="13">
+											<table class="table table-condensed">
+												<thead>
+													<tr><th>Nombre</th><th>U</th><th>Peso</th><th>Cant.</th><th>T</th><th>act</th></tr>
+												</thead>
+												<tbody id="body_array">
+													
+												</tbody>
+											</table>
+										</td>
+									</tr>
+									<tr>
 										<th>KG</th>
 										<th>TM</th>
 										<th>ORIGEN</th>
@@ -71,31 +134,37 @@ $pres_id = $partida->presupuestos_id;?>
 									</tr>
 								</thead>
 								<tbody>
+									
+									<?php 
+									$totalkg = !$calculoflete->totalkg ? 0 : $calculoflete->totalkg;
+									$totaltn = !$calculoflete->totaltn ? 0 : $calculoflete->totaltn;
+									$factor_tipo_carretera = !$calculoflete->factor_tipo_carretera ? 0 : $calculoflete->factor_tipo_carretera;
+									$distancia_virtual = !$calculoflete->distancia_virtual ? 0 : $calculoflete->distancia_virtual;
+									$preciotn = !$calculoflete->preciotn? 0 : $calculoflete->preciotn;
+									$factor_retorno = !$calculoflete->factor_retorno ? 0 : $calculoflete->factor_retorno;
+									$reajustek1 = !$calculoflete->reajustek1 ? 0 : $calculoflete->reajustek1;
+									$xTM = $preciotn*$factor_retorno;
+									$costokg = !$calculoflete->costokg ? 0 : $calculoflete->costokg;
+									$costotn = !$calculoflete->costotn ? 0 : $calculoflete->costotn;
+									$total = !$calculoflete->total ? 0 : $calculoflete->total;
+									?>
+									<?php if($id!=0){?>
 									<tr>
-										<td>
-											<table class="table table-condensed">
-												<thead>
-													<tr><th>Nombre</th><th>U</th><th>Peso</th><th>Cant.</th><th>T</th><th>act</th></tr>
-												</thead>
-												<tbody id="body_array">
-													
-												</tbody>
-											</table>
-										</td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
+										<td align="left"><?php echo number_format($totalkg,4);?></td>
+										<td align="left"><?php echo number_format($totaltn,4);?></td>
+										<td align="left"><?php echo $calculoflete->origen?></td>
+										<td align="left"><?php echo $calculoflete->destino?></td>
+										<td align="left"><?php echo number_format($factor_tipo_carretera,4);?></td>
+										<td align="left"><?php echo number_format($distancia_virtual,4);?></td>
+										<td align="left"><?php echo number_format($preciotn,4);?></td>
+										<td align="left"><?php echo number_format($factor_retorno,4);?></td>
+										<td align="left"><?php echo number_format($reajustek1,4);?></td>
+										<td align="left"><?php echo number_format($xTM,4);?></td>
+										<td align="left"><?php echo number_format($totalkg,4);?></td>
+										<td align="left"><?php echo number_format($costotn,4);?></td>
+										<td align="left"><?php echo number_format($total,4);?></td>
 									</tr>
+								<?php }?>
 								</tbody>
 								<tfoot>
 									
@@ -113,14 +182,16 @@ $pres_id = $partida->presupuestos_id;?>
 					var array_datos=<?Php echo $id==0 ? $array : $calculoflete->items;?>;
 					var total_kg=0;
 					function getdatos(a){
+						var tt=0;
 						$("#body_array").html("");
 						a.forEach(function(element){
 							console.log(element);
 							var tr="<tr id='tr-"+element.id+"'><td>"+element.nombre+"</td><td>"+element.abr+"</td><td>"+element.peso+"</td><td>"+element.cantidad+"</td><td>"+Number(element.t).toFixed(2)+"</td><td><a href='javascript:;' class='eliminar_element' data-item='"+element.id+"'><i class='fa fa-trash' style='font-size:15px;'></a></td></tr>";
 
-							total_kg = total_kg + Number(element.t);
+							tt = tt + Number(element.t);
 						  $("#body_array").append(tr);
 						});
+						total_kg=tt;
 						$('#calculoflete_totalkg').val(total_kg);
 						$('#calculoflete_items').val(JSON.stringify(array_datos));
 					}
@@ -145,6 +216,7 @@ $pres_id = $partida->presupuestos_id;?>
 						console.log(val);
 						eliminarPorId(val);
 					});
+					
 
 					$('#partida_detalleanalisis').val($("#reporte-detalleanalisis").html());
 				});
