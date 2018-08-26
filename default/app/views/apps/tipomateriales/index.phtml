@@ -15,8 +15,16 @@
                 <?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
                 <?php echo Form::hidden('tipomateriales.id');?>
                 <?php echo Form::hidden('tipomateriales.aclempresas_id',NULL,Auth::get('aclempresas_id'));?>
-                <?php echo Form::hidden('tipomateriales.tipomateriales_id',NULL,$tipo->id);?>
+                <?php //echo Form::hidden('tipomateriales.tipomateriales_id',NULL,$tipo->id);?>
                 <?php echo Form::hidden('tipomateriales.estado',NULL,1);?>
+                
+                <div class="form-group">
+			    	<?php echo Form::label('Tipo Materiales','tipomateriales.nombre','class="col-sm-2 control-label"');?>
+			        <div class="col-sm-9">
+			        	<?php echo Form::dbSelect('tipomateriales.tipomateriales_id','nombre',array('tipomateriales','find','conditions: estado=1 AND tipomateriales_id is null'),'seleccione','class="form-control calcular"',$tipo->id)?>
+			        </div>
+			    </div>
+
                 <div class="form-group">
 			    	<?php echo Form::label('Nombre','tipomateriales.nombre','class="col-sm-2 control-label"');?>
 			        <div class="col-sm-9">
