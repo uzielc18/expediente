@@ -24,7 +24,8 @@ class AnalisisController extends AppController {
                 $this->detalleanalisis = $obj;
                 return;
             }
-            
+            $PP = new Partidas();
+            $PP->save(Input::post('partida'));
             return Redirect::toAction('crear/'.$partida_id);   
             //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
         }
@@ -52,7 +53,8 @@ class AnalisisController extends AppController {
                 $this->detalleanalisis = $obj;
                 return;
             }
-            
+            $PP = new Partidas();
+            $PP->save(Input::post('partida'));
             return Redirect::toAction('crear/'.$partida_id);   
             //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
         }
@@ -68,7 +70,6 @@ class AnalisisController extends AppController {
             $obj = new Partidas();
             $datos = Input::post('partida');
             $datos['detalleanalisis']=base64_encode($datos['detalleanalisis']);
-            print_r($datos);
             if (!$obj->save($datos)) {
                 Flash::error('Falló Operación');
                 //se hacen persistente los datos en el formulario

@@ -43,6 +43,12 @@ $pres_id = $partida->presupuestos_id;?>
 						<?php echo Form::hidden('detalleanalisis.estado',NULL,1);?>
 						<?php echo Form::hidden('detalleanalisis.parcial');?>
 						<?php echo Form::hidden('detalleanalisis.modulos_id',NULL,$modulo->id);?>
+						<?php 
+						echo Form::hidden('partida.id');
+						echo Form::hidden('partida.presupuestos_id');
+						echo Form::hidden('partida.titulopartidas_id');
+						echo Form::hidden('partida.tipopartidas_id');
+						echo Form::hidden('partida.medidas_id');?>
 					<div class="row">
 
 						<div class="col-sm-6">
@@ -65,7 +71,7 @@ $pres_id = $partida->presupuestos_id;?>
 						    <div class="form-group">
 						    <?php echo Form::label('Cuadrilla','detalleanalisis.cuadrilla','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
-						            <?php echo Form::input('number','detalleanalisis.cuadrilla','class="form-control calcular" placeholder="Cuadrilla"')?>
+						            <?php echo Form::input('decimal','detalleanalisis.cuadrilla','class="form-control calcular" placeholder="Cuadrilla"')?>
 						        </div>
 						    </div>
 						</div>
@@ -73,15 +79,23 @@ $pres_id = $partida->presupuestos_id;?>
 						    <div class="form-group">
 						    <?php echo Form::label('Cantidad','detalleanalisis.cantidad','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
-						            <?php echo Form::input('number','detalleanalisis.cantidad','class="form-control calcular" placeholder="Cantidad"')?>
+						            <?php echo Form::input('decimal','detalleanalisis.cantidad','class="form-control" placeholder="Cantidad"')?>
 						        </div>
 						    </div>
 						</div>
 						<div class="col-sm-6">
 						    <div class="form-group">
-						    <?php echo Form::label('Precio','detalleanalisis.precio','class="col-sm-3 control-label"');?>
+						    <?php echo Form::label('Precio','detalleanalisis.precio','class="col-sm-3 control-label calcular"');?>
 						        <div class="col-sm-9">
 						            <?php echo Form::input('number','detalleanalisis.precio','class="form-control calcular" placeholder="Precio"')?>
+						        </div>
+						    </div>
+						</div>
+						<div class="col-sm-6">
+						    <div class="form-group">
+						    <?php echo Form::label('Rendimiento','partida.rendimiento','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::input('number','partida.rendimiento','class="form-control calcular" placeholder="Rendimiento"')?>
 						        </div>
 						    </div>
 						</div>
@@ -108,7 +122,7 @@ $pres_id = $partida->presupuestos_id;?>
 								Rendimiento <b><?php echo $partida->getMedidas()->abr?>/DIA</b>
 							</div>
 							<div class="col-sm-2">
-								<?php echo Form::text('partida.rendimiento','class="form-control"')?>
+								<?php echo $partida->rendimiento;?>
 							</div>
 							<div class="col-sm-3">
 								Costo unitario directo por: <?php echo $partida->getMedidas()->abr?>
@@ -151,8 +165,8 @@ $pres_id = $partida->presupuestos_id;?>
 												<td><?php echo $item->getMateriales()->getCodigoCompleto();?></td>
 												<td><?php echo $item->getMateriales()->nombre;?></td>
 												<td><?Php echo $item->getMedidas()->nombre?></td>
-												<td align="right"><?php echo $item->cuadrilla ;?></td>
-												<td align="right"><?php echo $item->cantidad ? number_format($cantidad,4) : '-'?></td>
+												<td align="right"><?php echo number_format($item->cuadrilla,3);?></td>
+												<td align="right"><?php echo number_format($cantidad,4);?></td>
 												<td align="right">S/ <?php echo $item->precio ? number_format($precio,4) : '-'?></td>
 												<td align="right">S/ <?php echo number_format($item->parcial,4);?></td>
 												<td align="center">
@@ -194,13 +208,28 @@ $pres_id = $partida->presupuestos_id;?>
 			$(document).ready(function(){
 				    $('#partida_detalleanalisis').val($("#reporte-detalleanalisis").html());
 				});
+			<?php //if($tipo->simbologia=='EQ' or $tipo->simbologia=="MO"){?>
+				function calCantidad(){
+					var cuadrilla = $( "#detalleanalisis_cuadrilla").val();
+					var rendimiento = $( "#partida_rendimiento").val();
+					//if(!cuadrilla) cuadrilla = 0;
+					//if(!rendimiento) rendimiento = 0;
+					console.log(cuadrilla,rendimiento);
+					return (cuadrilla*8)/rendimiento;
+				}
+			<?php //}?>		
 			function calcular() {
 			  var cantidad = $( "#detalleanalisis_cantidad" ).val();
 			  var precio = $( "#detalleanalisis_precio" ).val();
 			  return cantidad*precio;
 			}
 			$(".calcular").change(function() {
+
+			  $("#detalleanalisis_cantidad").val(calCantidad());
 			  $("#detalleanalisis_parcial" ).val(calcular());
+			  <?php //if($tipo->simbologia=='EQ' or $tipo->simbologia=="MO"){?>
+				
+			  <?php //}?>
 			});
 			</script>
 			</div>
