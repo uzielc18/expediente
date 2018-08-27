@@ -6,8 +6,8 @@ class UsuariosController extends AdminController {
     
     protected function before_filter() {
         if ( Input::isAjax() ){
-			View::response('view');
-            //View::select(NULL, NULL);
+			//View::response('view');
+            //View::select('view', NULL);
         }
     }
 
@@ -29,16 +29,17 @@ class UsuariosController extends AdminController {
 			$this->datos = $dat->find_first('conditions: id='.Auth::get('acldatos_id'));
             if (Input::hasPost('usuario1')) {
                 if ($usr->update(Input::post('usuario1'))) {
-                    Flash::valid('Datos Actualizados Correctamente');
+                    //Flash::valid('Datos Actualizados Correctamente');
                     $this->usuario1 = $usr;
                 }
 				if (Input::hasPost('datos')) {
 					$dat->fnacimiento=Input::post('anio').'-'.Input::post('mes').'-'.Input::post('dia');
 					$dat->nombre=$usr->nombres;
-                if ($dat->update(Input::post('datos'))) {
-                    Flash::valid('Datos Actualizados Correctamente');
-                    $this->datos = $dat;
-                }
+                    if ($dat->update(Input::post('datos'))) {
+                        Flash::valid('Datos Actualizados Correctamente');
+                        return Redirect::toAction('perfil');
+                        $this->datos = $dat;
+                    }
 				}
             } else if (Input::hasPost('usuario2')) {
                 if ($usr->cambiar_clave(Input::post('usuario2'))) {

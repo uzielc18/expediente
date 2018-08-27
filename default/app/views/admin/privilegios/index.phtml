@@ -1,12 +1,13 @@
 <?php echo Form::open('admin/privilegios/asignar_privilegios/' . $results->current) ?>
-<div class="box-header">
+<div class="box-header with-border">
     <h1 class="box-title">Privilegios de los Usuarios</h1>
+    <div class="box-tools"><?php echo Form::submit('Guardar Cambios', 'class="btn btn-primary"') ?></div>
 </div>
-<div class="box-body">
-    <div class="form-actions"><?php echo Form::submit('Guardar Cambios', 'class="btn btn-primary"') ?></div>
+
     <div id="mensajes_flash" >        
         <?php View::content() ?>
     </div>
+<div class="box-body">
     <?php $ids_privilegios = array(); //variable para saber los privilegios de la pagina actual ?>
     <?php if ($results->items) : ?>
         <table id="tabla_privilegios" class="table table-bordered table-striped">
@@ -47,7 +48,7 @@
             <?php endforeach ?>
             </tbody>
         </table>
-        <?php View::partial('paginators/bootstrap', false, array('page' => $results, 'url' => Router::get('controller_path') . '/index')); ?>
+        
 
     <?php else : // Si no hay items?>
         <h2>No hay ningún registro</h2>
@@ -76,5 +77,5 @@
     </style> 
 </div>
 <div class="box-footer">
-    
+    <?php View::partial('paginators/bootstrap', false, array('page' => $results, 'url' => Router::get('controller_path') . '/index')); ?>
 </div>

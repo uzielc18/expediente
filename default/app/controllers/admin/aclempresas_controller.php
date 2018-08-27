@@ -26,8 +26,8 @@ class AclempresasController extends AdminController {
 				$em->activo='0';
 				if ($em->save()) {
                     Flash::valid('Empresa fué agregada Exitosamente...!!!');
-                    Acciones::add("Agregó Empresa {$em->nombre} al sistema");
-                    return Redirect::redirect();
+                    //Acciones::add("Agregó Empresa {$em->nombre} al sistema");
+                    return Redirect::to();
                 } else {
                     Flash::warning('No se Pudieron Guardar los Datos...!!!');
                 }
@@ -50,7 +50,7 @@ class AclempresasController extends AdminController {
                 if ($em->update(Input::post('aclempresas'))) {
                     Flash::valid('La Empresa fué actualizada Exitosamente...!!!');
                     Acciones::add("Editó la Empresa {$em->nombre}", 'aclempresas');
-                    return Redirect::redirect();
+                    return Redirect::to();
                 } else {
                     Flash::warning('No se Pudieron Guardar los Datos...!!!');
                     unset($this->em); //para que cargue el $_POST en el form
@@ -77,7 +77,7 @@ class AclempresasController extends AdminController {
         } catch (KumbiaException $e) {
             View::excepcion($e);
         }
-        Redirect::redirect();
+        Redirect::to();
     }
 	public function desactivar($id) {
         try {
@@ -96,8 +96,27 @@ class AclempresasController extends AdminController {
         } catch (KumbiaException $e) {
             View::excepcion($e);
         }
-        return Redirect::redirect();
+        return Redirect::to();
     }
+    public function borrar($id){
+        try {
+            $id = Filter::get($id, 'digits');
+            $doc = new Aclempresas();
+            if (!$doc->find_first($id)){ //si no existe el usuario
+                Flash::warning("No existe ningun registro con id '{$id}'");
+            }else if ($doc->borrar()) {
+                Flash::valid("El <b>{$doc->id}</b> el registro esta borrado ahora <b>Borrado</b>...!!!");
+                Acciones::add("Colocó el registro {$doc->id} como borrado", $this->model);
+            } else {
+                Flash::warning('No se pudo borrar el registro!!!');
+            }
+        } catch (KumbiaException $e) {
+            View::excepcion($e);
+        }
+        return Redirect::toAction('index');
+    }
+
+
     public function eliminar($id) {
         try {
             $id = Filter::get($id, 'digits');
@@ -115,7 +134,7 @@ class AclempresasController extends AdminController {
         } catch (KumbiaException $e) {
             View::excepcion($e);
         }
-        return Redirect::redirect();
+        return Redirect::to();
     }
 
 }

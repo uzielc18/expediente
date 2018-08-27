@@ -7,14 +7,15 @@ $(document).ready(function(){
         });
 });
 </script>
-<div class="box-header">
-    <h1 class="box-title">Menus del Sistema</h1>    
+<div class="box-header with-border">
+    <h1 class="box-title">Menus del Sistema</h1>
+    <div class="box-tools">
+        <?php echo Html::linkAction("crear", '<i class="fa fa-plus"></i>','class="btn btn-primary" title="Crear Menu"') ?>
+        <?php echo Form::select('visible',array("1"=>"Solo en La Aplicación, fuera del Backend","2"=>"Solo en El Backend","3"=>"En cualquier parte del sistema"),"class='btn btn-primary'")?>
+        
+    </div> 
 </div>
   <?php View::content() ?>
-<div class="form-actions">
-    <?php echo Html::linkAction("crear", 'Crear Menu', 'class="btn btn-primary"') ?>
-    <?php echo Form::select('visible',array("1"=>"Solo en La Aplicación, fuera del Backend","2"=>"Solo en El Backend","3"=>"En cualquier parte del sistema"),"class='btn'")?>
-</div>
 <div class="box-body">
     <table class="table table-bordered table-striped">
         <thead>

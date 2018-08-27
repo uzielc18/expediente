@@ -1,43 +1,43 @@
-<div class="box-header">
-    <h1>Crear Empresa</h1>
+<div class="box-header with-border">
+    <h1 class="box-title">Crear Empresa</h1>
 </div>
 <div class="box-body">    
     <?php View::content() ?>
     <?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal "') ?>
     <?php echo Form::hidden('aclempresas.id') ?>
-    <div class="form-group">
-        <label class="form-label col-sm-2">Nombre de la Empresa* : </label>
-        <div class="col-sm-8"><?php echo Form::text('aclempresas.nombre','class="form-control"') ?></div>            
+    <div class="form-group required">
+        <label class="form-label col-sm-2">Nombre de la Empresa: </label>
+        <div class="col-sm-8"><?php echo Form::text('aclempresas.nombre','class="form-control" required') ?></div>            
     </div>
     <div class="form-group">
-        <label class="form-label col-sm-2">Razon Social* : </label>
-        <div class="col-sm-8"><?php echo Form::text('aclempresas.razonsocial','class="form-control"') ?></div>
+        <label class="form-label col-sm-2">Razon Social: </label>
+        <div class="col-sm-8"><?php echo Form::text('aclempresas.razonsocial','class="form-control" required') ?>
             
-        
+        </div>
     </div>
     <div class="form-group">
-        <label class="form-label col-sm-2">Direccion* : </label>
-        <div class="col-sm-8"><?php echo Form::text('aclempresas.direccion','class="form-control"') ?></div>      
+        <label class="form-label col-sm-2">Direccion: </label>
+        <div class="col-sm-8"><?php echo Form::text('aclempresas.direccion','class="form-control" required') ?></div>      
     </div>
     <div class="form-group">
-        <label class="form-label col-sm-2">Ruc* : </label>
-        <div class="col-sm-8"><?php echo Form::text('aclempresas.ruc','class="form-control"') ?></div>
+        <label class="form-label col-sm-2">Ruc: </label>
+        <div class="col-sm-8"><?php echo Form::text('aclempresas.ruc','class="form-control" required') ?></div>
     </div>
     <div class="form-group">
-        <label class="form-label col-sm-2">Movimiento de la Empresa* :</label>
-        <div class="col-sm-8"><?php echo Form::text('aclempresas.detalle','class="form-control"') ?></div>
+        <label class="form-label col-sm-2">Movimiento de la Empresa:</label>
+        <div class="col-sm-8"><?php echo Form::text('aclempresas.detalle','class="form-control" required') ?></div>
     </div>
     <div class="form-group">
-        <label class="form-label col-sm-2">Telefono Fijo* : </label>
+        <label class="form-label col-sm-2">Telefono Fijo: </label>
         <div class="col-sm-8"><?php echo Form::text('aclempresas.telefonos','class="form-control"') ?></div>
     </div>
     <div class="form-group">
-        <label class="form-label col-sm-2">Fax* : </label>
+        <label class="form-label col-sm-2">Fax: </label>
         <div class="col-sm-8"><?php echo Form::text('aclempresas.telefonos1','class="form-control"') ?></div>
            
     </div>
     <div class="form-group">
-        <label class="form-label col-sm-2">Celular/Movil* : </label>
+        <label class="form-label col-sm-2">Celular/Movil : </label>
         <div class="col-sm-8"><?php echo Form::text('aclempresas.telefonos2','class="form-control"') ?></div>
     </div>    
 </div>

@@ -1,10 +1,10 @@
-<div class="box-header">
+<div class="box-header with-border">
     <h1 class="box-title">Recursos del Sistema</h1>
+    <div class="box-tools"><?php echo Html::linkAction('escaner', '<i class="fa fa-binoculars"></i>Escanear Recursos por Agregar', 'class="btn btn-primary"') ?> <?php echo Html::linkAction("crear", 'Crear Recurso', 'class="btn btn-primary"') ?>
+    </div>
 </div>
+
 <div class="box-body">
-<div class="form-actions">
-<?php echo Html::linkAction('escaner', 'Escanear Recursos por Agregar', 'class="btn btn-primary"') ?> <?php echo Html::linkAction("crear", 'Crear Recurso', 'class="btn btn-primary"') ?>
-</div>
 <?php View::content() ?>
 <?php
         Table::headers('id', 'Modulo', 'Controlador','Recurso');
