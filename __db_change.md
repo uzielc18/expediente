@@ -12,13 +12,6 @@ CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
 -- Cambios realizados 26-08-2018 --
 
 
-ALTER TABLE `expedientes`.`materiales` 
-DROP FOREIGN KEY `fk_materiales_especificadegastos1`;
-
-ALTER TABLE `expedientes`.`materiales` 
-DROP COLUMN `especificadegastos_id`,
-DROP INDEX `fk_materiales_especificadegastos1_idx` ;
-
 ALTER TABLE `expedientes`.`calculoflete` 
 ADD COLUMN `preciokm` FLOAT(11) NULL DEFAULT NULL AFTER `distancia_virtual`;
 
@@ -43,9 +36,6 @@ CREATE TABLE IF NOT EXISTS `expedientes`.`especificacionusuarios` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 
-
-
-----
 ALTER TABLE `expedientes`.`calculoflete` 
 CHANGE COLUMN `preciokm` `preciotn` FLOAT(11) NULL DEFAULT NULL ;
 
@@ -57,3 +47,4 @@ ALTER TABLE `expedientes`.`calculoflete`
 CHANGE COLUMN `factor_tipo_carretera` `factor_tipo_carretera` FLOAT(11) NULL DEFAULT NULL ,
 CHANGE COLUMN `factor_retorno` `factor_retorno` FLOAT(11) NULL DEFAULT NULL ,
 CHANGE COLUMN `reajustek1` `reajustek1` FLOAT(11) NULL DEFAULT NULL ;
+--- cambios realizados 27-08-2018 ---
