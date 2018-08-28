@@ -2,29 +2,31 @@
 <?php View::content()?>
 
 <?php if($result) : ?>
-<div class="page-header">
-	<h1><?php echo ucwords("$model"),": <span>$action_name</span>" ?></h1>
-</div>
-<div class="page">
-	<ul>
-	<?php foreach ($result->fields as $field) : ?>
-		<li><strong><?php echo $result->alias[$field]?> :</strong>  <?php eh($result->$field) ?></li>
-	<?php endforeach ?>
-	</ul>
-
-	<div class="actions">
-		<a href="../">Listado</a>
-		<a href="../crear/">Crear registro</a>
-		<a href="../editar/<?php echo $result->id?>">Editar</a>
-		<a class="del" title="¿Seguro que quiere borrar?" href="../borrar/<?php echo $result->id?>" onclick="return confirm('¿Está seguro?');">Borrar</a>
+<div class="box-header with-border">
+	<h1 class="box-title"><?php echo ucwords("$model"),": <span>$action_name</span>" ?></h1>
+	<div class="box-tools">
+		<a href="../" class="btn">Listado</a>
+		<a href="../crear/" class="btn">Crear registro</a>
+		<a href="../editar/<?php echo $result->id?>" class="btn">Editar</a>
+		<a class="btn" title="¿Seguro que quiere borrar?" href="../borrar/<?php echo $result->id?>" onclick="return confirm('¿Está seguro?');">Borrar</a>
 	</div>
+</div>
+<div class="box-body">
+	<dl class="dl-horizontal">
+	<?php foreach ($result->fields as $field) : ?>
+		<dt><?php echo $result->alias[$field]?></dt>
+		<dd><?php echo $result->$field ?></dd>
+	<?php endforeach ?>
+	</dl>
+
+	
 </div>
 <?php else : ?>
 	<?php header("HTTP/1.0 404 Not Found")?>
-<div class="page-header">	<h1>No existe</h1> </div>
-	<div class="actions">
+<div class="box-header">	<h1>No existe</h1> </div>
+	<div class="box-tools">
 		<a href="../">Listado</a>
 		<a href="../crear/">Crear registro</a>
-	</div>
+</div>
 <?php endif ?>
 

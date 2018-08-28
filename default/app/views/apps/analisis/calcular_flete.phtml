@@ -133,6 +133,7 @@ $pres_id = $partida->presupuestos_id;?>
 										<th>TOTAL</th>
 									</tr>
 								</thead>
+								<?Php if($id!=0){?>
 								<tbody>
 									
 									<?php 
@@ -164,8 +165,9 @@ $pres_id = $partida->presupuestos_id;?>
 										<td align="left"><?php echo number_format($costotn,4);?></td>
 										<td align="left"><?php echo number_format($total,4);?></td>
 									</tr>
-								<?php }?>
+									<?php }?>
 								</tbody>
+								<?php }?>
 								<tfoot>
 									
 								</tfoot>

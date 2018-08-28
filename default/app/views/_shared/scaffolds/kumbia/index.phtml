@@ -1,11 +1,8 @@
 
 <?php View::content()?>
 <div class="box-header">
-    <h1><?php echo ucwords("$model"), ": <span>$action_name</span>" ?></h1>
-</div>
-
-<div class="form-actions">
-	 <?php echo Html::linkAction("crear/", 'Crear registro', 'class=" primary btn"') ?>
+    <i class="fa fa-shield"></i><h1 class="box-title"><?php echo ucwords("$model"), ": <span>$action_name</span>" ?></h1>
+    <div class="box-tools"><?php echo Html::linkAction("crear/", '<i class="fa fa-plus"></i>', 'class="btn btn-primary" title="Crear '.ucwords("$model").'"') ?></div>
 </div>
 <div class="box-body">
     <?php if ($results->items) : ?>
@@ -39,7 +36,6 @@
         <?php endforeach?>
     	</tbody>
     </table>
-    <?php View::partial('paginators/bootstrap', false, array('page' => $results ,'url' => Router::get('controller_path').'/index')); ?>
 
     <?php else : // Si no hay items?>
     <h2>No hay ningún registro</h2>
@@ -48,4 +44,6 @@
     <?php //var_dump($results)?>
 </div>
 <div class="box-footer">
+    <?php if ($results->items)View::partial('paginators/bootstrap', false, array('page' => $results ,'url' => Router::get('controller_path').'/index')); ?>
+
 </div>

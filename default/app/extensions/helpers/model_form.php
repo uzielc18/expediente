@@ -49,9 +49,9 @@ class ModelForm
             $formName = $model_name.'['.$field.']';
             echo '<div class="form-group">';
             if (in_array($field, $model->not_null)) {
-                echo "<label for=\"$formId\" class=\"required col-sm-2 form-label\">$alias *</label>" , PHP_EOL;
+                echo "<label for=\"$formId\" class=\"required col-sm-2 control-label\">$alias *</label>" , PHP_EOL;
             } else {
-                echo "<label for=\"$formId\" class=\" col-sm-2 form-label\">$alias</label>" , PHP_EOL;
+                echo "<label for=\"$formId\" class=\" col-sm-2 control-label\">$alias</label>" , PHP_EOL;
             }
             echo '<div class="col-sm-8">';
             switch ($tipo) {
@@ -89,7 +89,8 @@ class ModelForm
 
                 case 'text': case 'mediumtext': case 'longtext': // Usar textarea
                 case 'blob': case 'mediumblob': case 'longblob':
-                    echo "<textarea id=\"$formId\" name=\"$formName\" class=\"form-control\">{$model->$field}</textarea>" , PHP_EOL;
+                    $cc=$model->$field ? $model->$field : '';
+                    echo "<textarea id=\"$formId\" name=\"$formName\" class=\"form-control\">{$cc}</textarea>" , PHP_EOL;
                     break;
 
                 default: //text,tinytext,varchar, char,etc se comprobara su tamaño

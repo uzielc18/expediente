@@ -6,7 +6,8 @@ class ExpedienteController extends AdminController {
 		$Expedientes = new Expedientes();
 		$this->expedientes = $Expedientes->get_expedientes_all();
 	}
-	public function crear(){		
+	public function crear(){
+		View::template('apps/default_app');	
 		$Expedientes = new Expedientes();
 		$this->titulo='Expediente nuevo';
 		$this->codigo = $Expedientes->get_codigo();
