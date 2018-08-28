@@ -63,6 +63,7 @@ class MaterialesController extends AppController{
         }
 
         $this->materiales = $Materiales->find((int) $id);
+		$this->codigo_new=$this->materiales->codigo;
 
 	}
 	public function resultados(){

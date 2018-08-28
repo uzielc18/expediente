@@ -276,6 +276,7 @@ class ExpedienteController extends AdminController {
 
 		/*Obtiene el expedieten princiapl*/
 		$this->expediente = $Expedientes->find((int) $id);
+		$this->modulo=$Modulos->find((int)$m_id);
 		$b_id = $bloque_id ? $bloque_id : $Expedientes->minimum('id', 'conditions: estado=1 AND expedientes_id='.$id);		
 		$m_id = $modulo_id ? $modulo_id : 1;
 		$this->bloque= False;

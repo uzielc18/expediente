@@ -51,66 +51,42 @@ var group = $("ol.serialization").sortable({
               
 
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-10">
+              <?php 
+              $bloque_id=$bloque? $bloque->id : 0;
+              $presupuesto_id=$presupuesto? $presupuesto->id : 0;
+              function obtener_titulos($array_titulo,$modulo,$expediente,$presupuesto,$bloque_id,$li,$cod,$partidas){
+                foreach ($array_titulo as $ti) {
+                  $codigo= $cod ? $cod.'.'.$ti['codigo_titulo'] : $ti['codigo_titulo'];
+                  $li.='<li>';
+                  $li.=''.$presupuesto->codigo.' '.$codigo.'';
+                  $li.='';
+                  $li.='<b>'.$ti['titulo'].'</b>';
+                  $ol_li='<ol class="nested_with_switch vertical">';
+                  $PP=$partidas->get_titulos_partidas_all($presupuesto->id,$ti['id']);
+                  $n=0;
+                  foreach($PP as $partida){
+                    $n++;
+                      $ol_li.='<li>';
+                      $ol_li.='<td>'.$presupuesto->codigo.' '.$codigo.'.'.$n.'</li>';
+                      
+                    }
+                  $ol_li.='</ol>';
+                  $li.=$ol_li;
+                  if($ti['total_sub']){
+                    $li=obtener_titulos($ti['subtitulos'],$modulo,$expediente,$presupuesto,$bloque_id,$li,$codigo,$partidas);
+                  }else{
+                  }
+
+                  $li.='</li>';
+                }
+                return $li;
+              }
               
+              ?>
               <ol class="nested_with_switch vertical">
-                <li class="btn btn-block">
-                  Item 1
-                </li >
-                <li class="btn btn-block">
-                  Item 2
-                </li >
-                <li class="btn btn-block">
-                  Item 3
-                </li>
-                <li class="btn btn-block">
-                  Item 4
-                  <ol class="nested_with_switch vertical">
-                    <li class="btn btn-block">Item 3.1</li>
-                    <li class="btn btn-block">Item 3.2</li>
-                    <li class="btn btn-block">Item 3.3</li>
-                    <li class="btn btn-block">Item 3.4</li>
-                    <li>Item 3.5</li>
-                    <li>Item 3.6</li>
-                  </ol>
-                </li>
-                <li>
-                  Item 5
-                </li>
-                <li>
-                  Item 6
-                </li>
-              </ol>
-            </div>
-            <div class="col-sm-4">
-              
-              <ol class="nested_with_switch vertical">
-                <li>
-                  Item 1
-                </li>
-                <li>
-                  Item 2
-                </li>
-                <li>
-                  Item 3
-                </li>
-                <li>
-                  Item 4
-                  <ol>
-                    <li>Item 3.1</li>
-                    <li>Item 3.2</li>
-                    <li>Item 3.3</li>
-                    <li>Item 3.4</li>
-                    <li>Item 3.5</li>
-                    <li>Item 3.6</li>
-                  </ol>
-                </li>
-                <li>
-                  Item 5
-                </li>
-                <li>
-                  Item 6
-                </li>
+                <?php echo obtener_titulos($array_titulo,$modulo,$expediente,$presupuesto,$bloque_id,$tr='',0,$partidas);?>
+               
               </ol>
             </div>
           </div>
