@@ -2,18 +2,7 @@
 echo Tag::js('jquery/jquery.tokeninput');
 Tag::css('token-input');?>
 <script type="text/javascript">
-$(document).ready(function() 
-{
-    $("#detalleanalisis_materiales_id").tokenInput("<?php echo '/'.$module_name.'/materiales/resultados'?>",
-    {
-        tokenLimit: 1,minChars: 3,
-        <?php if(!empty($detalleanalisis->materiales_id)){?>
-        prePopulate: [
-                {id: <?php echo $detalleanalisis->materiales_id?>, name: "<?php echo $detalleanalisis->getMateriales()->getCodigoCompleto().' '.$detalleanalisis->getMateriales()->nombre?>"}
-            ]
-        <?php }?>
-    });
-});
+
 
 </script>
 <?php 
@@ -205,19 +194,45 @@ $pres_id = $partida->presupuestos_id;?>
 				    <?php echo Form::close();?>
 				</div>
 			<script type="text/javascript">
+			$(document).ready(function() 
+			{
+				var tipo_codigo = '0';
+			    $("#detalleanalisis_materiales_id").tokenInput("<?php echo '/'.$module_name.'/materiales/resultados'?>",
+			    {
+			        tokenLimit: 1,
+			        minChars: 3,
+			        <?php if(!empty($detalleanalisis->materiales_id)){?>
+			        prePopulate: [
+			                {id: <?php echo $detalleanalisis->materiales_id?>, name: "<?php echo $detalleanalisis->getMateriales()->getCodigoCompleto().' '.$detalleanalisis->getMateriales()->nombre?>",tipo_codigo:"<?php echo $detalleanalisis->getMateriales()->getTipomateriales()->getTipomateriales()->simbologia?>"}
+			            ],
+			        <?php }?>
+			        onAdd: function (item) {
+	                    alert("codigo " + item.tipo_codigo);
+	                    tipo_codigo=item.tipo_codigo;
+	                    if(tipo_codigo=='EQ' || tipo_codigo=='MO'){
+						  	$("#detalleanalisis_cantidad").attr('readonly', 'readonly');
+						}
+	                },
+	                onDelete: function (item) {
+	                    alert("codigo " + item.tipo_codigo);
+	                    tipo_codigo=item.tipo_codigo;
+	                    if(tipo_codigo=='EQ' || tipo_codigo=="MO"){
+						  	$("#detalleanalisis_cantidad").attr('readonly', '');
+						}
+	                }
+
+			    });
+			});
 			$(document).ready(function(){
 				    $('#partida_detalleanalisis').val($("#reporte-detalleanalisis").html());
 				});
-			<?php //if($tipo->simbologia=='EQ' or $tipo->simbologia=="MO"){?>
-				function calCantidad(){
-					var cuadrilla = $( "#detalleanalisis_cuadrilla").val();
-					var rendimiento = $( "#partida_rendimiento").val();
-					//if(!cuadrilla) cuadrilla = 0;
-					//if(!rendimiento) rendimiento = 0;
-					console.log(cuadrilla,rendimiento);
-					return (cuadrilla*8)/rendimiento;
-				}
-			<?php //}?>		
+			
+			function calCantidad(){
+				var cuadrilla = $( "#detalleanalisis_cuadrilla").val();
+				var rendimiento = $( "#partida_rendimiento").val();
+				console.log(cuadrilla,rendimiento);
+				return (cuadrilla*8)/rendimiento;
+			}	
 			function calcular() {
 			  var cantidad = $( "#detalleanalisis_cantidad" ).val();
 			  var precio = $( "#detalleanalisis_precio" ).val();
@@ -225,11 +240,11 @@ $pres_id = $partida->presupuestos_id;?>
 			}
 			$(".calcular").change(function() {
 
-			  $("#detalleanalisis_cantidad").val(calCantidad());
+			 if(tipo_codigo=='EQ' || tipo_codigo=="MO"){
+			  	$("#detalleanalisis_cantidad").val(calCantidad());
+			 }
 			  $("#detalleanalisis_parcial" ).val(calcular());
-			  <?php //if($tipo->simbologia=='EQ' or $tipo->simbologia=="MO"){?>
-				
-			  <?php //}?>
+
 			});
 			</script>
 			</div>

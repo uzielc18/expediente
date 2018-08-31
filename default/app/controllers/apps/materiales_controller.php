@@ -76,9 +76,11 @@ class MaterialesController extends AppController{
 		{
 			$id = $value->id;
 			$name=$value->getCodigoCompleto()." ".$value->nombre;
+			$tipo_codigo=$value->getTipomateriales()->getTipomateriales()->simbologia;
 			$json = array();
 			$json['id'] = $id;
 			$json['name'] = $name;
+			$json['tipo_codigo'] = $tipo_codigo;
 			$this->data[] = $json;
 		}
 
