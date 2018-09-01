@@ -3,166 +3,166 @@
 
 <section class="content">
 <div class="row">
-<div class="col-md-12">
-  <div class="box box-solid">
-    <?php echo View::content();
-    $bloque_id=$bloque? $bloque->id : 0;
-    $presupuesto_id=$presupuesto? $presupuesto->id : 0;
-    ?>
-    <div class="box-header">
-        <div style="text-align: center;"><h2 class="box-title"><i class="<?php echo $modulo->icono?>"> </i> <?php echo $modulo->descripcion?>  <?php echo html::linkAction('ordenar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto_id,'ordenar','class="btn btn-xs"');?></h2></div>
-        <dl class="dl-horizontal">
-          <dt>Presupuesto</dt>
-          <dd><?php echo $expediente->nombre?></dd>
-          <dt>Bloque:</dt>
-          <dd><?php if($bloque){ echo $bloque->codigo.' '; echo $bloque->nombre; echo Html::link('apps/expediente/editar_bloque/'.$expediente->id.'/'.$modulo->id.'/'.$bloque->id,' <i class="fa fa-edit"></i>');}else{ echo Html::link('apps/expediente/crear_bloque/'.$expediente->id.'/'.$modulo->id,'Agregar <i class="fa fa-plus-square"></i>');}?></dd>
-          <dt>Sub Prepuesto</dt>
-          <dd><?php if($presupuesto){ echo $presupuesto->codigo.' '; echo $presupuesto->nombre;echo Html::link('apps/presupuesto/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,' <i class="fa fa-edit"></i>','');}else{ echo Html::link('apps/presupuesto/crear/'.$expediente->id.'/'.$modulo->id,'Agregar <i class="fa fa-plus-square"></i>');}?></dd>
-          <dt>Cliente:</dt>
-          <dd> <?php echo $expediente->getAclempresas()->razonsocial ?> </dd>
-          <dt>Lugar:</dt>
-          <dd>  <?php echo $expediente->direccion ?> <?php echo $expediente->getUbigeo()->get_resultado();?>
-          </dd>                
-          <dt>Fecha:</dt>
-          <dd><?Php echo $expediente->fecha?></dd>
-        </dl>
-    </div>
-    <div class="box-body">
-      <?Php if($bloque){?>
-      <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs pull-right">
-          <?php foreach($bloques as $bl){?>
-          <li class="<?php echo ($bl->id==$bloque->id)? 'active': '';?>">
-            <?php echo Html::linkAction('generar/'.$expediente->id.'/'.$modulo->id.'/'.$bl->id.'#tab_'.$bl->id.'-'.$bl->id,$bl->nombre);?></li>
+  <div class="col-md-12">
+    <div class="box box-solid">
+      <?php echo View::content();
+      $bloque_id=$bloque? $bloque->id : 0;
+      $presupuesto_id=$presupuesto? $presupuesto->id : 0;
+      ?>
+      <div class="box-header">
+          <div style="text-align: center;"><h2 class="box-title"><i class="<?php echo $modulo->icono?>"> </i> <?php echo $modulo->descripcion?>  <?php echo html::linkAction('ordenar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto_id,'ordenar','class="btn btn-xs"');?></h2></div>
+          <dl class="dl-horizontal">
+            <dt>Presupuesto</dt>
+            <dd><?php echo $expediente->nombre?></dd>
+            <dt>Bloque:</dt>
+            <dd><?php if($bloque){ echo $bloque->codigo.' '; echo $bloque->nombre; echo Html::link('apps/expediente/editar_bloque/'.$expediente->id.'/'.$modulo->id.'/'.$bloque->id,' <i class="fa fa-edit"></i>');}else{ echo Html::link('apps/expediente/crear_bloque/'.$expediente->id.'/'.$modulo->id,'Agregar <i class="fa fa-plus-square"></i>');}?></dd>
+            <dt>Sub Prepuesto</dt>
+            <dd><?php if($presupuesto){ echo $presupuesto->codigo.' '; echo $presupuesto->nombre;echo Html::link('apps/presupuesto/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,' <i class="fa fa-edit"></i>','');}else{ echo Html::link('apps/presupuesto/crear/'.$expediente->id.'/'.$modulo->id,'Agregar <i class="fa fa-plus-square"></i>');}?></dd>
+            <dt>Cliente:</dt>
+            <dd> <?php echo $expediente->getAclempresas()->razonsocial ?> </dd>
+            <dt>Lugar:</dt>
+            <dd>  <?php echo $expediente->direccion ?> <?php echo $expediente->getUbigeo()->get_resultado();?>
+            </dd>                
+            <dt>Fecha:</dt>
+            <dd><?Php echo $expediente->fecha?></dd>
+          </dl>
+      </div>
+      <div class="box-body">
+        <?Php if($bloque){?>
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs pull-right">
+            <?php foreach($bloques as $bl){?>
+            <li class="<?php echo ($bl->id==$bloque->id)? 'active': '';?>">
+              <?php echo Html::linkAction('generar/'.$expediente->id.'/'.$modulo->id.'/'.$bl->id.'#tab_'.$bl->id.'-'.$bl->id,$bl->nombre);?></li>
+            <?php }?>
+            <li class="pull-left header"><?php echo Html::link('apps/expediente/crear_bloque/'.$expediente->id.'/'.$modulo->id,'Bloques <i class="fa fa-plus-square"></i>');?> </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-panel active" id="tab_<?php echo $bloque->id?>-<?php echo $bloque->id?>">
           <?php }?>
-          <li class="pull-left header"><?php echo Html::link('apps/expediente/crear_bloque/'.$expediente->id.'/'.$modulo->id,'Bloques <i class="fa fa-plus-square"></i>');?> </li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-panel active" id="tab_<?php echo $bloque->id?>-<?php echo $bloque->id?>">
-        <?php }?>
-          <div class="row">
-            <div class="col-lg-10">
-              <?php 
-              function obtener_titulos($array_titulo,$modulo,$expediente,$presupuesto,$bloque_id,$tr,$cod,$partidas){
-                foreach ($array_titulo as $ti) {
-                  $codigo= $cod ? $cod.'.'.$ti['codigo_titulo'] : $ti['codigo_titulo'];
-                  $tr.='<tr>';
-                  $tr.='<td>'.$presupuesto->codigo.' '.$codigo.'</td>';
-                  $tr.='<td>';
-                  $tr.='<span class="text-light-blue" style="font-size: 15px;"><b>'.$ti['titulo'].'</b></span>';
-                  $tr.='<span class="pull-right">';
-                  $tr.=Html::link('apps/titulopartidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['id'],' <i class="fa fa-edit"></i>','title="Editar titulo"');
-                  $tr.= $ti['total_partidas'] ? '' : Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['id'],'<i class="fa fa-plus-square"></i>','title="Agregar Subtitulo"');
-                  $tr.='</span></td><td></td><td></td></tr>';
-                  $tr_p='';
-                  $PP=$partidas->get_titulos_partidas_all($presupuesto->id,$ti['id']);
-                  $n=0;
-                  foreach($PP as $partida){
-                    $n++;
-                      $tr_p.='<tr>';
-                      $tr_p.='<td>'.$presupuesto->codigo.' '.$codigo.'.'.$n.'</td>';
-                      $tr_p.='<td>';
-                      $tr_p.='<a data-show="show-'.$partida->id.'" data-id="'.$partida->id.'" class="show-detalle"><i class="fa fa-eye"></i></a> ';
-                      $tr_p.='<a data-hide="hide-'.$partida->id.'" data-id="'.$partida->id.'" class="hide-detalle" style="display:none;""><i class="fa fa-eye-slash"></i></a> ';
-                      $tr_p.=$partida->nombre;
-                      $tr_p.='<span class="pull-right">'.Html::link('apps/partidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$partida->titulo_id.'/'.$partida->id,' <i class="fa fa-edit"></i>','title="Editar Partida"').'</span>';
-                      $tr_p.='</td>';
-                      $tr_p.='<td align="center">'.$partida->getMedidas()->codigos.'</td>';
-                      if($modulo->id==1)$tr_p.='<td align="right">'.$partida->metrado.'</td></tr>';
-                      if($modulo->id==2)$tr_p.='<td align="right">'.$partida->parcial.'</td></tr>';
-                      $tr_p.='<tr style="display: none;" id="detalle-'.$partida->id.'">';
-                      $tr_p.='<td colspan="4">';
-                      if($modulo->id==1)
-                      {
-                        $error_de_partida=$partida->get_correcto($partida->id,'detallemetrados');
-                        $tr_p.=html::link('apps/metrados/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
-                        if(!$error_de_partida) $tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
-                        $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detallemetrados)."<div>";
+            <div class="row">
+              <div class="col-lg-10">
+                <?php 
+                function obtener_titulos($array_titulo,$modulo,$expediente,$presupuesto,$bloque_id,$tr,$cod,$partidas){
+                  foreach ($array_titulo as $ti) {
+                    $codigo= $cod ? $cod.'.'.$ti['codigo_titulo'] : $ti['codigo_titulo'];
+                    $tr.='<tr>';
+                    $tr.='<td>'.$presupuesto->codigo.' '.$codigo.'</td>';
+                    $tr.='<td>';
+                    $tr.='<span class="text-light-blue" style="font-size: 15px;"><b>'.$ti['titulo'].'</b></span>';
+                    $tr.='<span class="pull-right">';
+                    $tr.=Html::link('apps/titulopartidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['id'],' <i class="fa fa-edit"></i>','title="Editar titulo"');
+                    $tr.= $ti['total_partidas'] ? '' : Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['id'],'<i class="fa fa-plus-square"></i>','title="Agregar Subtitulo"');
+                    $tr.='</span></td><td></td><td></td></tr>';
+                    $tr_p='';
+                    $PP=$partidas->get_titulos_partidas_all($presupuesto->id,$ti['id']);
+                    $n=0;
+                    foreach($PP as $partida){
+                      $n++;
+                        $tr_p.='<tr>';
+                        $tr_p.='<td>'.$presupuesto->codigo.' '.$codigo.'.'.$n.'</td>';
+                        $tr_p.='<td>';
+                        $tr_p.='<a data-show="show-'.$partida->id.'" data-id="'.$partida->id.'" class="show-detalle"><i class="fa fa-eye"></i></a> ';
+                        $tr_p.='<a data-hide="hide-'.$partida->id.'" data-id="'.$partida->id.'" class="hide-detalle" style="display:none;""><i class="fa fa-eye-slash"></i></a> ';
+                        $tr_p.=$partida->nombre;
+                        $tr_p.='<span class="pull-right">'.Html::link('apps/partidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$partida->titulo_id.'/'.$partida->id,' <i class="fa fa-edit"></i>','title="Editar Partida"').'</span>';
+                        $tr_p.='</td>';
+                        $tr_p.='<td align="center">'.$partida->getMedidas()->codigos.'</td>';
+                        if($modulo->id==1)$tr_p.='<td align="right">'.$partida->metrado.'</td></tr>';
+                        if($modulo->id==2)$tr_p.='<td align="right">'.$partida->parcial.'</td></tr>';
+                        $tr_p.='<tr style="display: none;" id="detalle-'.$partida->id.'">';
+                        $tr_p.='<td colspan="4">';
+                        if($modulo->id==1)
+                        {
+                          $error_de_partida=$partida->get_correcto($partida->id,'detallemetrados');
+                          $tr_p.=html::link('apps/metrados/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
+                          if(!$error_de_partida) $tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
+                          $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detallemetrados)."<div>";
+                        }
+                        if($modulo->id==2)
+                        {
+                          $error_de_partida=$partida->get_correcto($partida->id,'detalleanalisis');
+                          $tr_p.=html::link('apps/analisis/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
+                          if(!$error_de_partida)$tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
+                          $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detalleanalisis)."<div>";
+                        }
+                        $tr_p.='</td></tr>';
                       }
-                      if($modulo->id==2)
-                      {
-                        $error_de_partida=$partida->get_correcto($partida->id,'detalleanalisis');
-                        $tr_p.=html::link('apps/analisis/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
-                        if(!$error_de_partida)$tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
-                        $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detalleanalisis)."<div>";
-                      }
-                      $tr_p.='</td></tr>';
+                    $tr.=$tr_p;
+                    if($ti['total_sub']){
+                      $tr=obtener_titulos($ti['subtitulos'],$modulo,$expediente,$presupuesto,$bloque_id,$tr,$codigo,$partidas);
+                    }else{
+                      $tr.='<tr><td></td><td colspan="2">'.Html::link('apps/partidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['titulo_id'],'Agregar Partida','class="btn btn-block"').'</td><td></td></tr>';
                     }
-                  $tr.=$tr_p;
-                  if($ti['total_sub']){
-                    $tr=obtener_titulos($ti['subtitulos'],$modulo,$expediente,$presupuesto,$bloque_id,$tr,$codigo,$partidas);
-                  }else{
-                    $tr.='<tr><td></td><td colspan="2">'.Html::link('apps/partidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['titulo_id'],'Agregar Partida','class="btn btn-block"').'</td><td></td></tr>';
                   }
+                  return $tr;
                 }
-                return $tr;
-              }
-              
-              ?>
-              
-              <table id="generar_table" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th>item</th>
-                    <th>Descripcion</th>
-                    <th>Unid</th>
-                    <th align="right"><?php if($modulo->id==='1') echo 'Metrado';?><?php if($modulo->id==='2') echo 'Total';?></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php if($presupuesto){?>
-                  <tr>
-                    <td><?php echo $presupuesto->codigo?></td>
-                    <td><span class="text-blue">
-                      <b style="font-size: 16px;"><?php echo $presupuesto->nombre; ?></b>
-                      </span><span class="pull-right">
-                      <?php echo Html::link('apps/presupuesto/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,' <i class="fa fa-edit"></i>','');?>
-                    </span></td>
-                    <td></td>
-                    <td><?php if($partidas_nuevo==0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-sm btn-primary"');?></td>
-                  </tr>
-                    <?php echo obtener_titulos($array_titulo,$modulo,$expediente,$presupuesto,$bloque_id,$tr='',0,$partidas);?> 
-                  <tr>
-                    <td></td>
-                    <td colspan="2">
-                      <?php if($partidas_nuevo!=0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-primary btn-block""');?></td>
-                    <td></td>
-                  </tr>           
-                  <?php }?>
-                </tbody>
-              </table>
+                
+                ?>
+                
+                <table id="generar_table" class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>item</th>
+                      <th>Descripcion</th>
+                      <th>Unid</th>
+                      <th align="right"><?php if($modulo->id==='1') echo 'Metrado';?><?php if($modulo->id==='2') echo 'Total';?></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <?php if($presupuesto){?>
+                    <tr>
+                      <td><?php echo $presupuesto->codigo?></td>
+                      <td><span class="text-blue">
+                        <b style="font-size: 16px;"><?php echo $presupuesto->nombre; ?></b>
+                        </span><span class="pull-right">
+                        <?php echo Html::link('apps/presupuesto/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,' <i class="fa fa-edit"></i>','');?>
+                      </span></td>
+                      <td></td>
+                      <td><?php if($partidas_nuevo==0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-sm btn-primary"');?></td>
+                    </tr>
+                      <?php echo obtener_titulos($array_titulo,$modulo,$expediente,$presupuesto,$bloque_id,$tr='',0,$partidas);?> 
+                    <tr>
+                      <td></td>
+                      <td colspan="2">
+                        <?php if($partidas_nuevo!=0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-primary btn-block""');?></td>
+                      <td></td>
+                    </tr>           
+                    <?php }?>
+                  </tbody>
+                </table>
 
-              
-            </div>
-            <div class="col-lg-2">
-              <div class="btn-group-vertical btn-block">
-                <?Php 
-                echo Html::link('apps/presupuesto/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id,'Nuevo <i class="fa fa-plus-square"></i>','class="btn btn-xs btn-primary"');
-              foreach($presupuestos as $pres){
-                $cls=($pres->id==$presupuesto->id) ? 'active':'';
-                echo html::linkAction('generar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$pres->id,$pres->nombre,'class="btn btn-xs '.$cls.'"');
-              }?>
+                
+              </div>
+              <div class="col-lg-2">
+                <div class="btn-group-vertical btn-block">
+                  <?Php 
+                  echo Html::link('apps/presupuesto/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id,'Nuevo <i class="fa fa-plus-square"></i>','class="btn btn-xs btn-primary"');
+                foreach($presupuestos as $pres){
+                  $cls=($pres->id==$presupuesto->id) ? 'active':'';
+                  echo html::linkAction('generar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$pres->id,$pres->nombre,'class="btn btn-xs '.$cls.'"');
+                }?>
+                </div>
               </div>
             </div>
+        <?Php if($bloque){?>
+              <div style="clear: both;"></div>
+            </div>
+            <!-- /.tab-pane -->
           </div>
-      <?Php if($bloque){?>
-            <div style="clear: both;"></div>
-          </div>
-          <!-- /.tab-pane -->
+          <!-- /.tab-content -->
         </div>
-        <!-- /.tab-content -->
+        <?php }?>
       </div>
-      <?php }?>
-    </div>
-    <div class="box-footer">
-    	<?php foreach($modulos as $mod){   ?>	
-      <a href="/apps/expediente/generar/<?php echo $expediente->id?>/<?Php echo $mod->id?>/<?php echo $bloque_id;?>/<?php echo $presupuesto_id;?>" class="btn btn-app <?php echo $cl = $mod->id==$modulo->id ? 'active':''; ?>">
-        	<i class="<?php echo $mod->icono?>"></i> <?php echo $mod->nombre;?>
-      	</a>
-      <?php }?>
+      <div class="box-footer">
+      	<?php /*foreach($modulos as $mod){   ?>	
+        <a href="/apps/expediente/generar/<?php echo $expediente->id?>/<?Php echo $mod->id?>/<?php echo $bloque_id;?>/<?php echo $presupuesto_id;?>" class="btn btn-app <?php echo $cl = $mod->id==$modulo->id ? 'active':''; ?>">
+          	<i class="<?php echo $mod->icono?>"></i> <?php echo $mod->nombre;?>
+        	</a>
+        <?php }*/?>
+      </div>
     </div>
   </div>
-</div>
 <script>
 $(document).ready(function(){
     $(".hide-detalle").click(function(){
@@ -181,3 +181,10 @@ $(document).ready(function(){
 </script>
 </div>
 </section>
+<footer class="main-footer" style="z-index: 999999 !important;position: fixed;left: 0px;bottom: 0px;width: 100%;margin-bottom: 2px;">
+  <?php foreach($modulos as $mod){   ?> 
+      <a href="/apps/expediente/generar/<?php echo $expediente->id?>/<?Php echo $mod->id?>/<?php echo $bloque_id;?>/<?php echo $presupuesto_id;?>" class="btn btn-app <?php echo $cl = $mod->id==$modulo->id ? 'active':''; ?>">
+          <i class="<?php echo $mod->icono?>"></i> <?php echo $mod->nombre;?>
+        </a>
+      <?php }?>
+</footer>
