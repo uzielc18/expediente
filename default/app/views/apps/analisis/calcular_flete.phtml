@@ -8,9 +8,11 @@ $pres_id = $partida->presupuestos_id;?>
 	<?php View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 		<div class="col-md-12">
 			<div class="box box-solid">
-				<div class="box-header">
+				<div class="box-header with-border">
 				    <h2 class="box-title"><?php echo $titulo?></h2>
 				</div>
+				
+				<div class="box-body">
 				<blockquote>
 					<dl class="dl-horizontal">
 				      <dt>Presupuesto: </dt><dd><?php echo $partida->getPresupuestos()->nombre?></dd>
@@ -18,8 +20,6 @@ $pres_id = $partida->presupuestos_id;?>
 				      <dt>Medida: </dt><dd><?php echo $partida->getMedidas()->nombre?> (<?php echo $partida->getMedidas()->abr?>)</dd>
 				  	</dl>
 				</blockquote>
-				
-				<div class="box-body">
 				<?Php 
 				echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');
 				echo Form::hidden('calculoflete.id');
@@ -32,15 +32,15 @@ $pres_id = $partida->presupuestos_id;?>
 						<div class="form-group">
 					    <?php echo Form::label('Origen','calculoflete.origen','class="col-sm-3 control-label"');?>
 					        <div class="col-sm-9">
-					            <?php echo Form::text('calculoflete.origen','class="form-control" placeholder="Origen"')?>
+					            <?php echo Form::text('calculoflete.origen','class="form-control" placeholder="Origen" required')?>
 					        </div>
 					    </div>
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-					    <?php echo Form::label('Destino','calculoflete.destino','class="col-sm-3 control-label"');?>
+					    <?php echo Form::label('Destino','calculoflete.destino','class="col-sm-3 control-label" ');?>
 					        <div class="col-sm-9">
-					            <?php echo Form::text('calculoflete.destino','class="form-control" placeholder="Destino"')?>
+					            <?php echo Form::text('calculoflete.destino','class="form-control" placeholder="Destino" required')?>
 					        </div>
 					    </div>						
 					</div>
@@ -48,7 +48,7 @@ $pres_id = $partida->presupuestos_id;?>
 						<div class="form-group">
 					    <?php echo Form::label('Factor Carretera','calculoflete.factor_tipo_carretera','class="col-sm-3 control-label"');?>
 					        <div class="col-sm-9">
-					            <?php echo Form::text('calculoflete.factor_tipo_carretera','class="form-control" placeholder="Factor Carretera"')?>
+					            <?php echo Form::text('calculoflete.factor_tipo_carretera','class="form-control" placeholder="Factor Carretera" required')?>
 					        </div>
 					    </div>						
 					</div>
@@ -56,7 +56,7 @@ $pres_id = $partida->presupuestos_id;?>
 						<div class="form-group">
 					    <?php echo Form::label('Distancia virtual','calculoflete.distancia_virtual','class="col-sm-3 control-label"');?>
 					        <div class="col-sm-9">
-					            <?php echo Form::text('calculoflete.distancia_virtual','class="form-control" placeholder="Distancia virtual"')?>
+					            <?php echo Form::text('calculoflete.distancia_virtual','class="form-control" placeholder="Distancia virtual" required')?>
 					        </div>
 					    </div>
 						
@@ -65,16 +65,16 @@ $pres_id = $partida->presupuestos_id;?>
 						<div class="form-group">
 					    <?php echo Form::label('Precio x TM','calculoflete.preciotn','class="col-sm-3 control-label"');?>
 					        <div class="col-sm-9">
-					            <?php echo Form::text('calculoflete.preciotn','class="form-control" placeholder="Precio x TM"')?>
+					            <?php echo Form::text('calculoflete.preciotn','class="form-control" placeholder="Precio x TM" required')?>
 					        </div>
 					    </div>
 						
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-					    <?php echo Form::label('Factor retorno','calculoflete.factor_retorno','class="col-sm-3 control-label"');?>
+					    <?php echo Form::label('Factor retorno','calculoflete.factor_retorno','class="col-sm-3 control-label" ');?>
 					        <div class="col-sm-9">
-					            <?php echo Form::text('calculoflete.factor_retorno','class="form-control" placeholder="Factor retorno"')?>
+					            <?php echo Form::text('calculoflete.factor_retorno','class="form-control" placeholder="Factor retorno" required')?>
 					        </div>
 					    </div>
 						
@@ -83,7 +83,7 @@ $pres_id = $partida->presupuestos_id;?>
 						<div class="form-group">
 					    <?php echo Form::label('Reajuste K1','calculoflete.reajustek1','class="col-sm-3 control-label"');?>
 					        <div class="col-sm-9">
-					            <?php echo Form::text('calculoflete.reajustek1','class="form-control" placeholder="Reajuste K1"')?>
+					            <?php echo Form::text('calculoflete.reajustek1','class="form-control" placeholder="Reajuste K1" required')?>
 					        </div>
 					    </div>
 						
@@ -97,9 +97,21 @@ $pres_id = $partida->presupuestos_id;?>
 					</div>
 				</div>
 				<?php echo Form::close()?>
+				<?Php 
+				echo Form::open('apps/analisis/terminar_flete/'.$partida->id, 'post', 'role="form" class="form-horizontal" id="terminar"');
+				echo Form::hidden('calculoflete.id');
+				echo Form::hidden('calculoflete.detalleanalisis_id',NULL,$detalleanalisis_id);
+				//echo Form::hidden('calculoflete.items');
+				//echo Form::hidden('calculoflete.totalkg');
+				echo Form::hidden('detalleanalisis.id');
+				echo Form::hidden('detalleanalisis.materiales_id');
+				echo Form::hidden('detalleanalisis.partidas_id');
+				echo Form::hidden('detalleanalisis.estado');
+				echo Form::hidden('detalleanalisis.modulos_id');
+				echo Form::hidden('detalleanalisis.medidas_id');?>
 					<div class="col-sm-12">					
 						<div id="reporte-detalleanalisis">
-							<table class="table table-condensed" style="font-size: 12px;">
+							<table class="table table-condensed table-bordered" style="font-size: 12px;">
 								<caption>Detalle de flete</caption>
 								<thead>
 									<tr>
@@ -143,27 +155,31 @@ $pres_id = $partida->presupuestos_id;?>
 									$distancia_virtual = !$calculoflete->distancia_virtual ? 0 : $calculoflete->distancia_virtual;
 									$preciotn = !$calculoflete->preciotn? 0 : $calculoflete->preciotn;
 									$factor_retorno = !$calculoflete->factor_retorno ? 0 : $calculoflete->factor_retorno;
-									$reajustek1 = !$calculoflete->reajustek1 ? 0 : $calculoflete->reajustek1;
-									$xTM = $preciotn*$factor_retorno;
-									$costokg = !$calculoflete->costokg ? 0 : $calculoflete->costokg;
-									$costotn = !$calculoflete->costotn ? 0 : $calculoflete->costotn;
-									$total = !$calculoflete->total ? 0 : $calculoflete->total;
+									$costotn = $preciotn*$factor_retorno;
+									echo Form::hidden('calculoflete.costotn',NULL,$costotn);
+									$reajustek1 = !$calculoflete->reajustek1 ? 0 : $calculoflete->reajustek1;									
+									$sub_total_tm = $costotn*$reajustek1;
+									echo Form::hidden('calculoflete.sub_total_tm',NULL,$sub_total_tm);
+									$costo_km_tn = ($sub_total_tm/$distancia_virtual);
+									echo Form::hidden('calculoflete.costo_km_tn',NULL,$costo_km_tn);
+									$total = ($costo_km_tn*$totaltn*$distancia_virtual);
+									echo Form::hidden('calculoflete.total',NULL,$total);
 									?>
 									<?php if($id!=0){?>
 									<tr>
-										<td align="left"><?php echo number_format($totalkg,4);?></td>
-										<td align="left"><?php echo number_format($totaltn,4);?></td>
+										<td align="left"><?php echo number_format($totalkg,4, '.', '');?></td>
+										<td align="left"><?php echo number_format($totaltn,4, '.', ',');?></td>
 										<td align="left"><?php echo $calculoflete->origen?></td>
 										<td align="left"><?php echo $calculoflete->destino?></td>
-										<td align="left"><?php echo number_format($factor_tipo_carretera,4);?></td>
-										<td align="left"><?php echo number_format($distancia_virtual,4);?></td>
-										<td align="left"><?php echo number_format($preciotn,4);?></td>
-										<td align="left"><?php echo number_format($factor_retorno,4);?></td>
-										<td align="left"><?php echo number_format($reajustek1,4);?></td>
-										<td align="left"><?php echo number_format($xTM,4);?></td>
-										<td align="left"><?php echo number_format($totalkg,4);?></td>
-										<td align="left"><?php echo number_format($costotn,4);?></td>
-										<td align="left"><?php echo number_format($total,4);?></td>
+										<td align="right"><?php echo number_format($factor_tipo_carretera,4, '.', ',');?></td>
+										<td align="right"><?php echo number_format($distancia_virtual,4, '.', ',');?></td>
+										<td align="right"><?php echo number_format($preciotn,4, '.', ',');?></td>
+										<td align="right"><?php echo number_format($factor_retorno,4, '.', ',');?></td>
+										<td align="right"><?php echo number_format($costotn,4, '.', ',');?></td>
+										<td align="right"><?php echo number_format($reajustek1,4, '.', ',');?></td>
+										<td align="right"><?php echo number_format($sub_total_tm,4);?></td>
+										<td align="right"><?php echo number_format($costo_km_tn,4);?></td>
+										<td align="right"><?php echo number_format($total,4);?></td>
 									</tr>
 									<?php }?>
 								</tbody>
@@ -174,9 +190,17 @@ $pres_id = $partida->presupuestos_id;?>
 							</table>
 						</div>
 					</div>
+					
+				<div class="col-sm-12">
+					<?php echo Form::hidden('detalleanalisis.precio',NULL,$costo_km_tn);?>
+					<?php echo Form::hidden('detalleanalisis.parcial',NULL,$total);?>
+					<div class="pull-right">
+					<?php echo Form::submit('Terminar','class="btn btn-info"').' ';?>
+					</div>				
+				</div>
+				<?php echo Form::close()?>
 				</div>
 				<div class="box-footer with-border">
-					
 				</div>
 
 				<script type="text/javascript">

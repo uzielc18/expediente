@@ -50,10 +50,17 @@
                     $tr.='<td>'.$presupuesto->codigo.' '.$codigo.'</td>';
                     $tr.='<td>';
                     $tr.='<span class="text-light-blue" style="font-size: 15px;"><b>'.$ti['titulo'].'</b></span>';
+                    if($modulo->id!=3){
                     $tr.='<span class="pull-right">';
                     $tr.=Html::link('apps/titulopartidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['id'],' <i class="fa fa-edit"></i>','title="Editar titulo"');
                     $tr.= $ti['total_partidas'] ? '' : Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['id'],'<i class="fa fa-plus-square"></i>','title="Agregar Subtitulo"');
-                    $tr.='</span></td><td></td><td></td></tr>';
+                    $tr.='</span>';
+                    }
+                    $tr.='</td><td></td><td></td>';
+                    if($modulo->id==='3'){
+                      $tr.='</td><td></td><td></td>';
+                    }
+                    $tr.='</tr>';
                     $tr_p='';
                     $PP=$partidas->get_titulos_partidas_all($presupuesto->id,$ti['id']);
                     $n=0;
@@ -62,27 +69,43 @@
                         $tr_p.='<tr>';
                         $tr_p.='<td>'.$presupuesto->codigo.' '.$codigo.'.'.$n.'</td>';
                         $tr_p.='<td>';
-                        $tr_p.='<a data-show="show-'.$partida->id.'" data-id="'.$partida->id.'" class="show-detalle"><i class="fa fa-eye"></i></a> ';
-                        $tr_p.='<a data-hide="hide-'.$partida->id.'" data-id="'.$partida->id.'" class="hide-detalle" style="display:none;""><i class="fa fa-eye-slash"></i></a> ';
+                        
                         $tr_p.=$partida->nombre;
-                        $tr_p.='<span class="pull-right">'.Html::link('apps/partidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$partida->titulo_id.'/'.$partida->id,' <i class="fa fa-edit"></i>','title="Editar Partida"').'</span>';
+                        if($modulo->id!=3){
+                        $tr_p.='<span class="pull-right">'.Html::link('apps/partidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$partida->titulo_id.'/'.$partida->id,' <i class="fa fa-edit"></i>','title="Editar Partida"');
+                        $tr_p.='<a data-show="show-'.$partida->id.'" data-id="'.$partida->id.'" class="show-detalle" title="Ver detalle"><i class="fa fa-eye"></i></a> ';
+                        $tr_p.='<a data-hide="hide-'.$partida->id.'" data-id="'.$partida->id.'" class="hide-detalle" title="Ocultar detalle" style="display:none;"><i class="fa fa-eye-slash"></i></a> ';
+                        $tr_p.='</span>';
+                        }
                         $tr_p.='</td>';
                         $tr_p.='<td align="center">'.$partida->getMedidas()->codigos.'</td>';
-                        if($modulo->id==1)$tr_p.='<td align="right">'.$partida->metrado.'</td></tr>';
-                        if($modulo->id==2)$tr_p.='<td align="right">'.$partida->parcial.'</td></tr>';
+
+                        if($modulo->id==1 || $modulo->id==3)$tr_p.='<td align="right">'.$partida->metrado.'</td>';
+                        if($modulo->id==3)
+                          {
+                            $tr_p.='<td align="right"> S/ '.$partida->costo.'</td>';
+                            $tr_p.='<td align="right"> S/ '.$partida->parcial.'</td>';
+                          }
+                        if($modulo->id==2)$tr_p.='<td align="right"> S/ '.$partida->costo.'</td>';
+                        $tr_p.='</tr>';
                         $tr_p.='<tr style="display: none;" id="detalle-'.$partida->id.'">';
-                        $tr_p.='<td colspan="4">';
+                        $cols= $modulo->id===3 ? '6':'4';
+                        $tr_p.='<td colspan="'.$cols.'">';
                         if($modulo->id==1)
                         {
                           $error_de_partida=$partida->get_correcto($partida->id,'detallemetrados');
+                          $tr_p.='<span class="pull-right">';
                           $tr_p.=html::link('apps/metrados/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
+                          $tr_p.='</span>';
                           if(!$error_de_partida) $tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
                           $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detallemetrados)."<div>";
                         }
                         if($modulo->id==2)
                         {
                           $error_de_partida=$partida->get_correcto($partida->id,'detalleanalisis');
+                          $tr_p.='<span class="pull-right">';
                           $tr_p.=html::link('apps/analisis/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
+                          $tr_p.='</span>';
                           if(!$error_de_partida)$tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
                           $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detalleanalisis)."<div>";
                         }
@@ -92,7 +115,7 @@
                     if($ti['total_sub']){
                       $tr=obtener_titulos($ti['subtitulos'],$modulo,$expediente,$presupuesto,$bloque_id,$tr,$codigo,$partidas);
                     }else{
-                      $tr.='<tr><td></td><td colspan="2">'.Html::link('apps/partidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['titulo_id'],'Agregar Partida','class="btn btn-block"').'</td><td></td></tr>';
+                      if($modulo->id!=3)$tr.='<tr><td></td><td colspan="2">'.Html::link('apps/partidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['titulo_id'],'Agregar Partida','class="btn btn-block"').'</td><td></td></tr>';
                     }
                   }
                   return $tr;
@@ -106,7 +129,13 @@
                       <th>item</th>
                       <th>Descripcion</th>
                       <th>Unid</th>
-                      <th align="right"><?php if($modulo->id==='1') echo 'Metrado';?><?php if($modulo->id==='2') echo 'Total';?></th>
+                      <th align="right"><?php if($modulo->id==='1' || $modulo->id==3) echo 'Metrado';?><?php if($modulo->id==='2') echo 'COSTO';?>
+                        
+                      <?php if($modulo->id==='3'){?>
+                        <th>Precio</th>
+                        <th>Parcial</th>
+                      <?Php }?>
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -116,10 +145,14 @@
                       <td><span class="text-blue">
                         <b style="font-size: 16px;"><?php echo $presupuesto->nombre; ?></b>
                         </span><span class="pull-right">
-                        <?php echo Html::link('apps/presupuesto/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,' <i class="fa fa-edit"></i>','');?>
+                        <?php if($modulo->id!=3)echo Html::link('apps/presupuesto/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,' <i class="fa fa-edit"></i>','');?>
                       </span></td>
                       <td></td>
                       <td><?php if($partidas_nuevo==0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-sm btn-primary"');?></td>
+                      <?php if($modulo->id==='3'){?>
+                        <td></td>
+                        <td></td>
+                      <?Php }?>
                     </tr>
                       <?php echo obtener_titulos($array_titulo,$modulo,$expediente,$presupuesto,$bloque_id,$tr='',0,$partidas);?> 
                     <tr>
@@ -127,6 +160,10 @@
                       <td colspan="2">
                         <?php if($partidas_nuevo!=0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-primary btn-block""');?></td>
                       <td></td>
+                      <?php if($modulo->id==='3'){?>
+                        <td></td>
+                        <td></td>
+                      <?Php }?>
                     </tr>           
                     <?php }?>
                   </tbody>

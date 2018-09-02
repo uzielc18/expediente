@@ -57,6 +57,7 @@ class Form
      */
     public static function getField($field, $value = null, $is_check = false, $filter = true, $check = false)
     {
+
         // Obtiene considerando el patrón de formato form.field
         $formField = explode('.', $field, 2);
         list($id, $name) = self::fieldName($formField);
@@ -66,9 +67,9 @@ class Form
             Input::post($field) == $value : Input::post($field);
         } elseif ($is_check) {
             $value = (bool) $check;
-        } elseif ($tmp_val = self::getFromModel($formField)) {
+        } elseif (($tmp_val = self::getFromModel($formField))) {
             // Autocarga de datos
-            $value = $is_check ? $tmp_val == $value : $tmp_val;
+            $value = $is_check ? $tmp_val == $value : $value === null ? $tmp_val : $value;
         }
         // Filtrar caracteres especiales
         if (!$is_check && $value !== null && $filter) {

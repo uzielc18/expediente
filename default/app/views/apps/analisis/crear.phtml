@@ -117,7 +117,7 @@ $pres_id = $partida->presupuestos_id;?>
 								Costo unitario directo por: <?php echo $partida->getMedidas()->abr?>
 							</div>
 							<div class="col-sm-3">
-								<b><?php echo $partida->parcial ? number_format($partida->parcial,4): '-';?></b>
+								<b><?php echo $partida->costo ? number_format($partida->costo,4): '-';?></b>
 							</div>
 						</div>
 						<div id="reporte-detalleanalisis">
@@ -149,20 +149,22 @@ $pres_id = $partida->presupuestos_id;?>
 												$precio = $item->precio ? $item->precio : 0;
 												
 											?>
-											<?php if($n==1)echo "<tr><td colspan='8'><b>".$tipo->nombre."</b></td></tr>"; ?>
+											<?php if($n==1)echo "<tr><td colspan='8'><b>".$tipo->nombre.$tipo->simbologia."</b></td></tr>"; ?>
 											<tr>
 												<td><?php echo $item->getMateriales()->getCodigoCompleto();?></td>
 												<td><?php echo $item->getMateriales()->nombre;?></td>
 												<td><?Php echo $item->getMedidas()->nombre?></td>
-												<td align="right"><?php echo number_format($item->cuadrilla,3);?></td>
+												<td align="right"><?php echo $item->cuadrilla ? number_format($item->cuadrilla,3):'-'?></td>
 												<td align="right"><?php echo number_format($cantidad,4);?></td>
 												<td align="right">S/ <?php echo $item->precio ? number_format($precio,4) : '-'?></td>
-												<td align="right">S/ <?php echo number_format($item->parcial,4);?></td>
+												<td align="right">S/ <?php echo $item->parcial ? number_format($item->parcial,4):'-';?></td>
 												<td align="center">
 													<?php 
-													echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:15px;"></i>');
-													if($partida->getTipopartidas()->codigo==='FL'){
-														echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id.'/'.$item->get_calculoflete(),' <i class="fa fa-road" style="font-size:15px;"></i>');
+													echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:15px;"></i>','title="Editar detalle de analsis"');
+													echo Html::linkAction('eliminar_analisis/'.$partida->id.'/'.$item->id,' <i class="fa fa-minus-square" style="font-size:15px;"></i>','title="Eliminar detalle de analsis" onclick="return confirm(\'¿Está seguro?\')"' );
+													if($partida->getTipopartidas()->codigo==='FL' && $tipo->simbologia==='SE'){
+														echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id.'/'.$item->get_calculoflete(),' <i class="fa fa-road" style="font-size:15px;"></i>','title="Calcular el flete"');
+														if($item->get_calculoflete()) echo Html::linkAction('eliminar_flete/'.$partida->id.'/'.$item->get_calculoflete(),' <i class="fa fa-trash" style="font-size:15px;"></i>','title="Eliminar calculo del flete" onclick="return confirm(\'¿Está seguro?\')"');
 													};?></td>
 											</tr>
 									<?php   } 
@@ -188,14 +190,36 @@ $pres_id = $partida->presupuestos_id;?>
 				<div class="box-footer with-border">
 					<div class="pull-right">
 				    <?php 
-				    echo Form::hidden('partida.parcial','',$total_parcial_partida);
+				    echo Form::hidden('partida.costo','',$total_parcial_partida);
 				    echo Form::hidden('partida.detalleanalisis');
+				    echo Form::hidden('partida.metrado');
 				    echo Form::submit('Terminar','class="btn btn-primary"') ?></div>
 				    <?php echo Form::close();?>
 				</div>
 			<script type="text/javascript">
 			$(document).ready(function() 
 			{
+				function calCantidad(){
+					var cuadrilla = $( "#detalleanalisis_cuadrilla").val();
+					var rendimiento = $( "#partida_rendimiento").val();
+					//console.log(cuadrilla,rendimiento);
+					return (cuadrilla*8)/rendimiento;
+				}	
+				function calcular() {
+				  var cantidad = $( "#detalleanalisis_cantidad" ).val();
+				  var precio = $( "#detalleanalisis_precio" ).val();
+				  return cantidad*precio;
+				}
+				$(".calcular").change(function() {
+
+				 if(tipo_codigo=='EQ' || tipo_codigo=="MO"){
+				 	//alert('calcular')
+				  	$("#detalleanalisis_cantidad").val(calCantidad());
+				 }
+				 $("#detalleanalisis_costo" ).val(calcular());
+
+				});
+				$('#partida_detalleanalisis').val($("#reporte-detalleanalisis").html());
 				var tipo_codigo = '0';
 			    $("#detalleanalisis_materiales_id").tokenInput("<?php echo '/'.$module_name.'/materiales/resultados'?>",
 			    {
@@ -222,29 +246,6 @@ $pres_id = $partida->presupuestos_id;?>
 	                }
 
 			    });
-			});
-			$(document).ready(function(){
-				    $('#partida_detalleanalisis').val($("#reporte-detalleanalisis").html());
-				});
-			
-			function calCantidad(){
-				var cuadrilla = $( "#detalleanalisis_cuadrilla").val();
-				var rendimiento = $( "#partida_rendimiento").val();
-				console.log(cuadrilla,rendimiento);
-				return (cuadrilla*8)/rendimiento;
-			}	
-			function calcular() {
-			  var cantidad = $( "#detalleanalisis_cantidad" ).val();
-			  var precio = $( "#detalleanalisis_precio" ).val();
-			  return cantidad*precio;
-			}
-			$(".calcular").change(function() {
-
-			 if(tipo_codigo=='EQ' || tipo_codigo=="MO"){
-			  	$("#detalleanalisis_cantidad").val(calCantidad());
-			 }
-			  $("#detalleanalisis_parcial" ).val(calcular());
-
 			});
 			</script>
 			</div>

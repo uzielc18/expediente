@@ -48,3 +48,17 @@ CHANGE COLUMN `factor_tipo_carretera` `factor_tipo_carretera` FLOAT(11) NULL DEF
 CHANGE COLUMN `factor_retorno` `factor_retorno` FLOAT(11) NULL DEFAULT NULL ,
 CHANGE COLUMN `reajustek1` `reajustek1` FLOAT(11) NULL DEFAULT NULL ;
 --- cambios realizados 27-08-2018 ---
+
+
+ALTER TABLE `expedientes`.`calculoflete` 
+CHANGE COLUMN `costotn` `costotn` FLOAT(11) NULL DEFAULT NULL COMMENT 'S/ x TM calculo de preciotn por el factor_tipo_carretera' AFTER `factor_retorno`,
+CHANGE COLUMN `factor_tipo_carretera` `factor_tipo_carretera` FLOAT(11) NULL DEFAULT NULL COMMENT 'FACTOR DE CONVERSION SEGÚN TIPO DE CARRETERA' ,
+CHANGE COLUMN `distancia_virtual` `distancia_virtual` FLOAT(11) NULL DEFAULT NULL COMMENT 'DISTANCIA VIRTUAL (Km)' ,
+CHANGE COLUMN `preciotn` `preciotn` FLOAT(11) NULL DEFAULT NULL COMMENT 'S/ x TM (ingresado por usuario)' ,
+CHANGE COLUMN `factor_retorno` `factor_retorno` FLOAT(11) NULL DEFAULT NULL COMMENT 'FACOR DE RETORNO AL VACIO FRV' ,
+CHANGE COLUMN `reajustek1` `reajustek1` FLOAT(11) NULL DEFAULT NULL COMMENT 'REAJUSTE K1' ,
+CHANGE COLUMN `costokg` `sub_total_tm` FLOAT(11) NULL DEFAULT NULL COMMENT 'SUB TOTAL S/ X TM' ,
+CHANGE COLUMN `total` `total` FLOAT(11) NULL DEFAULT NULL COMMENT 'TOTAL' ,
+ADD COLUMN `costo_km_tn` FLOAT(11) NULL DEFAULT NULL COMMENT 'COSTO DE KM X TN' AFTER `sub_total_tm`;
+
+cambios a realizar en la unbe y en upeu

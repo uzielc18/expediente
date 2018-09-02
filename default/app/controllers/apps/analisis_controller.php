@@ -55,6 +55,7 @@ class AnalisisController extends AppController {
             }
             $PP = new Partidas();
             $PP->save(Input::post('partida'));
+            Flash::valid('Correcto');
             return Redirect::toAction('crear/'.$partida_id);   
             //return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
         }
@@ -62,7 +63,26 @@ class AnalisisController extends AppController {
 		$this->detalleanalisis = $Detalleanalisis->find((int) $id);
 	}
 
-    
+    public function eliminar_analisis($partida_id,$id) {
+        $obj = new Detalleanalisis();
+        $cc = new Calculoflete();
+        $cc->delete_all('detalleanalisis_id='.$id);
+        if (!$obj->delete($id)) {
+            Flash::error('Falló Operación');
+        }
+        //enrutando al index para listar los articulos
+        Flash::error('Detalle eliminado');
+        Redirect::toAction('crear/'.$partida_id);
+    }
+    public function eliminar_flete($partida_id,$id){
+        $obj = new Calculoflete();
+        if (!$obj->delete($id)) {
+            Flash::error('Falló Operación');
+        }
+        //enrutando al index para listar los articulos
+        Flash::error('Analisis de felte eliminado');
+        Redirect::toAction('crear/'.$partida_id);
+    }
     public function terminar($exp_id,$mod_id,$bloc_id,$pres_id){    
         //View::select('crear');  
         if (Input::hasPost('partida')) {
@@ -70,6 +90,7 @@ class AnalisisController extends AppController {
             $obj = new Partidas();
             $datos = Input::post('partida');
             $datos['detalleanalisis']=base64_encode($datos['detalleanalisis']);
+            $datos['parcial']=$datos['metrado']*$datos['costo'];
             if (!$obj->save($datos)) {
                 Flash::error('Falló Operación');
                 //se hacen persistente los datos en el formulario
@@ -87,13 +108,20 @@ class AnalisisController extends AppController {
         $Modulos = new Modulos();
         $Materiales = new Materiales();
         $Calculoflete = new Calculoflete();
+        if(!$Calculoflete->exists($id)){
+            if($Calculoflete->exists('detalleanalisis_id='.$detalleanalisis_id)){
+                $id=$Calculoflete->find_by_detalleanalisis_id($detalleanalisis_id)->id;
+            }else{
+                $id=0;
+            }
+            }        
         $this->id=$id;
         if($id!=0)$this->calculoflete=$Calculoflete->find((int) $id);
         $this->detalleanalisis_id=$detalleanalisis_id;
         $this->modulo=$Modulos->find_first('conditions: codigo="ACU"');
         $this->partida=$Partidas->find((int)$partida_id);
         $this->titulo='Calcular el flete para <b>'.$this->partida->getPresupuestos()->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
-
+        $this->detalleanalisis=$Detalleanalisis->find((int) $detalleanalisis_id);
         //$Materiales->getMaterialesPresupuesto($this->partida->presupuestos_id);
         $this->array=json_encode($Materiales->getMaterialesPresupuesto($this->partida->presupuestos_id));
         if (Input::hasPost('calculoflete')) {
@@ -118,6 +146,14 @@ class AnalisisController extends AppController {
         }
         //enrutando al index para listar los articulos
         Redirect::toAction('calcular_flete/'.$partida_id.'/'.$detalleanalisis_id);
+    }
+    public function terminar_flete($partida_id)
+    {
+        $dd = new Detalleanalisis();
+        $cc = new Calculoflete();
+        $cc->save(Input::post('calculoflete'));
+        $dd->save(Input::post('detalleanalisis'));
+        return Redirect::toAction('crear/'.$partida_id);    
     }
 }
 ?>
