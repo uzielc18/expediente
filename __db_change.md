@@ -61,4 +61,4 @@ CHANGE COLUMN `costokg` `sub_total_tm` FLOAT(11) NULL DEFAULT NULL COMMENT 'SUB 
 CHANGE COLUMN `total` `total` FLOAT(11) NULL DEFAULT NULL COMMENT 'TOTAL' ,
 ADD COLUMN `costo_km_tn` FLOAT(11) NULL DEFAULT NULL COMMENT 'COSTO DE KM X TN' AFTER `sub_total_tm`;
 
-cambios a realizar en la unbe y en upeu
+cambios a realizar en la en upeu
