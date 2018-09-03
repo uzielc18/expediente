@@ -1,6 +1,6 @@
 <?php
 
-Load::models('aclmenus', 'expedientes'); 
+//Load::models('aclmenus', 'expedientes'); 
 
 class Menu {
     /**

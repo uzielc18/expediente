@@ -70,14 +70,25 @@
 					</thead>
 
 					<tbody>
-						<?php $n=0;foreach($indices as $item):
+						<?php $n=0;
+						foreach($indices as $item):
 						$n++;?>
 						<tr>
 							<td><?php echo $n;?></td>
 							<td><?php echo $item->nombre?></td>
 							<td><?php echo $item->indice_unificado?></td>
 							<td><?php echo $item->simbologia?></td>
-							<td><?php echo Html::linkAction('index/'.$item->tipomateriales_id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:25px;"></i>');?></td>
+							<td>
+								<?php 
+								$links=[];
+								$links[0]=['action'=>'index','icono'=>'edit','params'=>"'".$item->tipomateriales_id.",".$item->id."'"];
+								$links[1]=['borrar'=>'index','icono'=>'trash','params'=>"'".$item->tipomateriales_id.",".$item->id."'"];
+
+								Actions::getActions('tipomateriales',$links);?>
+
+								<?php //echo Html::linkAction('index/'.$item->tipomateriales_id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:18;"></i>');?>
+								<?php //echo Html::linkAction('borrar/'.$item->tipomateriales_id.'/'.$item->id,' <i class="fa fa-trash" style="font-size:18;"></i>');?>
+							</td>
 						</tr>
 						<?php endforeach;?>
 					</tbody>

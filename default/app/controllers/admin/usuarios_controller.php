@@ -1,5 +1,4 @@
 <?php
-Load::models('aclusuarios','acldatos');
 View::template('backend/backend');
 
 class UsuariosController extends AdminController {
@@ -55,22 +54,25 @@ class UsuariosController extends AdminController {
     public function crear() {
         try {
              if (Input::hasPost('usuario')) {
-                $usr = new Aclusuarios(Input::post('usuario'));
-				$usr->activo='0';
-				$usr->estado='1';
-				$usr->userid=Auth::get('id');
-                if ($usr->save()) {
-					$dat= new Acldatos(Input::post('datos'));
-					$dat->aclusuarios_id=$usr->id;
-					$dat->aclempresas_id=$usr->aclempresas_id;
-					$dat->nombre=$usr->nombres;
-					$dat->estado='1';
-					$dat->userid=Auth::get('id');
-					if ($dat->save()) {
+                $dat = new Acldatos(Input::post('dato'));
+                $dat->estado='1';
+                $dat->userid=Auth::get('id');
+                if ($dat->save()) {
+					$usr= new Aclusuarios(Input::post('usuario'));
+                    $usr->nombres=$dat->nombre.' '.$dat->appaterno;
+                    $usr->clave=md5('123456');
+                    $usr->aclempresas_id=$dat->aclempresas_id;
+                    $usr->dni=$dat->dni;
+                    $usr->picture='avatar2.png';
+                    $usr->activo='0';
+                    $usr->estado='1';
+                    $usr->acldatos_id=$dat->id;
+					
+					if ($usr->save()) {
 						//Flash::valid('Datos Actualizados Correctamente');
 					}
                     Flash::valid('El Usuario Ha Sido Agregado Exitosamente...!!!');
-                    Acciones::add("Agregó al usuario {$usr->login} al sistema", 'usuarios');
+                    //Acciones::add("Agregó al usuario {$usr->login} al sistema", 'usuarios');
                     return Redirect::to();
                 } else {
                     Flash::warning('No se Pudieron Guardar los Datos...!!!');
@@ -83,21 +85,21 @@ class UsuariosController extends AdminController {
 
     public function editar($id) {
         try {
-
+            View::select('crear');
             $id = Filter::get($id, 'digits');
 
             $usr = new Aclusuarios();
 			$dat= new Acldatos();//Input::post('datos')
-            $this->usuario = $usr->find_first($id);
-			$this->datos = $dat->find_first('conditions: id='.$this->usuario->acldatos_id);
+            $this->usuario = $usr->find((int) $id);
+			$this->dato = $dat->find((int) $id);
             if (Input::hasPost('usuario')) {
 					$usr->userid=Auth::get('id');
 				if ($usr->update(Input::post('usuario'))){
 					
-					$dat->update(Input::post('datos'));
+					$dat->update(Input::post('dato'));
                     Flash::valid('El Usuario Ha Sido Actualizado 
 					Exitosamente...!!!');
-                    Acciones::add("Editó al usuario {$usr->login}", 'usuarios');
+                    //Acciones::add("Editó al usuario {$usr->login}", 'usuarios');
                     return Redirect::to();
                 } else {
                     Flash::warning('No se Pudieron Guardar los Datos...!!!');

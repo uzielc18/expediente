@@ -71,5 +71,10 @@ class Aclpermisos extends ActiveRecord {
         return $this->exists("aclroles_id = '$rol' AND aclrecursos_id = '$recurso'");
     }
 
+    public function get_permisos_action($rol_id,$modulo,$controller){
+        $sql="SELECT p.id, re.recurso,re.modulo,re.controlador,re.accion FROM aclpermisos as p INNER JOIN aclrecursos as re ON re.id=p.aclrecursos_id AND re.controlador='".$controller."' AND re.modulo='".$modulo."' Inner JOIN aclroles as r ON r.id=p.aclroles_id AND r.id=".$rol_id;
+        return $this->find_all_by_sql($sql);
+    }
+
 }
 

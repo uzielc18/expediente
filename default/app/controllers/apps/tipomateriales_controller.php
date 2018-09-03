@@ -56,5 +56,21 @@ class TipomaterialesController extends AppController
             }            
         }
 	}
+    public function borrar($tipomateriales_id,$id){
+        try {
+            $id = Filter::get($id, 'digits');
+            $doc = new Tipomateriales();
+            if (!$doc->find_first($id)){ //si no existe el usuario
+                Flash::warning("No existe ningun registro con id '{$id}'");
+            }else if ($doc->borrar()) {
+                Flash::valid("El <b>{$doc->id}</b> el registro esta borrado ahora <b>Borrado</b>...!!!");
+            } else {
+                Flash::warning('No se pudo borrar el registro!!!');
+            }
+        } catch (KumbiaException $e) {
+            View::excepcion($e);
+        }
+        return Redirect::toAction('index/'.$tipomateriales_id);
+    }
 }
 ?>

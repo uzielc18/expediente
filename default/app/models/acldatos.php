@@ -8,8 +8,8 @@ class Acldatos extends ActiveRecord {
         $this->has_one('filiaciones');
         //$this->has_one('aclusarios');
 		$this->validates_presence_of('nombre', 'message: Debe escribir un <b>Nombre</b> para el Trabajador');
-        $this->validates_presence_of('apaterno', 'message: Debe escribir el <b>Primir Apellido</b>');
-        $this->validates_presence_of('amaterno', 'message: Debe escribir el <b>Segundo Apellido</b>');
+        $this->validates_presence_of('appaterno', 'message: Debe escribir el <b>Primir Apellido</b>');
+        $this->validates_presence_of('apmaterno', 'message: Debe escribir el <b>Segundo Apellido</b>');
         $this->validates_presence_of('dni', 'message: Debe ingresar su <b> DNI </b>');
 		$this->validates_presence_of('aclempresas_id', 'message: Debe seleccionar una <b>Empresa</b>');
     }
