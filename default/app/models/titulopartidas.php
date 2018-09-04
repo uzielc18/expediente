@@ -21,10 +21,13 @@ class Titulopartidas extends ActiveRecord {
     		$n=0;
     		foreach ($ts as $t) {
     			$total_sub=$Titulopartidas->count('estado=1 AND titulopartidas_id='.$t->id);
-    			$total_partidas=$Partidas->count('estado=1 AND titulopartidas_id='.$t->id);
-    			$new=array('titulo'=>$t->titulo,'id'=>$t->id,'titulo_id'=>$t->id,'titulopartidas_id'=>$t->titulopartidas_id,'presupuestos_id'=>$t->presupuestos_id,'codigo_titulo'=>$t->codigo,'total_sub'=>$total_sub,'total_partidas'=>$total_partidas);
+                $total_partidas=$Partidas->count('estado=1 AND titulopartidas_id='.$t->id);
+                $total=$Partidas->sum('parcial','conditions: estado=1 AND titulopartidas_id='.$t->id);
+    			$new=array('titulo'=>$t->titulo,'id'=>$t->id,'titulo_id'=>$t->id,'titulopartidas_id'=>$t->titulopartidas_id,'presupuestos_id'=>$t->presupuestos_id,'codigo_titulo'=>$t->codigo,'total_sub'=>$total_sub,'total_partidas'=>$total_partidas,'total'=>$total);
     			if($total_sub){
-    				$new['subtitulos']=titulos_sub($presupuestos_id,$t->id);
+                    $__sub_titulos=titulos_sub($presupuestos_id,$t->id);
+    				$new['subtitulos']=$__sub_titulos;
+                    $new['total']=array_sum(array_column($__sub_titulos, 'total'));
     			}else{
     				$new['subtitulos']=array();
     			}
@@ -39,6 +42,9 @@ class Titulopartidas extends ActiveRecord {
     }
     public function get_json_titulos($presupuestos_id){
         return json_encode($this->get_array_titulos($presupuestos_id));
+    }
+    public function get_total($titulo_id,$presupuestos_id){
+
     }
 }
 ?>

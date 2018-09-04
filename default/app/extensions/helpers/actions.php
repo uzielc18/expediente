@@ -11,7 +11,7 @@ class Actions
 	 * @return [type] [description]
 	 * 
 	 */
-	public function getActions($controller,$arrayLinks)
+	static function  getActions($controller,$arrayLinks)
 	{
 		$roles_id=Auth::get('aclroles_id');
 		$modulo=Router::get('module');
@@ -38,12 +38,55 @@ class Actions
 						echo Html::linkAction($ac.'/'.$pr,' <i class="fa fa-'.$ic.'" style="font-size:18;"></i>');
 					}else{
 						echo Html::link($ac.'/'.$pr,' <i class="fa fa-'.$ic.'" style="font-size:18;"></i>');
-						
 					}
 
 				}
 
 
+	}
+	/**
+     * Crea un enlace usando la constante PUBLIC_PATH, para que siempre funcione.
+     *
+     * @example <?= Actions::link('usuario/crear','Crear usuario') ?>
+     * @example Imprime un enlace para todos los roles
+     * @example <?= Actions::link(usuario/crear','Crear usuario', 'class="button"','1,2,3') ?>
+     * @example El mismo anterior, pero solo para los roles 1,2,3
+     *
+     *
+     * @param string       $action Ruta a la acción
+     * @param string       $text   Texto a mostrar
+     * @param string|array $attrs  Atributos adicionales
+     * @param string       $roles roles separados por coma o el comodin 
+     *
+     * @return string
+     */
+	public static function link($action, $text, $attrs = '',$roles=NULL){
+		$roles = $roles ? $roles:'*';
+		if($roles==='*'){
+			return Html::link($action, $text, $attrs);
+		}else{
+			$roles=explode(',', $roles);
+			if(in_array(Auth::get('aclroles_id'),$roles)){
+				return Html::link($action, $text, $attrs);
+			}else{
+				return '- ';
+			}
+		}
+		
+	}
+	public static function linkAction($action, $text, $attrs = '',$roles=NULL){
+		$roles = $roles ? $roles : '*';
+		if($roles==='*'){
+			return Html::linkAction($action, $text, $attrs);
+		}else{
+			$roles=explode(',', $roles);
+			if(in_array(Auth::get('aclroles_id'),$roles)){
+				return Html::linkAction($action, $text, $attrs);
+			}else{
+				return '';
+			}
+		}
+		
 	}
 }
 ?>

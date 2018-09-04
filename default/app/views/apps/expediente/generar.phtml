@@ -49,7 +49,9 @@
                     $tr.='<tr>';
                     $tr.='<td>'.$presupuesto->codigo.' '.$codigo.'</td>';
                     $tr.='<td>';
-                    $tr.='<span class="text-light-blue" style="font-size: 15px;"><b>'.$ti['titulo'].'</b></span>';
+                    //$color=$ti['total_sub'] == 0 ? '':'text-light-blue';
+                    $color='text-light-blue';
+                    $tr.='<span class="'.$color.'" style="font-size: 15px;"><b>'.$ti['titulo'].'</b></span>';
                     if($modulo->id!=3){
                     $tr.='<span class="pull-right">';
                     $tr.=Html::link('apps/titulopartidas/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id.'/'.$ti['id'],' <i class="fa fa-edit"></i>','title="Editar titulo"');
@@ -58,7 +60,7 @@
                     }
                     $tr.='</td><td></td><td></td>';
                     if($modulo->id==='3'){
-                      $tr.='</td><td></td><td></td>';
+                      $tr.='</td><td></td><td align="right">S/ '.number_format($ti['total'],2,'.','').'</td>';
                     }
                     $tr.='</tr>';
                     $tr_p='';
@@ -80,13 +82,13 @@
                         $tr_p.='</td>';
                         $tr_p.='<td align="center">'.$partida->getMedidas()->codigos.'</td>';
 
-                        if($modulo->id==1 || $modulo->id==3)$tr_p.='<td align="right">'.$partida->metrado.'</td>';
+                        if($modulo->id==1 || $modulo->id==3)$tr_p.='<td align="right">'.number_format($partida->metrado?$partida->metrado:0,2,'.','').'</td>';
                         if($modulo->id==3)
                           {
-                            $tr_p.='<td align="right"> S/ '.$partida->costo.'</td>';
-                            $tr_p.='<td align="right"> S/ '.$partida->parcial.'</td>';
+                            $tr_p.='<td align="right"> S/ '.number_format($partida->costo,2,'.','').'</td>';
+                            $tr_p.='<td align="right"> S/ '.number_format($partida->parcial,2,'.','').'</td>';
                           }
-                        if($modulo->id==2)$tr_p.='<td align="right"> S/ '.$partida->costo.'</td>';
+                        if($modulo->id==2)$tr_p.='<td align="right"> S/ '.number_format($partida->costo,2,'.','').'</td>';
                         $tr_p.='</tr>';
                         $tr_p.='<tr style="display: none;" id="detalle-'.$partida->id.'">';
                         $cols= $modulo->id===3 ? '6':'4';
@@ -120,7 +122,7 @@
                   }
                   return $tr;
                 }
-                
+                //print_r($array_titulo);
                 ?>
                 
                 <table id="generar_table" class="table table-bordered">
@@ -151,14 +153,14 @@
                       <td><?php if($partidas_nuevo==0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-sm btn-primary"');?></td>
                       <?php if($modulo->id==='3'){?>
                         <td></td>
-                        <td></td>
+                        <td align="right">S/ <?php echo number_format($presupuesto->get_total(),4,'.','');?></td>
                       <?Php }?>
                     </tr>
                       <?php echo obtener_titulos($array_titulo,$modulo,$expediente,$presupuesto,$bloque_id,$tr='',0,$partidas);?> 
                     <tr>
                       <td></td>
                       <td colspan="2">
-                        <?php if($partidas_nuevo!=0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-primary btn-block""');?></td>
+                        <?php if($modulo->id!='3') if($partidas_nuevo!=0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-primary btn-block""');?></td>
                       <td></td>
                       <?php if($modulo->id==='3'){?>
                         <td></td>
