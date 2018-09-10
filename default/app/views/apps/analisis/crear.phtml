@@ -30,7 +30,7 @@ $pres_id = $partida->presupuestos_id;?>
 						<?php echo Form::hidden('detalleanalisis.id');?>
 						<?php echo Form::hidden('detalleanalisis.partidas_id',NULL,$partida->id);?>
 						<?php echo Form::hidden('detalleanalisis.estado',NULL,1);?>
-						<?php echo Form::text('detalleanalisis.parcial');?>
+						<?php echo Form::hidden('detalleanalisis.parcial');?>
 						<?php echo Form::hidden('detalleanalisis.modulos_id',NULL,$modulo->id);?>
 						<?php 
 						echo Form::hidden('partida.id');

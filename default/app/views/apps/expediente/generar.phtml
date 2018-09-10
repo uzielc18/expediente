@@ -111,6 +111,15 @@
                           if(!$error_de_partida)$tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
                           $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detalleanalisis)."<div>";
                         }
+                        if($modulo->id==4)
+                        {
+                          $error_de_partida=$partida->get_correcto($partida->id,'detallestecnicos');
+                          $tr_p.='<span class="pull-right">';
+                          $tr_p.=html::link('apps/detallestecnicos/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
+                          $tr_p.='</span>';
+                          if(!$error_de_partida)$tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
+                          $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detallestecnicos)."<div>";
+                        }
                         $tr_p.='</td></tr>';
                       }
                     $tr.=$tr_p;
@@ -221,9 +230,11 @@ $(document).ready(function(){
 </div>
 </section>
 <footer class="main-footer" style="z-index: 999999 !important;position: fixed;left: 0px;bottom: 0px;width: 100%;margin-bottom: 2px;">
-  <?php foreach($modulos as $mod){   ?> 
-      <a href="/apps/expediente/generar/<?php echo $expediente->id?>/<?Php echo $mod->id?>/<?php echo $bloque_id;?>/<?php echo $presupuesto_id;?>" class="btn btn-app <?php echo $cl = $mod->id==$modulo->id ? 'active':''; ?>">
+  
+  <div><?php foreach($modulos as $mod){   ?> 
+      <a href="/apps/expediente/generar/<?php echo $expediente->id?>/<?Php echo $mod->id?>/<?php echo $bloque_id;?>/<?php echo $presupuesto_id;?>" class="btn btn-app <?php echo $cl = $mod->id==$modulo->id ? 'btn-primary active':''; ?>">
           <i class="<?php echo $mod->icono?>"></i> <?php echo $mod->nombre;?>
         </a>
       <?php }?>
+  </div>
 </footer>

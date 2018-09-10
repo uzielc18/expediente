@@ -11,20 +11,7 @@
         <!-- Sidebar toggle button-->
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
-        </a>
-        <div style="width: 50%;display: inline-flex;">
-          <form action="#" method="get" style="margin:10px 10px 0px 10px; border: white;">
-              <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                    <span class="input-group-btn" style="background-color: white;    border: white;">
-                      <button type="submit" name="search" id="search-btn" class="btn btn-flat" style="background-color: white;    border: white;">
-                          <i class="fa fa-search"></i>
-                      </button>
-                    </span>
-              </div>
-          </form>
-        </div>
-        
+        </a>        
          <div class="navbar-custom-menu"> 
               
         <?php if($modulo=='admin')View::renderMenu(Menu::BACKEND,1,'class="nav navbar-nav"') ?>
