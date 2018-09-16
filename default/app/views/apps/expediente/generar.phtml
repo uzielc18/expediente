@@ -1,16 +1,49 @@
-
+<?php 
+$Ex = new Expedientes();
+$registros= $Ex->getTipoExp();
+$expediente_id=$expediente->id;
+?>
 <?php View::partial('menu_expediente',false,array('expediente_id'=>$expediente->id)) ?>
 
 <section class="content">
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-2">
+    <?php if($expediente->id!=0){?>
+            <?php foreach($registros as $reg){?>
+            <div class="box box-solid no-padding">
+              <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-folder-open"></i><span><?php echo $reg->nombre?></span></h3>
+                <div class="box-tools">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="box-body no-padding">
+                <ul class="nav nav-pills nav-stacked">
+                  <?Php foreach($Ex->find('conditions: expedientes_id IS NULL AND tipoexpedientes_id='.$reg->id) as $expediente){?>
+                  <li <?php echo $expediente_id==$expediente->id ? 'class="active"': '';?>>
+                    <a href="/apps/expediente/generar/<?php echo $expediente->id ?>" <?php echo $expediente_id==$expediente->id ? 'style="color:#3c8dbc;"': '';?> class="">
+                      <i class="fa fa-file-excel-o"></i><span><?php echo $expediente->nombre;?></span>
+                    </a>
+                  </li>
+                  <?php }?>
+                </ul>
+              </div>
+              <!-- /.box-body -->
+            </div>
+          <?php }
+            }?>
+  </div>
+  <div class="col-md-10">
     <div class="box box-solid">
       <?php echo View::content();
       $bloque_id=$bloque? $bloque->id : 0;
       $presupuesto_id=$presupuesto? $presupuesto->id : 0;
       ?>
-      <div class="box-header">
-          <div style="text-align: center;"><h2 class="box-title"><i class="<?php echo $modulo->icono?>"> </i> <?php echo $modulo->descripcion?>  <?php echo html::linkAction('ordenar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto_id,'ordenar','class="btn btn-xs"');?></h2></div>
+      <div class="box-header with-border">
+          <div style="text-align: center;">
+            <h2 class="box-title"><i class="<?php echo $modulo->icono?>"> </i> <?php echo $modulo->descripcion?>  <?php echo html::linkAction('ordenar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto_id,'ordenar','class="btn btn-xs"');?></h2>
+          </div>
           <dl class="dl-horizontal">
             <dt>Presupuesto</dt>
             <dd><?php echo $expediente->nombre?></dd>
@@ -115,10 +148,10 @@
                         {
                           $error_de_partida=$partida->get_correcto($partida->id,'detallestecnicos');
                           $tr_p.='<span class="pull-right">';
-                          $tr_p.=html::link('apps/detallestecnicos/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
+                          $tr_p.=html::link('apps/detallestecnicos/crear/'.$partida->id.'/0',' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
                           $tr_p.='</span>';
                           if(!$error_de_partida)$tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
-                          $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detallestecnicos)."<div>";
+                          $tr_p.="<div id='ver_reporte'>".$partida->detallestecnicos."<div>";
                         }
                         $tr_p.='</td></tr>';
                       }

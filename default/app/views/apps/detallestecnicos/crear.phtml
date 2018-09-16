@@ -1,0 +1,108 @@
+<?php
+Tag::css('backendnew/bootstrap-wysihtml5/bootstrap-wysihtml5.min');
+echo Tag::js('jquery/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.all.min');
+//echo Tag::js('jquery/plugins/ckeditor/styles');
+//echo Tag::js('jquery/plugins/ckeditor/lang/es');
+
+Tag::css('backendnew/ckeditor/skins/moono/editor');
+?>
+<script type="text/javascript">
+/*$(document).ready(function() 
+{
+    $("#detallestecnicos_materiales_id").tokenInput("<?php //echo '/'.$module_name.'/materiales/resultados'?>",
+    {
+        tokenLimit: 1,minChars: 3,
+        <?php //if(!empty($detallestecnicos->materiales_id)){?>
+        prePopulate: [
+                {id: <?php //echo $detallestecnicos->materiales_id?>, name: "<?php //echo $detallestecnicos->getMateriales()->getCodigoCompleto().' '.$detallestecnicos->getMateriales()->nombre?>"}
+            ]
+        <?php //}?>
+    });
+});*/
+
+</script>
+
+<?php 
+$exp_id = $partida->getPresupuestos()->getExpedientes()->expedientes_id;
+$mod_id = $modulo->id;
+$bloc_id = $partida->getPresupuestos()->expedientes_id;
+$pres_id = $partida->presupuestos_id;
+View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
+<section class="content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-solid">
+				<div class="box-header">
+				    <h2 class="box-title"><?php echo $titulo?></h2>
+				</div>
+				<?php View::content();?>
+				<div class="col-sm-9">
+					<blockquote>
+						<dl class="dl-horizontal">
+					      <dt>Presupuesto: </dt><dd><?php echo $partida->getPresupuestos()->nombre?></dd>
+					      <dt>Titulo: </dt><dd><?php echo $partida->getTitulopartidas()->titulo?></dd>
+					      <dt>Medida: </dt><dd><?php echo $partida->getMedidas()->nombre?> (<?php echo $partida->getMedidas()->abr?>)</dd>
+					      <dt>Tipo Partida</dt><dd><?Php echo $partida->getTipopartidas()->nombre?></dd>
+					  	</dl>
+					</blockquote>
+				</div>
+				<div class="box-body">
+					<?php 
+						echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
+					<?php echo Form::hidden('detallestecnicos.id');?>
+					<?php echo Form::hidden('detallestecnicos.partidas_id',NULL,$partida->id);?>
+					<?php echo Form::hidden('detallestecnicos.estado',NULL,1);?>
+					<?php echo Form::hidden('detallestecnicos.modulos_id',NULL,$modulo->id);?>
+					<div class="row">
+						<div class="col-sm-12">
+						    <div class="form-group">
+						    <?php echo Form::label('Descripcion','detallestecnicos.descripcion','class="col-sm-2 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::textArea('detallestecnicos.descripcion','class="form-control calcular" placeholder="d"')?>
+						        </div>
+						    </div>
+						</div>
+						
+					</div>
+					<div class="col-sm-12" style="border-bottom: solid #ccc 1px;">
+						<div class="form-group">
+						    <div class="with-padding pull-right">
+						    	<br>					
+						    	<?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
+						    </div>
+						</div>
+					</div>
+					<?php echo Form::close();?>
+					<div class="col-sm-12 with-padding" >
+						<?Php 
+						
+						echo Form::open('apps/metrados/terminar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
+						echo Form::hidden('partida.id');
+						echo Form::hidden('partida.presupuestos_id');
+						echo Form::hidden('partida.titulopartidas_id');
+						echo Form::hidden('partida.medidas_id');
+						echo Form::hidden('partida.tipopartidas_id');
+						?>
+						<div id="reporte-detalles">
+							<?Php if($detallestecnicos)echo $detallestecnicos->descripcion?>
+						</div>
+					</div>
+				</div>
+				<div class="box-footer with-border">
+					<div class="pull-right">
+				    <?php 
+				    echo Form::hidden('partida.detallestecnicos');
+				    echo Form::submit('Terminar','class="btn btn-primary"') ?></div>
+				    <?php echo Form::close();?>
+				</div>
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$('#detallestecnicos_descripcion').wysihtml5();
+					    $('#partida_detallestecnicos').val($("#reporte-detalles").html());
+					});
+					
+				</script>
+			</div>
+		</div>
+	</div>
+</section>

@@ -19,37 +19,9 @@ $registros= $Ex->getTipoExp();
             </div>
         </div>
         <div class="col-md-12 menu_expediente no-padding">
-            <?php if($expediente_id!=0){?>
-            <?php foreach($registros as $reg){?>
-            <div class="box box-solid no-padding">
-              <div class="box-header with-border no-padding">
-                <h3 class="box-title" style="color: #fff;"><i class="fa fa-folder-open"></i><span><?php echo $reg->nombre?></span></h3>
-                <div class="box-tools">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="box-body no-padding">
-                <ul class="nav nav-pills nav-stacked">
-                  <?Php foreach($Ex->find('conditions: expedientes_id IS NULL AND tipoexpedientes_id='.$reg->id) as $expediente){?>
-                  <li <?php echo $expediente_id==$expediente->id ? 'class="active"': '';?>>
-                    <a href="/apps/expediente/generar/<?php echo $expediente->id ?>" <?php echo $expediente_id==$expediente->id ? 'style="color:#fff;"': '';?> class="menu_expediente_a">
-                      <i class="fa fa-file-excel-o"></i><span><?php echo $expediente->nombre;?></span>
-                    </a>
-                  </li>
-                  <?php }?>
-                </ul>
-              </div>
-              <!-- /.box-body -->
-            </div>
-          <?php }
-            }?>
-        <?php View::renderMenu(Menu::APP,3,'class="sidebar-menu"');?>      <!-- /. box -->
+          <?php View::renderMenu(Menu::APP,3,'class="sidebar-menu"');?>      <!-- /. box -->
         </div>
-        
         <!-- sidebar menu: : style can be found in sidebar.less -->
-        
-        
     </section>
     <!-- /.sidebar -->
 </aside>
