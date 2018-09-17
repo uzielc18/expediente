@@ -52,7 +52,9 @@ class PresupuestoController extends AppController {
 		$this->presupuestos = $Presupuestos->find((int) $id);
         $this->titulo.=' '.$this->presupuestos->getExpedientes()->nombre;
 	}
-
+    public function volver($exp_id=NULL, $mod_id=NULL, $bloq_id=NULL, $id = NULL){
+        return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloq_id.'/'.$id);
+    }
     public function borrar($exp_id=NULL, $mod_id=NULL, $bloq_id=NULL,$id, $act=NULL,$id_presupuesto){
         try {
             $id = Filter::get($id, 'digits');

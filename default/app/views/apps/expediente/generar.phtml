@@ -7,7 +7,8 @@ $expediente_id=$expediente->id;
 
 <section class="content">
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-sm-3 col-md-2" >
+    <div style="position: fixed; width: 15%;">
     <?php if($expediente->id!=0){?>
             <?php foreach($registros as $reg){?>
             <div class="box box-solid no-padding">
@@ -33,6 +34,7 @@ $expediente_id=$expediente->id;
             </div>
           <?php }
             }?>
+    </div>
   </div>
   <div class="col-md-10">
     <div class="box box-solid">

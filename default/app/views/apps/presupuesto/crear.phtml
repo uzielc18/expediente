@@ -17,13 +17,13 @@
 	    <div class="form-group">
 	    <?php echo Form::label('Codigo','presupuestos.codigo','class="col-sm-2 control-label"');?>
 	        <div class="col-sm-9">
-	            <?php echo Form::text('presupuestos.codigo','class="form-control" placeholder="Codigo"')?>
+	            <?php echo Form::text('presupuestos.codigo','class="form-control" placeholder="Codigo" required')?>
 	        </div>
 	    </div>
 	    <div class="form-group">
 	    <?php echo Form::label('Nombre','presupuestos.nombre','class="col-sm-2 control-label"');?>
 	        <div class="col-sm-9">
-	            <?php echo Form::text('presupuestos.nombre','class="form-control" placeholder="Nombre"')?>
+	            <?php echo Form::text('presupuestos.nombre','class="form-control" placeholder="Nombre" required')?>
 	        </div>
 	    </div>
 	    <!-- <div class="form-group">
@@ -69,7 +69,8 @@
 </div>
 </div>
 <div class="box-footer">
-	<?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
+	<?php echo Form::submit('Guardar Datos','class="btn btn-primary"').' ';
+        echo Html::linkAction('volver/'.$expedientes_id.'/'.$modulo_id.'/'.$bloque_id.'/'.$id_presupuesto,' Volver al expediente',' class="btn"') ?>
     <?php if($n==0)echo Html::linkAction('crear_predeterminados/'.$expedientes_id, 'Crear default', 'class="btn"') ?>
 </div>
 <?php echo Form::close();?>

@@ -9,14 +9,10 @@ $patrones[0] = '/s/';
 $sustituciones = array();
 $sustituciones[2] = ' ';
 $modulo_title = ucwords(preg_replace($patrones, $sustituciones, $modulo));
-if($modulo!='admin'){
 $t_t=explode(" ",$modulo_title);
 $mini1=substr($t_t[0],0, 1);
 $mini2=substr($t_t[1],0, 1);
-}else{
-   $mini1 = 'Adm';
-   $mini2 = '*';
-}
+
 ?>
         <title><?Php echo $modulo_title?></title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -56,7 +52,7 @@ $mini2=substr($t_t[1],0, 1);
         <!-- header logo: style can be found in header.less -->
 
         <?php View::partial('cabecera_admin',false,array('modulo_title'=>$modulo_title,'modulo'=>$modulo,'mini1'=>$mini1,'mini2'=>$mini2)) ?>
-        <?php View::partial('menu_admin',false,array('modulo'=>$modulo)) ?>
+        <?php View::partial('menu_admin',false,array('modulo'=>'apps')) ?>
             <!-- Right side column. Contains the navbar and content of the page -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
