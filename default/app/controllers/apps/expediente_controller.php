@@ -13,7 +13,7 @@ class ExpedienteController extends AdminController {
 		$this->codigo = $Expedientes->get_codigo();
 		if (Input::hasPost('expedientes')) {
 
-            $obj = Load::model('expedientes');
+            $obj = $Expedientes;
             //En caso que falle la operación de guardar
             if (!$obj->save(Input::post('expedientes'))) {
                 Flash::error('Falló Operación');
@@ -32,7 +32,7 @@ class ExpedienteController extends AdminController {
 		$this->codigo = $Expedientes->get_codigo();
 		if (Input::hasPost('expedientes')) {
 
-            $obj = Load::model('expedientes');
+            $obj = $Expedientes;
             //En caso que falle la operación de guardar
             if (!$obj->save(Input::post('expedientes'))) {
                 Flash::error('Falló Operación');
