@@ -5,6 +5,9 @@
 View::template('apps/default_app');
 class MiempresaController extends AppController
 {
+    public function index(){
+        
+    }
 	public function ver(){
 		$Aclempresas =  new Aclempresas ();
 		$this->tienda=$Aclempresas->find((int) Auth::get('aclempresas_id'));

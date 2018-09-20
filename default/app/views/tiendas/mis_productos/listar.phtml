@@ -37,9 +37,9 @@
     <h2>No hay ningún registro</h2>
     <?php endif ?>
 
-    <?php //var_dump($results)?>
+    <?php //var_dump($results->items)?>
 </div>
 <div class="box-footer">
-    <?php if ($results->items)View::partial('paginators/bootstrap', false, array('page' => $results ,'url' => Router::get('controller_path').'/index')); ?>
+    <?php if ($results->items)View::partial('paginators/bootstrap', False, array('page' => $results,'url' => Router::get('controller_path').'/listar')); ?>
 
 </div>

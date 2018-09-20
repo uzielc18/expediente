@@ -36,8 +36,8 @@ if (!isset($url)) {
 if (!isset($show)) {
     $show = 10;
 }
-
 $half = floor($show / 2);
+//echo 'next'.$page->next.' prev'.$page->prev.' current'.$page->current.'total'.$page->total.' count'.$page->count.' per_page'.$page->per_page;
 
 //Calculando el inicio de paginador centrado
 if ($page->current <= $half) {
@@ -49,8 +49,7 @@ if ($page->current <= $half) {
 } else {
     $start = $page->current - $half;
 }
-?>
-
+?> 
 <div class="clearfix">
     <ul class="pagination pagination-sm no-margin pull-right">
         <?php
@@ -72,8 +71,10 @@ if ($page->current <= $half) {
         ?>
             <li><a href="#">...</a></li>
         <?php endif; ?>
-
-        <?php for ($i = $start; $i <= $page->total && $i < ($start + $show); $i++): ?>
+        
+        <?php 
+        //echo 'start'.$start; echo '¡¡¡¡¡¡suma'.($start + $show);
+              for ($i = $start; $i <= $page->total && $i < ($start + $show); $i++): ?>
         <?php echo $i == $page->current ? "<li class=\"active\"><a href='#'>$i</a><li>" : '<li>' . Html::link("$url/$i", $i) . '</li>'; ?>
         <?php endfor; ?>
 

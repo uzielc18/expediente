@@ -47,21 +47,24 @@ class LectorRecursos {
 
     protected static function escanearDir($modulo = NUll) {
         $dir = APP_PATH . 'controllers' . ( $modulo ? "/$modulo" : '' );
-        $res = scandir($dir);
-        $modulos = array();
-        foreach ($res as $e) {
-            if (strpos($e, '_controller.php')) {
-                self::$_controladores[] = array(
-                    'dir' => "$dir/$e",
-                    'controlador' => str_replace('_controller.php', '', $e),
-                    'modulo' => $modulo
-                );
-            } elseif ($e !== '.' && $e !== '..') {
-                $modulos[] = $e;
+        if (!preg_match('/DS_Store/i', $dir)) {
+            //echo "----->".$dir;
+            $res = scandir($dir);
+            $modulos = array();
+            foreach ($res as $e) {
+                if (strpos($e, '_controller.php')) {
+                    self::$_controladores[] = array(
+                        'dir' => "$dir/$e",
+                        'controlador' => str_replace('_controller.php', '', $e),
+                        'modulo' => $modulo
+                    );
+                } elseif ($e !== '.' && $e !== '..') {
+                    $modulos[] = $e;
+                }
             }
-        }
-        foreach ($modulos as $mod) {
-            self::escanearDir($mod);
+            foreach ($modulos as $mod) {
+                self::escanearDir($mod);
+            }
         }
     }
 
