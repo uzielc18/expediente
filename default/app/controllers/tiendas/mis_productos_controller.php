@@ -8,7 +8,7 @@ class MisProductosController extends AppController
 	public function index(){
 		
 	}
-    public function listar($tipomateriales_id=1,$indices_id=NULL$page=1){
+    public function listar($tipomateriales_id=1,$indices_id=NULL,$page=1){
     	$this->titulo="Administracion de materiales";
 		$this->id=$tipomateriales_id;
 		$TipoMateriales = new Tipomateriales();

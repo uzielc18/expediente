@@ -8,7 +8,7 @@ class MaterialesController extends AppController{
 		$Materiales = new Materiales();
 		$this->tipos = $TipoMateriales->get_principales();
 		$this->tipo = $TipoMateriales->find((int)$tipomateriales_id);
-		$this->indices = $TipoMateriales->find('conditions: estado=1 AND tipomateriales_id='.$tipomateriales_id);
+		$this->indices = $TipoMateriales->find('conditions: estado=1 AND tipomateriales_id='.$tipomateriales_id.' limit 0,10');
 		$this->indice = false;
 		if($indices_id){
 			$this->indice = $TipoMateriales->find((int)$indices_id);
@@ -89,6 +89,12 @@ class MaterialesController extends AppController{
 		View::template(NULL); 
 		$Materiales = new Materiales();
 		$this->new_codigo=$Materiales->get_codigo($tipo);
+	}
+	public function tipo_lista($tipomateriales_id,$q){
+		View::template(NULL);
+		$TipoMateriales = new Tipomateriales();
+		$this->tipo = $TipoMateriales->find((int)$tipomateriales_id);
+		$this->indices = $TipoMateriales->find('conditions: (descripcion like "%'.$q.'%") or (nombre like "%'.$q.'%") AND estado=1 AND tipomateriales_id='.$tipomateriales_id);
 	}
 }
 ?>
