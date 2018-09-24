@@ -14,13 +14,6 @@
                 <div class="row">
                 <div class="col-lg-3">
                     <h4>Tipo Materiales <?php //echo Html::linkAction('crear/'.$tipo->id.'/'.$indice->id,' <i class="fa fa-plus" style="font-size:15px;"></i>','class="btn"');?></h4>
-                    <div class="input-group">
-                      <input type="text" name="q_tipo" id="q_tipo" class="form-control" placeholder="Buscar...">
-                          <span class="input-group-btn">
-                            <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                            </button>
-                          </span>
-                    </div>
                     <ul class="todo-list" id="lista_tipos">
                     <?php foreach($indices as $indi){?>
                         <li class="active"><?php echo Html::linkAction('listar/'.$tipo->id.'/'.$indi->id,$indi->nombre,'class=""')?> 
@@ -28,10 +21,13 @@
                     <?php }?>   
                     </ul>
                 </div>
+
                 <div class="col-lg-9">
+                    <div class="pull-right"> <?php echo Html::linkAction('crear/'.$tipo->id.'/',' <i class="fa fa-plus" style="font-size:15px;"></i>','class="btn" title="Crear nuevo Producto"');?></div>
                     <?php if($indice){?>
-                    <h4><?php echo $indice->nombre?> <?php echo Html::linkAction('crear/'.$tipo->id.'/'.$indice->id,' <i class="fa fa-plus" style="font-size:15px;"></i>','class="btn"');?></h4>
-                    <?php print_r($materiales);?>
+                    <h4><?php echo $indice->nombre?></h4>
+                    <?php //print_r(Auth::get('aclempresas_id'));?>
+                    <?php //print_r($materiales);?>
                     <table class="table table-bordered">
                         <thead>
                             <tr>
@@ -50,7 +46,7 @@
                             $n++;?>
                             <tr>
                                 <td><?php echo $n;?></td>
-                                <td><?php echo $item->getCodigoCompleto();?>.<?php echo $item->id?></td>
+                                <td><?php echo $item->getMateriales()->getCodigoCompleto();?>.<?php echo $item->id?></td>
                                 <td><?php echo $item->nombre?></td>
                                 <td><?php echo $item->descripcion?></td>
                                 <td><?php echo $item->precio?></td>
@@ -69,7 +65,8 @@
   </div>
 </div>
 <div class="box-footer">
-    
+    <?php if ($indice)View::partial('paginators/bootstrap', false, array('page' => $materiales ,'url' => Router::get('controller_path').'/index')); ?>
+
 </div>
 <script type="text/javascript">
 $(document).ready(function() 

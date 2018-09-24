@@ -18,6 +18,7 @@ class MisProductosController extends AppController
 		$this->indice = false;
 		if($indices_id){
 			$this->indice = $TipoMateriales->find((int)$indices_id);
+			$per_page=10;
 			$this->materiales=$MisProductos->getMisProductos($per_page, $page,$indices_id);
 			
 	    	$this->titulo='Mis productos';
@@ -26,14 +27,14 @@ class MisProductosController extends AppController
     	}
     }
 
-    	public function crear($tipomateriales_id,$indices_id)
+    	public function crear($tipomateriales_id,$indices_id=0)
 	{
 		$this->titulo="Crear materiales nuevos";
 		$Materiales = new Materiales();		
 		$TipoMateriales = new Tipomateriales();		
 		$this->tipo = $TipoMateriales->find((int)$tipomateriales_id);
 		$this->indices_id = $indices_id;
-		$this->codigo_new=$Materiales->get_codigo($indices_id);
+		$this->codigo_new = $indices_id ? $Materiales->get_codigo($indices_id): '1';
 		if (Input::hasPost('materiales')) {
 
             $obj = $Materiales;

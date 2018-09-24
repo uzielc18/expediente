@@ -3,7 +3,7 @@ class Materiales extends ActiveRecord {
 
     public function initialize() {
         //relaciones
-		$this->has_many('detallemetrados');
+		$this->has_many('detallemetrados','preciosempresas');
 		$this->belongs_to('tipomateriales','medidas');
     }
 
