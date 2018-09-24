@@ -2,6 +2,12 @@
 View::template('apps/default_app');
 class TipomaterialesController extends AppController
 {
+     protected function before_filter() {
+        if ( Input::isAjax() ){
+            View::template('ajax'); 
+            //View::select('view', NULL);
+        }
+    }
 	public function index($tipomateriales_id=1,$id=NULL){
 		$this->id=$tipomateriales_id;
 		$this->titulo="Ingresar Indices Unificados";
@@ -24,14 +30,20 @@ class TipomaterialesController extends AppController
             }            
         }
 	}
-	public function crear()
+	public function crear($tipomateriales_id,$id)
 	{
+        $this->id=$tipomateriales_id;
+        $this->titulo="Ingresar Indices Unificados";
+        $TipoMateriales = new Tipomateriales();
+        $this->tipos = $TipoMateriales->get_principales();
+        $this->tipo = $TipoMateriales->find((int)$tipomateriales_id);
 		if (Input::hasPost('tipomateriales')) {
             $obj = new Tipomateriales();
             //En caso que falle la operación de guardar
             if ($obj->save(Input::post('tipomateriales'))) {
                 //se hacen persistente los datos en el formulario
-                return Redirect::to('apps/tipomateriales/index/'.$obj->tipomateriales_id);
+                //return Redirect::to('apps/tipomateriales/index/'.$obj->tipomateriales_id);
+                //return True;
             }else{
 
                 Flash::error('Falló Operación');
@@ -42,19 +54,27 @@ class TipomaterialesController extends AppController
 	}
 	public function editar($tipomateriales_id,$id)
 	{
-		if (Input::hasPost('tipomateriales')) {
+        View::select("crear");
+		$this->id=$tipomateriales_id;
+        $this->titulo="Editars Indices Unificados";
+        $TipoMateriales = new Tipomateriales();
+        $this->tipos = $TipoMateriales->get_principales();
+        $this->tipo = $TipoMateriales->find((int)$tipomateriales_id);
+        if (Input::hasPost('tipomateriales')) {
             $obj = new Tipomateriales();
             //En caso que falle la operación de guardar
             if ($obj->save(Input::post('tipomateriales'))) {
                 //se hacen persistente los datos en el formulario
-                return Redirect::to('apps/tipomateriales/index/'.$obj->tipomateriales_id);
+                //return Redirect::to('apps/tipomateriales/index/'.$obj->tipomateriales_id);
             }else{
 
                 Flash::error('Falló Operación');
-                $this->titulopartidas = $obj;
-                return;
+                $this->tipomateriales = $obj;
+                //return;
             }            
         }
+
+        $this->tipomateriales=$TipoMateriales->find((int)$id);
 	}
     public function borrar($tipomateriales_id,$id){
         try {

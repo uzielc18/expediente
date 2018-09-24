@@ -1,30 +1,29 @@
 <?php 
-/**
- * 
- */
 View::template('apps/default_app');
 class MisProductosController extends AppController
 {
 	public function index(){
 		
 	}
-    public function listar($tipomateriales_id=1,$indices_id=NULL,$page=1){
+    public function listar($tipomateriales_id=1,$indices_id=0,$page=1){
+    	//View::select('/apps/materiales/index');
     	$this->titulo="Administracion de materiales";
 		$this->id=$tipomateriales_id;
 		$TipoMateriales = new Tipomateriales();
-		$Materiales = new Materiales();
+		//$Materiales = new Materiales();
+		$MisProductos= new Preciosempresas();
 		$this->tipos = $TipoMateriales->get_principales();
 		$this->tipo = $TipoMateriales->find((int)$tipomateriales_id);
-		$this->indices = $TipoMateriales->find('conditions: estado=1 AND tipomateriales_id='.$tipomateriales_id);
+		$this->indices = $MisProductos->getMisTipoMateriales($tipomateriales_id);
 		$this->indice = false;
 		if($indices_id){
 			$this->indice = $TipoMateriales->find((int)$indices_id);
-			$this->materiales=$Materiales->find('conditions: estado=1 AND tipomateriales_id='.$indices_id);
-		}
-    	$this->titulo='Mis productos';
-        $MisProductos= new Preciosempresas();
-        $per_page=10;
-        $this->results=$MisProductos->getMisProductos($per_page, $page);
+			$this->materiales=$MisProductos->getMisProductos($per_page, $page,$indices_id);
+			
+	    	$this->titulo='Mis productos';
+	        //$per_page=10;
+	        //$this->results=$MisProductos->getMisProductos($per_page, $page);
+    	}
     }
 
     	public function crear($tipomateriales_id,$indices_id)

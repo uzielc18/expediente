@@ -12,7 +12,7 @@
         <div class="tab-content">
         	<div class="tab-panel active" id="<?php echo $tipo->simbologia?>">
         		<div class="row">
-        		<div class="col-lg-2">
+        		<div class="col-lg-3">
         			<h4>Tipo Materiales <?php //echo Html::linkAction('crear/'.$tipo->id.'/'.$indice->id,' <i class="fa fa-plus" style="font-size:15px;"></i>','class="btn"');?></h4>
         			<div class="input-group">
 			          <input type="text" name="q_tipo" id="q_tipo" class="form-control" placeholder="Buscar...">
@@ -23,11 +23,18 @@
 			        </div>
 	    			<ul class="todo-list" id="lista_tipos">
 	    			<?php foreach($indices as $indi){?>
-	    				<li><?php echo Html::linkAction('index/'.$tipo->id.'/'.$indi->id.'#'.$tipo->simbologia,$indi->nombre,'class=""')?></li>
+	    				<li class="active"><?php echo Html::linkAction('index/'.$tipo->id.'/'.$indi->id.'#'.$tipo->simbologia,$indi->nombre,'class=""')?> 
+	    				<small class="pull-right label label-success"><i class="fa fa-clock-o"></i> <?php echo $indi->totalMateriales();?> materiales</small>
+	    				<!-- <div class="tools">
+
+		                   <i data-params="<?php //echo $indi->tipomateriales_id?>/<?php //echo $indi->id?>" data-url="/apps/tipomateriales/editar/" class="openModal fa fa-edit"></i>
+		                    <i class="fa fa-trash-o"></i>
+		                </div>-->
+		              </li>
 	    			<?php }?>	
 	    			</ul>
 	    		</div>
-    			<div class="col-lg-10">
+    			<div class="col-lg-9">
 	    			<?php if($indice){?>
 	    			<h4><?php echo $indice->nombre?> <?php echo Html::linkAction('crear/'.$tipo->id.'/'.$indice->id,' <i class="fa fa-plus" style="font-size:15px;"></i>','class="btn"');?></h4>
 			    	<table class="table table-bordered">
@@ -78,6 +85,32 @@ $(document).ready(function()
 	    	$("#lista_tipos").load( "/apps/materiales/tipo_lista/<?php echo $id;?>/"+q);
 	    }
     });
+    $('.openModal').on('click',function(){
+    var params = $(this).attr('data-params');
+    var _url = $(this).attr('data-url');
+    $('.modal-body').load(_url+params,function(){
+        $('#tipomateriales_modal').modal({show:true});
+    });
+});
 });
 
 </script>
+
+<!-- Modal -->
+<div class="modal fade" id="tipomateriales_modal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title">Modal with Dynamic Content</h4>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -11,6 +11,8 @@ class Tipomateriales extends ActiveRecord {
     {
     	return $this->find('conditions: tipomateriales_id is null');
     }
-	
+	public function totalMateriales(){
+       return $this->find_by_sql("SELECT count(id) as t FROM materiales WHERE tipomateriales_id=".$this->id)->t;
+    }
 }
 ?>

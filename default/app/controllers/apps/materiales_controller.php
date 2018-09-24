@@ -1,14 +1,14 @@
 <?php 
 View::template('apps/default_app');
 class MaterialesController extends AppController{
-	public function index($tipomateriales_id=1,$indices_id=NULL){
+	public function index($tipomateriales_id=1,$indices_id=0){
 		$this->titulo="Administracion de materiales";
 		$this->id=$tipomateriales_id;
 		$TipoMateriales = new Tipomateriales();
 		$Materiales = new Materiales();
 		$this->tipos = $TipoMateriales->get_principales();
 		$this->tipo = $TipoMateriales->find((int)$tipomateriales_id);
-		$this->indices = $TipoMateriales->find('conditions: estado=1 AND tipomateriales_id='.$tipomateriales_id.' limit 0,10');
+		$this->indices = $TipoMateriales->find('conditions: estado=1 AND tipomateriales_id='.$tipomateriales_id.' ');
 		$this->indice = false;
 		if($indices_id){
 			$this->indice = $TipoMateriales->find((int)$indices_id);
@@ -67,7 +67,7 @@ class MaterialesController extends AppController{
 
 	}
 	public function resultados(){
-	 	View::template(NULL); 
+	 	View::template('ajax'); 
 		//$this->data[] = [];
 		$q=$_GET['q'];
 		$obj = new Materiales();
