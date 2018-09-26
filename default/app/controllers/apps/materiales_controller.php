@@ -92,7 +92,7 @@ class MaterialesController extends AppController{
 		$this->new_codigo=$Materiales->get_codigo($tipo);
 	}
 	public function tipo_lista($tipomateriales_id,$q){
-		View::template(NULL);
+		View::template('ajax');
 		$TipoMateriales = new Tipomateriales();
 		$this->tipo = $TipoMateriales->find((int)$tipomateriales_id);
 		$this->indices = $TipoMateriales->find('conditions: (descripcion like "%'.$q.'%") or (nombre like "%'.$q.'%") AND estado=1 AND tipomateriales_id='.$tipomateriales_id);
