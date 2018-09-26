@@ -67,11 +67,11 @@ class MaterialesController extends AppController{
 
 	}
 	public function resultados(){
-	 	View::template('ajax'); 
-		//$this->data[] = [];
+	 	View::template('json'); 
+		//$this->data[] = []; base64_decode($conditions);
 		$q=$_GET['q'];
 		$obj = new Materiales();
-		$results = $obj->find('conditions: (descripcion like "%'.$q.'%") or (nombre like "%'.$q.'%") or (codigo like "%'.$q.'%") AND estado=1');
+		$results = $obj->find('conditions: ((descripcion like "%'.$q.'%") or (nombre like "%'.$q.'%") or (codigo like "%'.$q.'%")) AND estado=1');
 		foreach ($results as $value)
 		{
 			$id = $value->id;
@@ -79,8 +79,9 @@ class MaterialesController extends AppController{
 			$tipo_codigo=$value->getTipomateriales()->getTipomateriales()->simbologia;
 			$json = array();
 			$json['id'] = $id;
-			$json['name'] = $name;
+			$json['name'] = $name.base64_decode($conditions);
 			$json['tipo_codigo'] = $tipo_codigo;
+			$json['tipo_id'] = $value->getTipomateriales()->tipomateriales_id;
 			$this->data[] = $json;
 		}
 

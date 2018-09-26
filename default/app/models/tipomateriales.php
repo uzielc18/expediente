@@ -3,7 +3,7 @@ class Tipomateriales extends ActiveRecord {
 
     public function initialize() {
         //relaciones
-		$this->has_many('tipomateriales','materiales');
+		$this->has_many('materiales','tipomateriales');
 		$this->belongs_to('tipomateriales');
     }
 

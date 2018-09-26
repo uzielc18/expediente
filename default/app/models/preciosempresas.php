@@ -8,7 +8,7 @@ class Preciosempresas extends ActiveRecord {
     }
     public function getMisProductos($per_page, $page,$tipomateriales_id){
     	
-    	$campos = 'DISTINCT preciosempresas.materiales_id, materiales.id,materiales.nombre, materiales.descripcion, materiales.codigo, materiales.peso, materiales.estado, materiales.tipomateriales_id, materiales.medidas_id,tipomateriales.nombre as tipo_nombre, tipomateriales.simbologia, tipomateriales.indice_unificado, materiales.codigo';
+    	$campos = 'DISTINCT preciosempresas.materiales_id as materiales_id, materiales.nombre as nombre, materiales.descripcion, materiales.codigo, materiales.peso, materiales.estado, materiales.tipomateriales_id, materiales.medidas_id,tipomateriales.nombre as tipo_nombre, tipomateriales.simbologia, tipomateriales.indice_unificado, materiales.codigo';
         $join = 'INNER JOIN materiales ON preciosempresas.materiales_id=materiales.id ';
         $join.= 'INNER JOIN tipomateriales ON tipomateriales.id=materiales.tipomateriales_id AND tipomateriales.id='.$tipomateriales_id;
         $condiciones = "preciosempresas.aclempresas_id=".Auth::get('aclempresas_id');
@@ -24,6 +24,11 @@ class Preciosempresas extends ActiveRecord {
         $condiciones = "preciosempresas.aclempresas_id=".Auth::get('aclempresas_id');
         
         return $this->find($condiciones, "join: $join", "columns: $campos");
+    }
+    public function get_ultimo_precio($materiales_id){
+        $max=$this->maximum("id", 'conditions: materiales_id='.$materiales_id);
+        $precio=$this->find((int) $max)->precio;
+        return $precio;
     }
 	
 }

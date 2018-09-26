@@ -1,13 +1,52 @@
-<div class="box-header">
-	<h2 class="box-title"><?php echo $titulo?> <?php echo $tipo->nombre ?></h2>
+
+<?php
+echo Tag::js('jquery/jquery.tokeninput');
+Tag::css('token-input');?>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+    $("#producto").tokenInput("<?php echo '/apps/materiales/resultados/' ;?>",
+    {
+        tokenLimit: 1,
+        minChars: 1,
+        <?php if(!empty($materiales->id)){?>
+        prePopulate: [
+                {id: <?php echo $materiales->id?>, name: "<?php echo $materiales->getCodigoCompleto().' '.$materiales->nombre?>",tipo_codigo:"<?php echo $materiales->getTipomateriales()->getTipomateriales()->simbologia?>"}
+            ],
+        <?php }?>
+        onAdd: function (item) {
+            location.href="/tiendas/mis_productos/crear/"+item.tipo_id+"/<?php echo $indices_id?>/"+item.id;
+        },
+        onDelete: function (item) {
+            location.href="/tiendas/mis_productos/crear/<?Php echo $tipo->id ?>/<?php echo $indices_id?>/0";
+        }
+
+    });
+});
+</script>
+<div class="box-header with-border">
+	<h2 class="box-title"><?php echo $titulo?> para <?php echo $tipo->nombre ?></h2>
 </div>
 <?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
+	    <?php echo Form::text('materiales.id');?>
+	    <?php echo Form::hidden('preciosempresas.id');?>
+	    <?php echo $id ? Form::hidden('preciosempresas.materiales_id',NUll,$id):Form::hidden('preciosempresas.materiales_id');?>
+	    <?php echo Form::hidden('preciosempresas.fecha',NULL,date("Y-m-d"));?>
+	    <?php echo Form::hidden('preciosempresas.aclempresas_id',NULL,Auth::get('aclempresas_id'));?>
+	    <?php echo Form::hidden('preciosempresas.estado',NULL,1);?>
 	    <?php echo Form::hidden('materiales.id');?>
 	    <?php echo Form::hidden('materiales.estado',NULL,1);?>
 <div class="box-body">
 	<div class="row">
 		<div class="col-sm-10">
+		<div class="form-group">
+			<?php echo Form::label('Buscar un producto','materiales.tipomateriales_id','class="col-sm-2 control-label"');?>
+          	<div class="col-sm-10">
+          		<input type="text" name="producto" id="producto" class="form-control" placeholder="Buscar...">
+          	</div>
+        </div>
 	    <div class="form-group">
+
 	    	<?php echo Form::label('Indice Unificado','materiales.tipomateriales_id','class="col-sm-2 control-label"');?>
 	        <div class="col-sm-10">
 	        	<?php echo Form::dbSelect('materiales.tipomateriales_id','nombre',array('tipomateriales','find','conditions: estado=1 AND tipomateriales_id='.$tipo->id),'Seleccione','class="form-control"',$indices_id)?>
@@ -33,12 +72,7 @@
 	        	<?php echo Form::textArea('materiales.descripcion','class="form-control calcular" placeholder="Descripcion"')?>
 	        </div>
 	    </div>
-	    <div class="form-group">
-	    	<?php echo Form::label('Precio','materiales.precio','class="col-sm-2 control-label"');?>
-	        <div class="col-sm-10">
-	        	<?php echo Form::text('materiales.precio','class="form-control calcular" placeholder="Precio"')?>
-	        </div>
-	    </div>
+	    
 	    <div class="form-group">
 	    	<?php echo Form::label('Peso','materiales.peso','class="col-sm-2 control-label"');?>
 	        <div class="col-sm-10">
@@ -57,7 +91,12 @@
 	        	<?php echo Form::dbSelect('materiales.especificadegastos_id','nombre',array('especificadegastos','find','conditions: estado=1'),'Seleccione','class="form-control"')?>
 	        </div>
 	    </div>
-	    
+	    <div class="form-group">
+	    	<?php echo Form::label('Precio','materiales.precio','class="col-sm-2 control-label"');?>
+	        <div class="col-sm-10">
+	        	<?php echo Form::text('materiales.precio','class="form-control calcular" placeholder="Precio"'); ?>
+	        </div>
+	    </div>
 		
 		</div>
 	</div>	
@@ -65,7 +104,7 @@
 <div class="box-footer padding">
 	<div>
 	    	<div class="pull-right">
-	    		<?php echo Html::linkAction('index/'.$tipo->id.'/'.$indices_id,'Regresar al listado','class="btn"');?>
+	    		<?php echo Html::linkAction('listar/'.$tipo->id.'/'.$indices_id,'Regresar al listado','class="btn"');?>
 	    		<?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
 	    	</div>	
 	    </div>
