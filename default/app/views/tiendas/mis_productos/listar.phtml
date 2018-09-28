@@ -50,7 +50,7 @@
                                 <td><?php echo $item->getMateriales()->getCodigoCompleto();?>.<?php echo $item->materiales_id?></td>
                                 <td><?php echo $item->nombre?></td>
                                 <td><?php echo $item->descripcion?></td>
-                                <td><a href="javascript:;" class="openModal" data-params="/<?php echo $item->materiales_id?>" data-url="/tiendas/mis_productos/lista_precios"><?php echo $item->get_ultimo_precio($item->materiales_id);?></a>
+                                <td><a href="javascript:;" class="openModal" data-params="/<?php echo $item->materiales_id?>" data-url="/tiendas/mis_productos/lista_precios"><?php echo 'S/ '.$item->get_ultimo_precio($item->materiales_id);?></a>
                                 </td>
                                 <td><?php echo $item->peso?></td>
                                 <td><?php echo Html::linkAction('editar/'.$tipo->id.'/'.$indice->id.'/'.$item->materiales_id,' <i class="fa fa-edit" style="font-size:25px;"></i>');?></td>

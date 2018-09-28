@@ -3,7 +3,7 @@ View::template('apps/default_app');
 class MisProductosController extends AppController
 {
 	public function index(){
-		
+		$this->titulo="Ultimos productos pedidos";
 	}
     public function listar($tipomateriales_id=1,$indices_id=0,$page=1){
     	//View::select('/tiendas/materiales/index');

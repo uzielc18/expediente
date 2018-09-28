@@ -19,7 +19,7 @@
           <?php foreach ($precios as $precio) {?>
           <tr>
             <td><a href="javascript:;"><?php echo $precio->fecha?></a></td>
-            <td><?Php echo $precio->precio?></td>
+            <td><?Php echo 'S/ '.number_format($precio->precio,'2','.','')?></td>
             <td><span class="label label-success"><?php echo $estados[$precio->estado];?></span></td>
             <td>
               

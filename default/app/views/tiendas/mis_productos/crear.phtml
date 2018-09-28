@@ -28,7 +28,7 @@ $(document).ready(function()
 	<h2 class="box-title"><?php echo $titulo?> para <?php echo $tipo->nombre ?></h2>
 </div>
 <?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');?>
-	    <?php echo Form::text('materiales.id');?>
+	    <?php echo Form::hidden('materiales.id');?>
 	    <?php echo Form::hidden('preciosempresas.id');?>
 	    <?php echo $id ? Form::hidden('preciosempresas.materiales_id',NUll,$id):Form::hidden('preciosempresas.materiales_id');?>
 	    <?php echo Form::hidden('preciosempresas.fecha',NULL,date("Y-m-d"));?>
