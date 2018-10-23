@@ -23,12 +23,15 @@ $(document).ready(function()
                         {id: <?php echo $expedientes->aclempresas_id?>, name: "<?php echo $expedientes->getAclempresas()->nombre?>"}
                     ]
         <?php }?>
+        onAdd: function (item) {
+                    $("#otro_cliente").show();
+                }
     });
 });
 
 </script>
-<div class="box-header">
-    <h2 class="box-title"><?php echo $titulo?> <small>Del Mes de <?php echo $meses[date("m")];?></small></h2>
+<div class="box-header with-border">
+    <h1 class="box-title"><?php echo $titulo?> <small>Del Mes de <?php echo $meses[date("m")];?></small></h1>
 </div>
 
 <?php View::content() ?>
@@ -73,6 +76,12 @@ $(document).ready(function()
     <?php echo Form::label('Cliente','expedientes.aclempresas_id','class="col-sm-3 control-label"');?>
         <div class="col-sm-9">
             <?php echo Form::text('expedientes.aclempresas_id','class="form-control" placeholder="Cliente"')?>
+        </div>
+    </div> 
+    <div class="form-group" id="otro_cliente" style="display: none;">
+    <?php echo Form::label('Nombre del cliente','expedientes.referencia_nombre','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php echo Form::text('expedientes.referencia_nombre','class="form-control" placeholder="Nombre del cliente si no existe en la busqueda"')?>
         </div>
     </div>
     <div class="form-group">

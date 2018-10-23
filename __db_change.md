@@ -62,3 +62,7 @@ CHANGE COLUMN `total` `total` FLOAT(11) NULL DEFAULT NULL COMMENT 'TOTAL' ,
 ADD COLUMN `costo_km_tn` FLOAT(11) NULL DEFAULT NULL COMMENT 'COSTO DE KM X TN' AFTER `sub_total_tm`;
 
 --- cambios realizados 03-09-2018 ---
+
+ALTER TABLE `expedientes` CHANGE `aclempresas_id` `aclempresas_id` INT(10) UNSIGNED NULL;
+ALTER TABLE `expedientes` ADD `referencia_nombre` VARCHAR(250) NULL AFTER `aclempresas_id`;
+ALTER TABLE `expedientes` CHANGE `aclempresas_id` `aclempresas_id` INT(10) UNSIGNED NULL DEFAULT '0';
