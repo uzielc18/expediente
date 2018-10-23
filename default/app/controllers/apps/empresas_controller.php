@@ -8,10 +8,9 @@ class EmpresasController extends AppController {
 		$q=$_GET['q'];
 		$obj = new Aclempresas();
 		$results = $obj->find('conditions: nombre like "%'.$q.'%"');
-		$n=0;
 		foreach ($results as $value)
 		{
-			$n++;
+
 			//$id=$value->departamento."-".$value->provincia."-".$value->distrito;
 			$id = $value->id;
 			$name=$value->nombre;
@@ -20,14 +19,6 @@ class EmpresasController extends AppController {
 			$json['name'] = $name;
 			$this->data[] = $json;
 		}
-		if($n==0){
-		$json = array();
-		$json['id'] = 0;
-		$json['name'] = 'Otro Cliente';
-		$this->data[]= $json;
-
-		}
-		
 
 	}
 }
