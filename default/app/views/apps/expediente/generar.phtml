@@ -54,7 +54,8 @@ $expediente_id=$expediente->id;
             <dt>Sub Prepuesto</dt>
             <dd><?php if($presupuesto){ echo $presupuesto->codigo.' '; echo $presupuesto->nombre;echo Html::link('apps/presupuesto/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,' <i class="fa fa-edit"></i>','');}else{ echo Html::link('apps/presupuesto/crear/'.$expediente->id.'/'.$modulo->id,'Agregar <i class="fa fa-plus-square"></i>');}?></dd>
             <dt>Cliente:</dt>
-            <dd> <?php echo $expediente->getAclempresas()->razonsocial ?> </dd>
+            <dd> <?php echo $expediente->aclempresas_id!=0 ? $expediente->getAclempresas()->razonsocial : $expediente->referencia_nombre?> </dd>
+
             <dt>Lugar:</dt>
             <dd>  <?php echo $expediente->direccion ?> <?php echo $expediente->getUbigeo()->get_resultado();?>
             </dd>                

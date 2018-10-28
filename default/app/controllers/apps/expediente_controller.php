@@ -7,7 +7,8 @@ class ExpedienteController extends AdminController {
 		$this->expedientes = $Expedientes->get_expedientes_all();
 	}
 	public function crear(){
-		View::template('apps/default_app');	
+		View::template('apps/default_app');
+		$this->expedientes=False;
 		$Expedientes = new Expedientes();
 		$this->titulo='Expediente nuevo';
 		$this->codigo = $Expedientes->get_codigo();
@@ -26,10 +27,11 @@ class ExpedienteController extends AdminController {
         }
 	}
 	public function editar($id){
-	View::select('crear');	
+		View::template('apps/default_app');	
+		View::select('crear');	
 		$Expedientes = new Expedientes();
 		$this->titulo='Expediente modificar';
-		$this->codigo = $Expedientes->get_codigo();
+		//$this->codigo = $Expedientes->get_codigo();
 		if (Input::hasPost('expedientes')) {
 
             $obj = $Expedientes;
@@ -45,6 +47,8 @@ class ExpedienteController extends AdminController {
         }
 
 		$this->expedientes = $Expedientes->find((int) $id);
+        $this->codigo = $this->expedientes->codigo_expediente;
+
 	}
 	public function borrar($id, $act=NULL){
 		try {

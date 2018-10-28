@@ -3,7 +3,21 @@
 //Tag::css('bs-iconpicker/css/bootstrap-iconpicker');?>
 <?php View::partial('menu_expediente',false,array('expediente_id'=>0)) ?>
 <script type="text/javascript">
-    $(function () {
+$(function () {
+  alert('7');
+          /*var group = $("ol.serialization").sortable({
+            group: 'serialization',
+            delay: 500,
+            onDrop: function ($item, container, _super) {
+
+              var data = group.sortable("serialize").get();
+
+              var jsonString = JSON.stringify(data, null, ' ');
+
+              $('#serialize_output2').text(jsonString);
+              _super($item, container);
+            }
+          });*/
           var oldContainer;
           $("ol.nested_with_switch").sortable({
             group: 'nested_with_switch',
@@ -13,7 +27,7 @@
               if(oldContainer != container){
                 if(oldContainer)
                   oldContainer.el.removeClass("active");
-                container.el.addClass("active");
+                  container.el.addClass("active");
 
                 oldContainer = container;
               }
@@ -29,18 +43,7 @@
             
           });
     });
-var group = $("ol.serialization").sortable({
-  group: 'serialization',
-  delay: 500,
-  onDrop: function ($item, container, _super) {
-    var data = group.sortable("serialize").get();
 
-    var jsonString = JSON.stringify(data, null, ' ');
-
-    $('#serialize_output2').text(jsonString);
-    _super($item, container);
-  }
-});
 </script>
 <br>
 <div id="serialize_output2"></div>
