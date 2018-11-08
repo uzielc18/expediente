@@ -66,5 +66,9 @@ class Detallemetrados extends ActiveRecord {
         return $this->find_all_by_sql('SELECT materiales.nombre as nombre, materiales.peso as peso, sum(detallemetrados.parcial) as parcial, (sum(detallemetrados.parcial)*materiales.peso) as kilos, (sum(detallemetrados.parcial)*materiales.peso)/9 as cantidad_varilla FROM detallemetrados INNER JOIN materiales ON detallemetrados.materiales_id=materiales.id WHERE partidas_id='.$id.' GROUP by materiales_id');
     }
 
+    public function get_detalles_sin_imagen(){
+        return $this->find("detallemetrados_id=".$this->id);
+    }
+
 }
 ?>

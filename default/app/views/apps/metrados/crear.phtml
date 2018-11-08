@@ -65,7 +65,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 					<?php echo Form::hidden('detallemetrados.parcial');?>
 					<?php echo Form::hidden('detallemetrados.modulos_id',NULL,$modulo->id);?>
 					<div class="row">
-					<?php if($codigo_tipo_de_partida === 'AC'){?>
+					 <?php if($codigo_tipo_de_partida === 'AC'){?>
 						<div class="col-sm-6">
 						    <div class="form-group">
 						    <?php echo Form::label('Elemento','detallemetrados.nombre','class="col-sm-3 control-label"');?>
@@ -118,7 +118,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 						    </div>
 						</div>
 
-					<?php }else{?>
+					   <?php }else{?>
 						<div class="col-sm-6">
 						    <div class="form-group">
 						    <?php echo Form::label('Nombre','detallemetrados.nombre','class="col-sm-3 control-label"');?>
@@ -212,16 +212,8 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 							<thead>
 							<?php if($codigo_tipo_de_partida==='AC'){?>
 								<tr>
-									<th>Codigo</th>
 									<th>Foto</th>
-									<th>Elemento</th>
-									<th>Tipo</th>
-									<th>Nº veces Tipo</th>
-									<th>Cantidad de elemento</th>
-									<th>Largo</th>
-									<th>Factor</th>
-									<th>Parcial</th>
-									<th>Accion</th>
+									<th colspan="9">Detalles</th>
 								</tr>
 							<?php }
 							if($codigo_tipo_de_partida==="NN"){?>
@@ -257,27 +249,82 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 								$altura = $metro->altura ? $metro->altura: 1;
 								$total=$total+$metro->parcial;
 								?>
-								<?php if($codigo_tipo_de_partida==="AC"){?>
-								<tr>
-									<td><?php echo $metro->getMateriales()->getCodigoCompleto();?></td>
-									<td class="thumbnail"><?php echo $metro->imagen ? Html::img('upload/'.$metro->imagen,'producto -info','class="margin" style="width: 100px;"'): '<img src="/img/150x100.png" alt="...">'; ?></td>
-									<td><?php echo $metro->getMateriales()->nombre;?></td>
-									<td><?php echo $metro->tipo_material ?></td>
-									<td align="center"><?Php echo $metro->numero_de_veces?></td>
-									<td align="center"><?php echo $metro->cantidad_elementos?></td>
-									<td align="right"><?php echo $metro->largo ? number_format($largo,4): '-'?></td>
+								<?php 
+								if($codigo_tipo_de_partida==="AC"){
+									$sub_metrados=$metro->get_detalles_sin_imagen();
+									//echo count($sub_metrados);
+									?>
+									<tr>
+										<?php if(!empty($metro->imagen)){?>
+										<td align="center" valign="middle" class="thumbnail" id="ver_<?php echo $metro->id;?>">
+											<?php echo $metro->imagen ? Html::img('upload/'.$metro->imagen,'producto -info','class="margin" style="width: 100px;"'): '<img src="/img/150x100.png" alt="...">'; ?>
+										</td>
+										<?php } ?>
+										<td colspan="9">
+											<table class="table">
+												<tr>
+													<th>Codigo</th>
+													<th>Elemento</th>
+													<th>Tipo</th>
+													<th>Nº veces Tipo</th>
+													<th>Cantidad de elemento</th>
+													<th>Largo</th>
+													<th>Factor</th>
+													<th>Parcial</th>
+													<th>Accion</th>
+												</tr>
+												<tr>
+													<td><?php  echo $metro->getMateriales()->getCodigoCompleto();?></td>
+													<td><?php echo $metro->getMateriales()->nombre;?></td>
+													<td><?php echo $metro->tipo_material ?></td>
+													<td align="center"><?Php echo $metro->numero_de_veces?></td>
+													<td align="center"><?php echo $metro->cantidad_elementos?></td>
+													<td align="right"><?php echo $metro->largo ? number_format($largo,4): '-'?></td>
 
-									<td  align="center"><?php echo $metro->factor ?></td>
-									<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
-									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?></td>
-								</tr>
-								<?php }
+													<td  align="center"><?php echo $metro->factor ?></td>
+													<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
+													<td align="center">
+														<?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?>
+														<?php if(!empty($metro->imagen))echo Html::linkAction('crear_sin_imagen/'.$partida->id.'/'.$metro->id.'/0',' <i class="fa fa-plus" style="font-size:25px;"></i>','class="__no_mostrar" title="Agregar partida sin imagen"');?>
+														<?php if(empty($metro->imagen))echo Js::linkAction('eliminar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-trash" style="font-size:25px;"></i>','Deseas Eliminar?','class="__no_mostrar"');?>	
+													</td>
+												</tr>
+												<?php foreach($sub_metrados as $smetro){
+													$largo = $smetro->largo ? $smetro->largo : 1;
+													$ancho = $smetro->ancho ? $smetro->ancho : 1;
+													$altura = $smetro->altura ? $smetro->altura: 1;
+													$total=$total+$smetro->parcial;?>
+												<tr>
+													<td><?php  echo $smetro->getMateriales()->getCodigoCompleto();?></td>
+													<td><?php echo $smetro->getMateriales()->nombre;?></td>
+													<td><?php echo $smetro->tipo_material ?></td>
+													<td align="center"><?Php echo $smetro->numero_de_veces?></td>
+													<td align="center"><?php echo $smetro->cantidad_elementos?></td>
+													<td align="right"><?php echo $smetro->largo ? number_format($largo,4): '-'?></td>
+
+													<td  align="center"><?php echo $smetro->factor ?></td>
+													<td align="right"><?php echo number_format($smetro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
+													<td align="center">
+														<?php echo Html::linkAction('editar/'.$partida->id.'/'.$smetro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?>
+														<?php if(!empty($smetro->imagen))echo Html::linkAction('crear_sin_imagen/'.$partida->id.'/'.$smetro->id.'/0',' <i class="fa fa-plus" style="font-size:25px;"></i>','class="__no_mostrar" title="Agregar partida sin imagen"');?>
+														<?php echo Js::linkAction('eliminar/'.$partida->id.'/'.$smetro->id,' <i class="fa fa-trash" style="font-size:25px;"></i>','Deseas Eliminar?','class="__no_mostrar"');?>
+													</td>
+												</tr>
+												<?php }?>
+											</table>
+										</td>
+									</tr>
+								<?php
+								}
 								if($codigo_tipo_de_partida==="FL"){?>
 								<tr>
 									<td><?php echo $n;?></td>
 									<td><?php echo $metro->nombre;?></td>
 									<td align="right"><?php echo $metro->cantidad_elementos;?></td>
-									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?></td>
+									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?>
+										
+										<?php echo Js::linkAction('eliminar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-trash" style="font-size:25px;"></i>','Deseas Eliminar?','class="__no_mostrar"');?>
+									</td>
 								</tr>
 								<?Php }
 								if($codigo_tipo_de_partida==="NN"){?>
@@ -290,7 +337,11 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 									<td align="right"><?php echo $metro->altura ? number_format($altura,4) : '-'?></td>
 									<td  align="center"><?php echo $metro->factor ?></td>
 									<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
-									<td align="center"><?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?></td>
+									<td align="center">
+										<?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:25px;"></i>','class="__no_mostrar"');?>
+										<?php echo Js::linkAction('eliminar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-trash" style="font-size:25px;"></i>','Deseas Eliminar?','class="__no_mostrar"');?>
+									
+									</td>
 								</tr>
 								<?php }?>
 
@@ -311,25 +362,25 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 												<tr>
 													<td align="right"><b>Parcial:</b></td>
 													<?php foreach($totales as $tp){?>
-													<td align="right"><?Php echo number_format($tp->parcial,4)?></td>
+													<td align="right"><?Php echo number_format(empty($tp->parcial) ? 0: $tp->parcial,4)?></td>
 													<?php }?>
 												</tr>
 												<tr>
 													<td align="right"><b>Kilogramos del acero</b></td>
 													<?php foreach($totales as $tk){?>
-													<td align="right"><?php echo number_format($tk->peso,4)?></td>
+													<td align="right"><?php echo number_format(empty($tk->peso) ? 0 : $tk->peso,4)?></td>
 													<?php }?>
 												</tr>
 												<tr>
 													<td align="right"><b>Kilos total</b></td>
 													<?php foreach($totales as $tkt){?>
-													<td align="right"><?php echo number_format($tkt->kilos,4)?></td>
+													<td align="right"><?php echo number_format(empty($tkt->kilos) ? 0 : $tkt->kilos,4)?></td>
 													<?php }?>
 												</tr>
 												<tr>
 													<td align="right"><b>Nº de varillas de acero de 9ml</b></td>
 													<?php foreach($totales as $tv){?>
-													<td align="right"><?php echo number_format($tv->cantidad_varilla,4)?></td>
+													<td align="right"><?php echo number_format(empty($tv->cantidad_varilla)?0:$tv->cantidad_varilla,4)?></td>
 													<?php }?>
 												</tr>
 											</tbody>

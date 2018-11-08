@@ -1,0 +1,151 @@
+<?php
+echo Tag::js('jquery/jquery.tokeninput');
+Tag::css('token-input');?>
+<script type="text/javascript">
+$(document).ready(function() 
+{
+    $("#detallemetrados_materiales_id").tokenInput("<?php echo '/'.$module_name.'/materiales/resultados'?>",
+    {
+        tokenLimit: 1,minChars: 2,
+        <?php if(!empty($detallemetrados->materiales_id)){?>
+        prePopulate: [
+                {id: <?php echo $detallemetrados->materiales_id?>, name: "<?php echo $detallemetrados->getMateriales()->getCodigoCompleto().' '.$detallemetrados->getMateriales()->nombre?>"}
+            ]
+        <?php }?>
+    });
+});
+
+</script>
+
+<?php 
+$exp_id = $partida->getPresupuestos()->getExpedientes()->expedientes_id;
+$mod_id = $modulo->id;
+$bloc_id = $partida->getPresupuestos()->expedientes_id;
+$pres_id = $partida->presupuestos_id;
+View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
+<section class="content">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-solid">
+				<div class="box-header">
+				    <h2 class="box-title"><?php echo $titulo?></h2>
+				</div>
+				<?php View::content();?>
+				<div class="col-sm-9">
+					<blockquote>
+						<dl class="dl-horizontal">
+					      <dt>Presupuesto: </dt><dd><?php echo $partida->getPresupuestos()->nombre?></dd>
+					      <dt>Titulo: </dt><dd><?php echo $partida->getTitulopartidas()->titulo?></dd>
+					      <dt>Medida: </dt><dd><?php echo $partida->getMedidas()->nombre?> (<?php echo $partida->getMedidas()->abr?>)</dd>
+					      <dt>Tipo Partida</dt><dd><?Php echo $partida->getTipopartidas()->nombre?></dd>
+					  	</dl>
+					</blockquote>
+				</div>
+				<div class="col-sm-3">
+					
+					<div class="thumbnail">
+						<?php echo Html::img('upload/'.$detallemetrado->imagen,'producto -info','class="margin" style=""'); ?>
+					</div>
+					
+				</div>
+				<div class="box-body">
+					<?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"');
+					?>
+					<?php echo Form::hidden('detallemetrados.id');?>
+					<?php echo Form::hidden('detallemetrados.partidas_id',NULL,$partida->id);?>
+					<?php echo Form::hidden('detallemetrados.estado',NULL,1);?>
+					<?php echo Form::hidden('detallemetrados.parcial');?>
+					<?php echo Form::hidden('detallemetrados.modulos_id',NULL,$modulo->id);?>
+					<?php echo Form::hidden('detallemetrados.detallemetrados_id',NULL,$detallemetrado->id);?>
+					<div class="row">
+						<div class="col-sm-6">
+						    <div class="form-group">
+						    <?php echo Form::label('Elemento','detallemetrados.nombre','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::text('detallemetrados.nombre','class="form-control" placeholder="nombre" required')?>
+						        </div>
+						    </div>
+						</div>
+						<!-- <div class="col-sm-6">
+							<div class="form-group">
+						    	<?php //echo Form::label('Imagen','imagen','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php //echo $crear ? Form::file('imagen','class="form-control" placeholder="Imagen" required accept="image/*"'):$detallemetrados->imagen?>
+						            <br>
+						            <span class="help-block no-margin">Formatos permitidos jpg, png, gif, jpeg Max 3MB</span>
+						        </div>							
+						    </div>	
+						</div> -->
+						
+						
+						<div class="col-sm-6">
+						    <div class="form-group">
+						    <?php echo Form::label('Material','detallemetrados.materiales_id','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::text('detallemetrados.materiales_id','class="form-control" placeholder="nombre" required')?>
+						        </div>
+						    </div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+						    	<?php echo Form::label('Tipo material','detallemetrados.tipo_material','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::select('detallemetrados.tipo_material',array("Varilla"=>"Varilla","Estribo"=>"Estribo"),'class="form-control" placeholder="Tipo material"')?>
+						        </div>
+						    </div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+						    	<?php echo Form::label('Cantidad de elementos','detallemetrados.cantidad_elementos','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::text('detallemetrados.cantidad_elementos','class="form-control calcular" placeholder="Cantidad de elementos"')?>
+						        </div>
+						    </div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group">
+						    	<?php echo Form::label('Nº de veces del tipo','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
+						        <div class="col-sm-9">
+						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
+						        </div>
+						    </div>
+						</div>
+
+					</div>
+					<div class="col-sm-12" style="border-bottom: solid #ccc 1px;">
+						<div class="form-group">
+						    <div class="with-padding pull-right">
+						    	<br>
+						    	<?php if(!$crear && $codigo_tipo_de_partida==='AC')echo Html::linkAction('update_photo/'.$partida->id.'/'.$detallemetrados->id,'Editar imagen','class="btn"');?>
+						    	<?php echo Form::submit('Guardar Datos','class="btn btn-primary"') ?>
+						    </div>
+						</div>
+					</div>
+					<?php echo Form::close();?>
+				</div>
+				
+				<script type="text/javascript">
+					$(document).ready(function(){
+					    $('#partida_detallemetrados').val($("#reporte-detalles").html());
+					});
+					function calcular() {
+					  var veces = $( "#detallemetrados_numero_de_veces" ).val();
+					  var largo = $( "#detallemetrados_largo" ).val();
+					  var ancho = $( "#detallemetrados_ancho" ).val();
+					  var altura = $( "#detallemetrados_altura" ).val();
+					  var cantidad_elementos = $( "#detallemetrados_cantidad_elementos" ).val();
+					  if(!largo){largo=1;}
+					  if(!ancho){ancho=1;}
+					  if(!altura){altura=1;}
+					  if(!cantidad_elementos){cantidad_elementos=1;}
+					  return veces*(largo*ancho*altura*cantidad_elementos);
+					}
+					$( ".calcular" ).change(function() {
+					  $("#detallemetrados_parcial" ).val(calcular());
+					  
+					});
+				</script>
+			</div>
+		</div>
+	</div>
+</section>

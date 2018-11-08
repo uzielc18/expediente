@@ -67,3 +67,6 @@ ALTER TABLE `expedientes` CHANGE `aclempresas_id` `aclempresas_id` INT(10) UNSIG
 ALTER TABLE `expedientes` ADD `referencia_nombre` VARCHAR(250) NULL AFTER `aclempresas_id`;
 ALTER TABLE `expedientes` CHANGE `aclempresas_id` `aclempresas_id` INT(10) UNSIGNED NULL DEFAULT '0';
 ALTER TABLE `modulos` ADD `url` VARCHAR(250) NULL AFTER `nombre`;
+=============/////////==========
+ALTER TABLE `partidas` ADD `partidas_id` INT(11) NULL AFTER `fecha_in`;
+ALTER TABLE `detallemetrados` ADD `detallemetrados_id` INT(11) NULL AFTER `imagen`;

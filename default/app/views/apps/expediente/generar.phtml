@@ -124,7 +124,7 @@ $expediente_id=$expediente->id;
                             $tr_p.='<td align="right"> S/ '.number_format($partida->costo,2,'.','').'</td>';
                             $tr_p.='<td align="right"> S/ '.number_format($partida->parcial,2,'.','').'</td>';
                           }
-                        if($modulo->id==2)$tr_p.='<td align="right"> S/ '.number_format($partida->costo,2,'.','').'</td>';
+                        if($modulo->id==2)$tr_p.='<td align="right"> S/ '.number_format($partida->costo ? $partida->costo : 0,2,'.','').'</td>';
                         $tr_p.='</tr>';
                         $tr_p.='<tr style="display: none;" id="detalle-'.$partida->id.'">';
                         $cols= $modulo->id===3 ? '6':'4';

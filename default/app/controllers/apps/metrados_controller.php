@@ -2,17 +2,18 @@
 View::template('apps/default_expediente');
 class MetradosController extends AppController {
     
-    public function crear($partida_id){     
+    public function crear($partida_id,$imagen=1){     
         $Detallemetrados = new Detallemetrados();
         $Partidas = new Partidas();
         $Modulos = new Modulos();
+        $this->imagen=$imagen;
         $this->crear=1;
         $this->modulo=$Modulos->find_first('conditions: codigo="METRADO"');
         $this->partida=$Partidas->find((int)$partida_id);
         $this->codigo_tipo_de_partida=$this->partida->getTipopartidas()->codigo;
         $this->titulo='Crear metrados para la Partida <b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
         $this->titulo_small='Todos los detalles';
-        $this->metrados=$Detallemetrados->find('conditions: partidas_id='.$partida_id);
+        $this->metrados=$Detallemetrados->find('conditions: partidas_id='.$partida_id.' AND detallemetrados_id is null order by id,detallemetrados_id');
         $this->totales = $Detallemetrados->totales_partidas($partida_id);
         //$this->expedientes_id=$exp_id;
         //se verifica si se ha enviado via POST los datos
@@ -30,6 +31,37 @@ class MetradosController extends AppController {
                 Flash::valid('detalle creado');
                 return Redirect::toAction('crear/'.$partida_id);
             }
+            }
+            //Si falla se hacen persistentes los datos en el formulario
+            Flash::error('Falló Operación');
+            $this->detallemetrados = Input::post('detallemetrados');
+            return;
+        }
+       
+    }
+    public function crear_sin_imagen($partida_id,$metrado,$imagen=0){     
+        $Detallemetrados = new Detallemetrados();
+        $Partidas = new Partidas();
+        $Modulos = new Modulos();
+        $this->detallemetrado = $Detallemetrados->find((int) $metrado);
+        $this->imagen=$imagen;
+        $this->crear=1;
+        $this->modulo=$Modulos->find_first('conditions: codigo="METRADO"');
+        $this->partida=$Partidas->find((int)$partida_id);
+        $this->codigo_tipo_de_partida=$this->partida->getTipopartidas()->codigo;
+        $this->titulo='Crear metrados para la Partida <b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
+        $this->titulo_small='Todos los detalles';
+        //$this->metrados=$Detallemetrados->find('conditions: partidas_id='.$partida_id);
+        //$this->totales = $Detallemetrados->totales_partidas($partida_id);
+        //$this->expedientes_id=$exp_id;
+        //se verifica si se ha enviado via POST los datos
+        if (Input::hasPost('detallemetrados')) {
+            $obj = new Detallemetrados();
+            //Con Foto Cuando el tipo de partida es AC
+            
+            if ($obj->save(Input::post('detallemetrados'))) {
+                Flash::valid('detalle creado');
+                return Redirect::toAction('crear/'.$partida_id);
             }
             //Si falla se hacen persistentes los datos en el formulario
             Flash::error('Falló Operación');
@@ -125,6 +157,17 @@ class MetradosController extends AppController {
             
             return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);          
         }
+    }
+
+    
+    public function eliminar($partida_id,$id) {
+        $obj = new Detallemetrados();
+        if (!$obj->delete($id)) {
+            Flash::error('Falló Operación');
+        }
+        //enrutando al index para listar los articulos
+        Flash::error('Detalle eliminado');
+        Redirect::toAction('crear/'.$partida_id.'/0');
     }
 }
 ?>
