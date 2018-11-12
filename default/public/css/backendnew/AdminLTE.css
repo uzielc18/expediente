@@ -4924,6 +4924,13 @@ form input:required {
   background-color: #1e282c !important;
 }
 body.siderbar-mini>div.wrapper>div.content-wrapper>aside.main-sidebar>section.sidebar>div.menu_expediente div.box div.box-header h3.box-title span{display: none;}
+.sombra_div{
+padding: 10px;
+-webkit-box-shadow: inset 1px 1px 5px 1px rgba(168,168,168,1) !important;
+-moz-box-shadow: inset 1px 1px 5px 1px rgba(168,168,168,1)!important;
+box-shadow: inset 1px 1px 5px 1px rgba(168,168,168,1)!important;
+}
+
 /*
  * Misc: print
  * -----------

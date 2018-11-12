@@ -7,8 +7,13 @@ Tag::css('token-input');?>
 </script>
 <?php 
 $exp_id = $partida->getPresupuestos()->getExpedientes()->expedientes_id;
-$mod_id = $modulo->id;
 $bloc_id = $partida->getPresupuestos()->expedientes_id;
+if(empty($exp_id))
+{
+	$exp_id = $partida->getPresupuestos()->expedientes_id;
+	$bloc_id = 0;
+}
+$mod_id = $modulo->id;
 $pres_id = $partida->presupuestos_id;?>
 <section class="content">
 	<div class="row">

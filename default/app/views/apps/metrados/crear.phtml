@@ -16,11 +16,16 @@ $(document).ready(function()
 });
 
 </script>
-
 <?php 
 $exp_id = $partida->getPresupuestos()->getExpedientes()->expedientes_id;
-$mod_id = $modulo->id;
 $bloc_id = $partida->getPresupuestos()->expedientes_id;
+if(empty($exp_id))
+{
+	$exp_id = $partida->getPresupuestos()->expedientes_id;
+	$bloc_id = 0;
+}
+
+$mod_id = $modulo->id;
 $pres_id = $partida->presupuestos_id;
 View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 <section class="content">
@@ -198,7 +203,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 					<?php echo Form::close();?>
 					<div class="col-sm-12 with-padding" >
 						<?Php 
-						
+						echo $exp_id;echo "expedientes_id";
 						echo Form::open('apps/metrados/terminar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
 						echo Form::hidden('partida.id');
 						echo Form::hidden('partida.presupuestos_id');

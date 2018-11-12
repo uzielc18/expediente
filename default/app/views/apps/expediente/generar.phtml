@@ -121,8 +121,8 @@ $expediente_id=$expediente->id;
                         if($modulo->id==1 || $modulo->id==3)$tr_p.='<td align="right">'.number_format($partida->metrado?$partida->metrado:0,2,'.','').'</td>';
                         if($modulo->id==3)
                           {
-                            $tr_p.='<td align="right"> S/ '.number_format($partida->costo,2,'.','').'</td>';
-                            $tr_p.='<td align="right"> S/ '.number_format($partida->parcial,2,'.','').'</td>';
+                            $tr_p.='<td align="right"> S/ '.number_format($partida->costo ? $partida->costo : 0,2,'.','').'</td>';
+                            $tr_p.='<td align="right"> S/ '.number_format($partida->parcial?$partida->parcial:0,2,'.','').'</td>';
                           }
                         if($modulo->id==2)$tr_p.='<td align="right"> S/ '.number_format($partida->costo ? $partida->costo : 0,2,'.','').'</td>';
                         $tr_p.='</tr>';
@@ -136,7 +136,7 @@ $expediente_id=$expediente->id;
                           $tr_p.=html::link('apps/metrados/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
                           $tr_p.='</span>';
                           if(!$error_de_partida) $tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
-                          $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detallemetrados)."<div>";
+                          $tr_p.="<div id='ver_reporte' class='sombra_div'>".base64_decode($partida->detallemetrados)."<div>";
                         }
                         if($modulo->id==2)
                         {
@@ -145,7 +145,7 @@ $expediente_id=$expediente->id;
                           $tr_p.=html::link('apps/analisis/crear/'.$partida->id,' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
                           $tr_p.='</span>';
                           if(!$error_de_partida)$tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
-                          $tr_p.="<div id='ver_reporte'>".base64_decode($partida->detalleanalisis)."<div>";
+                          $tr_p.="<div id='ver_reporte' class='sombra_div'>".base64_decode($partida->detalleanalisis)."<div>";
                         }
                         if($modulo->id==4)
                         {
@@ -154,7 +154,7 @@ $expediente_id=$expediente->id;
                           $tr_p.=html::link('apps/detallestecnicos/crear/'.$partida->id.'/0',' <i class="fa fa-plus-square" style="font-size:20px;"></i> ','title="Agregar detalle de '.$modulo->nombre.'"');
                           $tr_p.='</span>';
                           if(!$error_de_partida)$tr_p.= "<span class='text-red'>Los detalles no se terminaron de ingresar</span>";
-                          $tr_p.="<div id='ver_reporte'>".$partida->detallestecnicos."<div>";
+                          $tr_p.="<div id='ver_reporte' class='sombra_div'>".$partida->detallestecnicos."<div>";
                         }
                         $tr_p.='</td></tr>';
                       }
@@ -198,7 +198,7 @@ $expediente_id=$expediente->id;
                       <td><?php if($partidas_nuevo==0)echo Html::link('apps/titulopartidas/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,'Nuevo titulo <i class="fa fa-plus-square"></i>','class="btn btn-sm btn-primary"');?></td>
                       <?php if($modulo->id==='3'){?>
                         <td></td>
-                        <td align="right">S/ <?php echo number_format($presupuesto->get_total(),4,'.','');?></td>
+                        <td align="right">S/ <?php echo number_format($presupuesto->get_total()?$presupuesto->get_total():0,4,'.','');?></td>
                       <?Php }?>
                     </tr>
                       <?php echo obtener_titulos($array_titulo,$modulo,$expediente,$presupuesto,$bloque_id,$tr='',0,$partidas);?> 
