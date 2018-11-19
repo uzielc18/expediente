@@ -21,7 +21,19 @@
     <small><?php echo $titulo_small ?></small>
 </blockquote>
 <div class="col-sm-10">
-    
+    <?php 
+    if($titulo_superior){
+        ?>
+    <div class="form-group">
+    <?php echo Form::label('Titulo Superior','titulopartidas.titulopartidas_id','class="col-sm-3 control-label"');?>
+        <div class="col-sm-9">
+            <?php 
+            $cond=$titulo_superior->titulopartidas_id? 'titulopartidas_id='.$titulo_superior->titulopartidas_id: 'titulopartidas_id IS NULL';
+            echo Form::dbSelect('titulopartidas.titulopartidas_id','titulo',array('titulopartidas','find',$cond),'Selecciones','class="form-control" placeholder="Nombre"')?>
+        </div>
+    </div>    
+    <?php }
+    ?>
     <div class="form-group">
     <?php echo Form::label('Titulo','titulopartidas.titulo','class="col-sm-3 control-label"');?>
         <div class="col-sm-9">

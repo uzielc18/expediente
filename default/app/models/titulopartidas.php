@@ -7,9 +7,15 @@ class Titulopartidas extends ActiveRecord {
 		$this->belongs_to('titulopartidas','expedientes','presupuestos');
     }
 
-    public function _codigo_titulo($presupuestos_id){
-    	$sql = $this->find_by_sql("SELECT LPAD((max(t.codigo)+1),2,'0') as new_codigo FROM titulopartidas as t WHERE t.presupuestos_id = ".$presupuestos_id." AND t.aclusuarios_id=".Auth::get('id'));
-    	return $sql->new_codigo;
+    public function _codigo_titulo($presupuestos_id,$titulo_id=0){
+        $cond = $titulo_id == 0 ? "" : " AND t.titulopartidas_id=".$titulo_id;
+        echo $sql="SELECT LPAD((IFNULL(max(t.codigo),0)+1),2,'0') as new_codigo FROM titulopartidas as t WHERE t.presupuestos_id = ".$presupuestos_id.$cond." AND t.estado = 1 AND t.aclusuarios_id=".Auth::get('id');
+        $dat = $this->find_by_sql($sql);
+        /*$a = $this->maximum('codigo');
+        $codigo= $a + 1;
+        $padded = str_pad((string)$codigo, 10, "0", STR_PAD_LEFT); */
+    	echo $dat->new_codigo;
+        return $dat->new_codigo;
     }
     public function get_array_titulos($presupuestos_id)
     {

@@ -1,0 +1,138 @@
+<?php 
+$Ex = new Expedientes();
+$registros= $Ex->getTipoExp();
+$expediente_id=$expediente->id;
+?>
+<?php View::partial('menu_expediente',false,array('expediente_id'=>$expediente->id)) ?>
+
+<section class="content">
+<div class="row">
+  <div class="col-sm-3 col-md-2" >
+    <div style="position: fixed; width: 15%;">
+    <?php if($expediente->id!=0){?>
+            <?php foreach($registros as $reg){?>
+            <div class="box box-solid no-padding">
+              <div class="box-header with-border">
+                <h3 class="box-title"><i class="fa fa-folder-open"></i><span><?php echo $reg->nombre?></span></h3>
+                <div class="box-tools">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="box-body no-padding">
+                <ul class="nav nav-pills nav-stacked">
+                  <?Php foreach($Ex->find('conditions: expedientes_id IS NULL AND tipoexpedientes_id='.$reg->id) as $expediente){?>
+                  <li <?php echo $expediente_id==$expediente->id ? 'class="active"': '';?>>
+                    <a href="/apps/expediente/generar/<?php echo $expediente->id ?>" <?php echo $expediente_id==$expediente->id ? 'style="color:#3c8dbc;"': '';?> class="">
+                      <i class="fa fa-file-excel-o"></i><span><?php echo $expediente->nombre;?></span>
+                    </a>
+                  </li>
+                  <?php }?>
+                </ul>
+              </div>
+              <!-- /.box-body -->
+            </div>
+          <?php }
+            }?>
+    </div>
+  </div>
+  <div class="col-md-10">
+    <div class="box box-solid">
+      <?php echo View::content();
+      $bloque_id=$bloque? $bloque->id : 0;
+      $presupuesto_id=$presupuesto? $presupuesto->id : 0;
+      ?>
+      <div class="box-header with-border">
+          <div style="text-align: center;">
+            <h2 class="box-title"><i class="<?php echo $modulo->icono?>"> </i> <?php echo $modulo->descripcion?>  <?php echo html::linkAction('ordenar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto_id,'ordenar','class="btn btn-xs"');?></h2>
+          </div>
+          <dl class="dl-horizontal">
+            <dt>Presupuesto</dt>
+            <dd><?php echo $expediente->nombre?></dd>
+            <dt>Bloque:</dt>
+            <dd><?php if($bloque){ echo $bloque->codigo.' '; echo $bloque->nombre; echo Html::link('apps/expediente/editar_bloque/'.$expediente->id.'/'.$modulo->id.'/'.$bloque->id,' <i class="fa fa-edit"></i>');}else{ echo Html::link('apps/expediente/crear_bloque/'.$expediente->id.'/'.$modulo->id,'Agregar <i class="fa fa-plus-square"></i>');}?></dd>
+            <dt>Sub Prepuesto</dt>
+            <dd><?php if($presupuesto){ echo $presupuesto->codigo.' '; echo $presupuesto->nombre;echo Html::link('apps/presupuesto/editar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$presupuesto->id,' <i class="fa fa-edit"></i>','');}else{ echo Html::link('apps/presupuesto/crear/'.$expediente->id.'/'.$modulo->id,'Agregar <i class="fa fa-plus-square"></i>');}?></dd>
+            <dt>Cliente:</dt>
+            <dd> <?php echo $expediente->aclempresas_id!=0 ? $expediente->getAclempresas()->razonsocial : $expediente->referencia_nombre?> </dd>
+
+            <dt>Lugar:</dt>
+            <dd>  <?php echo $expediente->direccion ?> <?php echo $expediente->getUbigeo()->get_resultado();?>
+            </dd>                
+            <dt>Fecha:</dt>
+            <dd><?Php echo $expediente->fecha?></dd>
+          </dl>
+      </div>
+      <div class="box-body">
+        <?Php if($bloque){?>
+        <div class="nav-tabs-custom">
+          <ul class="nav nav-tabs pull-right">
+            <?php foreach($bloques as $bl){?>
+            <li class="<?php echo ($bl->id==$bloque->id)? 'active': '';?>">
+              <?php echo Html::linkAction('generar/'.$expediente->id.'/'.$modulo->id.'/'.$bl->id.'#tab_'.$bl->id.'-'.$bl->id,$bl->nombre);?></li>
+            <?php }?>
+            <li class="pull-left header"><?php echo Html::link('apps/expediente/crear_bloque/'.$expediente->id.'/'.$modulo->id,'Bloques <i class="fa fa-plus-square"></i>');?> </li>
+          </ul>
+          <div class="tab-content">
+            <div class="tab-panel active" id="tab_<?php echo $bloque->id?>-<?php echo $bloque->id?>">
+          <?php }?>
+            <div class="row">
+              <div class="col-lg-10">
+                
+              </div>
+              <div class="col-lg-2">
+                <div class="btn-group-vertical btn-block">
+                  <?Php 
+                  echo Html::link('apps/presupuesto/crear/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id,'Nuevo <i class="fa fa-plus-square"></i>','class="btn btn-xs btn-primary"');
+                foreach($presupuestos as $pres){
+                  $cls=($pres->id==$presupuesto->id) ? 'active':'';
+                  echo html::linkAction('generar/'.$expediente->id.'/'.$modulo->id.'/'.$bloque_id.'/'.$pres->id,$pres->nombre,'class="btn btn-xs '.$cls.'"');
+                }?>
+                </div>
+              </div>
+            </div>
+        <?Php if($bloque){?>
+              <div style="clear: both;"></div>
+            </div>
+            <!-- /.tab-pane -->
+          </div>
+          <!-- /.tab-content -->
+        </div>
+        <?php }?>
+      </div>
+      <div class="box-footer">
+      	<?php /*foreach($modulos as $mod){   ?>	
+        <a href="/apps/expediente/generar/<?php echo $expediente->id?>/<?Php echo $mod->id?>/<?php echo $bloque_id;?>/<?php echo $presupuesto_id;?>" class="btn btn-app <?php echo $cl = $mod->id==$modulo->id ? 'active':''; ?>">
+          	<i class="<?php echo $mod->icono?>"></i> <?php echo $mod->nombre;?>
+        	</a>
+        <?php }*/?>
+      </div>
+    </div>
+  </div>
+<script>
+$(document).ready(function(){
+    $(".hide-detalle").click(function(){
+        var id_detalle = $(this).attr("data-id");
+        $("#detalle-"+id_detalle).hide();
+        $(this).hide();
+        $('[data-show="show-'+id_detalle+'"]').show();
+    });
+    $(".show-detalle").click(function(){
+        var id_detalle = $(this).attr("data-id");
+        $("#detalle-"+id_detalle).show();
+        $(this).hide();
+        $('[data-hide="hide-'+id_detalle+'"]').show();
+    });
+});
+</script>
+</div>
+</section>
+<footer class="main-footer" style="z-index: 999999 !important;position: fixed;left: 0px;bottom: 0px;width: 100%;margin-bottom: 2px;">
+  
+  <div><?php foreach($modulos as $mod){   ?> 
+      <a href="/apps/expediente/generar/<?php echo $expediente->id?>/<?Php echo $mod->id?>/<?php echo $bloque_id;?>/<?php echo $presupuesto_id;?>" class="btn btn-app <?php echo $cl = $mod->id==$modulo->id ? 'btn-primary active':''; ?>">
+          <i class="<?php echo $mod->icono?>"></i> <?php echo $mod->nombre;?>
+        </a>
+      <?php }?>
+  </div>
+</footer>

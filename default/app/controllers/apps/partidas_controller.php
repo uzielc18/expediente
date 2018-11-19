@@ -51,5 +51,26 @@ class PartidasController extends AppController {
 
 		$this->partidas = $Partidas->find((int) $id);
 	}
+
+    public function borrar($exp_id=NULL, $mod_id=NULL, $bloc_id=NULL, $pres_id=NULL, $ti_id=NULL,$id){
+        try {
+            $id = Filter::get($id, 'digits');
+            $doc = new Partidas();
+            if (!$doc->find_first($id)){ //si no existe el usuario
+                Flash::warning("No existe ningun registro con id '{$id}'");
+            }else if ($doc->borrar()) {
+                Flash::valid("El <b>{$doc->id}</b> el registro esta borrado ahora <b>Borrado</b>...!!!");
+                (new Detalleanalisis)->delete_all( " partidas_id = ".$id );
+                (new Detallemetrados)->delete_all( " partidas_id = ".$id );
+                (new Detallestecnicos)->delete_all( " partidas_id = ".$id  );
+                Acciones::add("Colocó el registro {$doc->id} como borrado",'Titulopartidas');
+            } else {
+                Flash::warning('No se pudo borrar el registro!!!');
+            }
+        } catch (KumbiaException $e) {
+            View::excepcion($e);
+        }
+         return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
+    }
 }
 ?>

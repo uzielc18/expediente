@@ -12,6 +12,7 @@ class ExpedienteController extends AdminController {
 		$Expedientes = new Expedientes();
 		$this->titulo='Expediente nuevo';
 		$this->codigo = $Expedientes->get_codigo();
+		$this->codigo_expediente = $Expedientes->get_codigo_expediente_unico();
 		if (Input::hasPost('expedientes')) {
 
             $obj = $Expedientes;
@@ -75,11 +76,15 @@ class ExpedienteController extends AdminController {
 		$Modulos = new Modulos();
 		$Presupuestos = new Presupuestos();
 		$Partidas = New Partidas();
-		$Detallemetrados = New Detallemetrados();
 		$Titulopartidas =  new Titulopartidas();
 
 		/*Obtiene el expedieten princiapl*/
 		$this->expediente = $Expedientes->find((int) $id);
+		if($this->expediente->estado!==1){
+			$EXP=$Expedientes->find((int) $id);
+			$EXP->estado=1;
+			$EXP->save();
+		}
 		$b_id = $bloque_id ? $bloque_id : $Expedientes->minimum('id', 'conditions: estado=1 AND expedientes_id='.$id);		
 		$m_id = $modulo_id ? $modulo_id : 1;
 		/*Obtiene los modulos*/
@@ -302,6 +307,42 @@ class ExpedienteController extends AdminController {
 			$this->presupuesto = $Presupuestos->find((int)$p_id);
 		}
 
+	}
+	public function insumos($id, $modulo_id=NULL, $bloque_id=NULL, $presupuesto_id=NULL){
+		//View::select('crear');
+		$this->titulo='Expediente nuevo';
+		$Expedientes = new Expedientes();
+		$Modulos = new Modulos();
+		$Presupuestos = new Presupuestos();
+		$Partidas = New Partidas();
+		$Detalleanalisis = New Detalleanalisis();
+		$Titulopartidas =  new Titulopartidas();
+
+		/*Obtiene el expedieten princiapl*/
+		$this->expediente = $Expedientes->find((int) $id);
+		$b_id = $bloque_id ? $bloque_id : $Expedientes->minimum('id', 'conditions: estado=1 AND expedientes_id='.$id);		
+		$m_id = $modulo_id ? $modulo_id : 1;
+		/*Obtiene los modulos*/
+		$this->modulo=$Modulos->find((int)$m_id);
+		$this->modulos = $Modulos->find('conditions: estado=1','oreder: id DESC');
+		/*Obtiene los bloques del expediente Prencipal*/
+		$this->bloques = $Expedientes->find('conditions: estado=1 AND expedientes_id='.$id);
+		$this->bloque= False;
+		if($b_id){
+			$this->bloque = $Expedientes->find((int)$b_id);
+			/*Si existe un Bloque el $id = $b_id los detalles a mostrar ahora son del bloqeu seleccionado*/
+			$id=$b_id;
+		}
+		/*Obtiene los sub presupuesto (tabla:Presupuestos)*/
+		$p_id = $presupuesto_id ? $presupuesto_id : $Presupuestos->minimum('id', 'conditions: estado=1 AND expedientes_id='.$id);
+		$this->presupuestos = $Presupuestos->find('conditions: estado=1 AND expedientes_id='.$id);
+		$this->presupuesto = False;
+		$this->partidas_nuevo=0;
+		if($p_id)$this->partidas_nuevo=$Partidas->count('id','conditions: presupuestos_id='.$p_id);
+		$this->array_titulo=[];
+		if($p_id){
+			$insumos=$Detalleanalisis->getInsumos();
+		}
 	}
 
 }

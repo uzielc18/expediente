@@ -36,7 +36,7 @@ $(function () {
               var data = group.sortable("serialize").get();
               alert(data);
               var jsonString = JSON.stringify(data, null, ' ');
-
+              alert(jsonString);
               $('#serialize_output2').text(jsonString);
               _super($item, container);
             }

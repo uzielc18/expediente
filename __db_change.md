@@ -69,4 +69,6 @@ ALTER TABLE `expedientes` CHANGE `aclempresas_id` `aclempresas_id` INT(10) UNSIG
 ALTER TABLE `modulos` ADD `url` VARCHAR(250) NULL AFTER `nombre`;
 ALTER TABLE `partidas` ADD `partidas_id` INT(11) NULL AFTER `fecha_in`;
 ALTER TABLE `detallemetrados` ADD `detallemetrados_id` INT(11) NULL AFTER `imagen`;
---- cambios realizados 07-11-2018  cambio echo en local como host ---
+
+ALTER TABLE `expedientes` ADD `prefijo` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL AFTER `id`, ADD `codigo` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL AFTER `prefijo`;
+--- cambios realizados 07-11-2018  cambio echo en local como nube ---

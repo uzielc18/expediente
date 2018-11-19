@@ -2,7 +2,8 @@
 <?php View::content()?>
 <div class="box-header with-border">
     <i class="fa fa-shield"></i><h1 class="box-title"><?php echo ucwords("$model"), ": <span>$action_name</span>" ?></h1>
-    <div class="box-tools"><?php echo Html::linkAction("crear/", '<i class="fa fa-plus"></i>', 'class="btn btn-primary" title="Crear '.ucwords("$model").'"') ?></div>
+    <div class="box-tools"><?php echo Html::linkAction("crear/", '<i class="fa fa-plus"></i>', 'class="btn btn-primary" title="Crear '.ucwords("$model").'"') ?>
+    <?php echo Html::linkAction("eliminar_estado_all/", '<i class="fa fa-trash-o" style="font-size:20px; color:red;"></i>', 'class="btn" title="Eliminar de la base de dato los borrados '.ucwords("$model").'"') ?></div>
 </div>
 <div class="box-body">
     <?php if ($results->items) : ?>

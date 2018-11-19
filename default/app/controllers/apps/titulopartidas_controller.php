@@ -11,7 +11,7 @@ class TitulopartidasController extends AppController {
         $this->titulo_small=$titulopartidas_id ? 'Subtitulo de '.$TITULO->titulo:'Titulo principal';
 		$this->expedientes_id=$exp_id;
 		$this->titulopartidas_id=$titulopartidas_id;
-        $this->codigo = $Titulopartidas->_codigo_titulo($pres_id);
+        $this->codigo = $Titulopartidas->_codigo_titulo($pres_id,$titulopartidas_id);
 		$this->presupuestos_id = $pres_id;
 		if (Input::hasPost('titulopartidas')) {
 
@@ -52,8 +52,29 @@ class TitulopartidasController extends AppController {
             }
             return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
         }
-
+        $this->titulo_superior=False;
 		$this->titulopartidas = $Titulopartidas->find((int) $id);
+        if($this->titulopartidas->titulopartidas_id){
+            $this->titulo_superior=$Titulopartidas->find((int) $this->titulopartidas->titulopartidas_id);
+
+        }
 	}
+    public function borrar($exp_id=NULL, $mod_id=NULL, $bloc_id=NULL, $pres_id=NULL, $id){
+        try {
+            $id = Filter::get($id, 'digits');
+            $doc = new Titulopartidas();
+            if (!$doc->find_first($id)){ //si no existe el usuario
+                Flash::warning("No existe ningun registro con id '{$id}'");
+            }else if ($doc->borrar()) {
+                Flash::valid("El <b>{$doc->id}</b> el registro esta borrado ahora <b>Borrado</b>...!!!");
+                Acciones::add("Colocó el registro {$doc->id} como borrado",'Titulopartidas');
+            } else {
+                Flash::warning('No se pudo borrar el registro!!!');
+            }
+        } catch (KumbiaException $e) {
+            View::excepcion($e);
+        }
+         return Redirect::to('apps/expediente/generar/'.$exp_id.'/'.$mod_id.'/'.$bloc_id.'/'.$pres_id);
+    }
 }
 ?>

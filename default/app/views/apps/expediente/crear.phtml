@@ -41,12 +41,14 @@ $(document).ready(function()
 <?php echo Form::open(NULL, 'post', 'role="form" class="form-horizontal"') ?>
 <?php echo Form::hidden('expedientes.id') ?>
 <?php echo Form::hidden('expedientes.aclusuarios_id',NULL,Auth::get('id')) ?>
-<?php echo Form::hidden('expedientes.estado',NULL,1) ?>
+<?php echo Form::hidden('expedientes.estado',NULL,0) ?>
+<?php echo Form::hidden('expedientes.prefijo',NULL,'BBIM') ?>
+<?php echo Form::hidden('expedientes.codigo_expediente',NULL,$codigo_expediente) ?>
 <div class="col-sm-10">
     <div class="form-group">
-    <?php echo Form::label('Codigo','expedientes.codigo_expediente','class="col-sm-3 control-label"');?>
+    <?php echo Form::label('Codigo BBIM','expedientes.codigo','class="col-sm-3 control-label"');?>
         <div class="col-sm-9">
-            <?php echo Form::text('expedientes.codigo_expediente','class="form-control" placeholder="Codigo"',$codigo)?>
+            <?php echo Form::text('expedientes.codigo','class="form-control" placeholder="Codigo"',$codigo)?>
         </div>
     </div>
     <div class="form-group">

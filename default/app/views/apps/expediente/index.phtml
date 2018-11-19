@@ -16,6 +16,7 @@ Expedientes
   <tr>
   	<th align="left">Nº</th>
     <th align="left">Tipo</th>
+    <th align="left">Codigo</th>
     <th align="left">Fecha</th>
     <th align="left">Nombre</th>
     <th align="left">Direccion</th>
@@ -28,8 +29,8 @@ Expedientes
 foreach($expedientes as $item){ $n++;?>
   <tr>
   	<td><?php echo $n?></td>
-
     <td><?php echo $item->tipo_nombre?></td>
+    <td><?php echo $item->prefijo?>-<?php echo $item->codigo?></td>
     <td><?php echo strftime("%d de %B del %Y", strtotime($item->fecha))?></td>
     <td><?php echo $item->nombre?></td>
     <td>
@@ -48,9 +49,9 @@ foreach($expedientes as $item){ $n++;?>
     }
     if($a==0)echo "Sin bloques";?></td>
     <td align="center">
-      <?php echo Html::linkAction('generar/'.$item->id,'<i class="fa fa-gears" style="font-size:15px;"></i>','')?> 
-      <?php echo Html::linkAction('editar/'.$item->id,'<i class="fa fa-edit" style="font-size:15px;"></i>','')?> 
-      <?php echo Js::linkAction("borrar/$item->id",'<i class="fa fa-close" style="font-size:15px;"></i>','Deseas Eliminar?');?>
+      <?php echo Html::linkAction('generar/'.$item->id,'<i class="fa fa-gears" style="font-size:20px;"></i>','title="Generar presupuestos y partidas"')?> 
+      <?php echo Html::linkAction('editar/'.$item->id,'<i class="fa fa-edit" style="font-size:20px;"></i>','')?> 
+      <?php echo  $item->estado==0 ? Js::linkAction("borrar/$item->id",'<i class="fa fa-trash" style="font-size:20px;"></i>','Deseas Eliminar?'):'<i class="fa fa-trash" style="font-size:20px;" title="No se puede Eliminar por que ya tiene presupuestos"></i>'?>
     </td>
   </tr>
 <?php }?>

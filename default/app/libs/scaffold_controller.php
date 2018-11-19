@@ -67,6 +67,13 @@ class ScaffoldController extends AdminController {
         //enrutando al index para listar los articulos
         Redirect::toAction('index');
     }
+    public function eliminar_estado_all() {
+        if (!Load::model($this->model)->delete('estado=3')) {
+            Flash::error('Falló Operación');
+        }
+        //enrutando al index para listar los articulos
+        Redirect::toAction('index');
+    }
     public function borrar($id){
         try {
             $id = Filter::get($id, 'digits');

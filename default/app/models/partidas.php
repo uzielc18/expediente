@@ -8,7 +8,7 @@ class Partidas extends ActiveRecord {
     }
 	/*@id recibe el id del presupuesto*/
 	public function get_titulos_partidas_all($id,$titulo){
-		$sql='SELECT t.codigo as codigo_titulo, t.id as titulo_id, t.titulo as titulo, p.*, (SELECT count(PR.id) FROM partidas as PR WHERE PR.titulopartidas_id=p.titulopartidas_id AND p.presupuestos_id=PR.presupuestos_id) as total_partidas FROM partidas as p INNER JOIN titulopartidas as t ON t.id=p.titulopartidas_id AND t.presupuestos_id=p.presupuestos_id WHERE p.titulopartidas_id='.$titulo.' AND p.presupuestos_id='.$id.' ORDER BY  codigo_titulo, titulo_id, p.id DESC';
+		$sql='SELECT t.codigo as codigo_titulo, t.id as titulo_id, t.titulo as titulo, p.*, (SELECT count(PR.id) FROM partidas as PR WHERE PR.titulopartidas_id=p.titulopartidas_id AND p.presupuestos_id=PR.presupuestos_id) as total_partidas FROM partidas as p INNER JOIN titulopartidas as t ON t.id=p.titulopartidas_id AND t.presupuestos_id=p.presupuestos_id WHERE p.titulopartidas_id='.$titulo.' AND p.estado!=3 AND p.presupuestos_id='.$id.' ORDER BY  codigo_titulo, titulo_id, p.id DESC';
 		return $this->find_all_by_sql($sql);
 	}
 	public function get_titulos_sin_partidas_all($id){
