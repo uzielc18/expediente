@@ -12,6 +12,7 @@ class ScaffoldController extends AdminController {
             $this->results = Load::model($this->model)->paginate("page: $page", 'order: estado DESC');
             if($this->results->items)$this->columns_view = current($this->results->items)->fields;
         }
+         $this->{$this->model} = Load::model($this->model);
 		
     }
 

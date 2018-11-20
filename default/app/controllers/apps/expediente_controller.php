@@ -342,6 +342,7 @@ class ExpedienteController extends AdminController {
 		$this->array_titulo=[];
 		if($p_id){
 			$insumos=$Detalleanalisis->getInsumos();
+			$this->presupuesto = $Presupuestos->find((int)$p_id);
 		}
 	}
 

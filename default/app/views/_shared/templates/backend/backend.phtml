@@ -25,7 +25,7 @@ $mini2=substr($t_t[1],0, 1);
         <?php
         Tag::css('themes/base/jquery.ui.all');
         Tag::css('backendnew/bootstrap.min');
-        Tag::css('backendnew/font-awesome');
+        //Tag::css('backendnew/font-awesome');
         //Tag::css('backendnew/ionicons.min');        
         Tag::css('backendnew/AdminLTE');
         Tag::css('backendnew/skins/_all-skins');
@@ -45,6 +45,7 @@ $mini2=substr($t_t[1],0, 1);
         <?php
         extract(Router::get(), EXTR_OVERWRITE);
         echo "<script src=\"", PUBLIC_PATH, "javascript/jquery/plugins/jQuery/jquery-2.2.3.min.js\">";?></script>
+        <script src="https://use.fontawesome.com/92eaa29aaf.js"></script>
     </head>
 <body class="hold-transition sidebar-mini wysihtml5-supported skin-black-light">
         <div class="wrapper">

@@ -11,5 +11,8 @@ class Detalleanalisis extends ActiveRecord {
 		$r = $this->find_by_sql('select calculoflete.id as id_unico from calculoflete WHERE detalleanalisis_id='.$this->id.' limit 0,1');
 		return $r->id_unico;
 	}
+	public function getInsumos(){
+		return $this->find();
+	}
 }
 ?>

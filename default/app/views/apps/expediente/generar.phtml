@@ -126,6 +126,7 @@ $expediente_id=$expediente->id;
                             $tr_p.='<td align="right"> S/ '.number_format($partida->parcial?$partida->parcial:0,2,'.','').'</td>';
                           }
                         if($modulo->id==2)$tr_p.='<td align="right"> S/ '.number_format($partida->costo ? $partida->costo : 0,2,'.','').'</td>';
+                        if($modulo->id==4)$tr_p.='<td align="right"></td>';
                         $tr_p.='</tr>';
                         $tr_p.='<tr style="display: none;" id="detalle-'.$partida->id.'">';
                         $cols= $modulo->id===3 ? '6':'4';
@@ -269,7 +270,7 @@ $(document).ready(function(){
 <footer class="main-footer" style="z-index: 999999 !important;position: fixed;left: 0px;bottom: 0px;width: 100%;margin-bottom: 2px;">
   
   <div><?php foreach($modulos as $mod){   ?> 
-      <a href="/apps/expediente/generar/<?php echo $expediente->id?>/<?Php echo $mod->id?>/<?php echo $bloque_id;?>/<?php echo $presupuesto_id;?>" class="btn btn-app <?php echo $cl = $mod->id==$modulo->id ? 'btn-primary active':''; ?>">
+      <a href="<?php echo $mod->url.$expediente->id?>/<?Php echo $mod->id?>/<?php echo $bloque_id;?>/<?php echo $presupuesto_id;?>" class="btn btn-app <?php echo $cl = $mod->id==$modulo->id ? 'btn-primary active':''; ?>">
           <i class="<?php echo $mod->icono?>"></i> <?php echo $mod->nombre;?>
         </a>
       <?php }?>

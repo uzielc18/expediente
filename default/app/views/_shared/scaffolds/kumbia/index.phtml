@@ -6,6 +6,7 @@
     <?php echo Html::linkAction("eliminar_estado_all/", '<i class="fa fa-trash-o" style="font-size:20px; color:red;"></i>', 'class="btn" title="Eliminar de la base de dato los borrados '.ucwords("$model").'"') ?></div>
 </div>
 <div class="box-body">
+    <?php ModelFilter::create($$model)?>
     <?php if ($results->items) : ?>
     <table class="table table-bordered">
         <thead>
