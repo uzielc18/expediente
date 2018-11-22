@@ -5,14 +5,30 @@ class ScaffoldController extends AdminController {
     public $scaffold = 'kumbia';
     
     public function index($page=1) {
+
+         $this->{$this->model} = Load::model($this->model);
+         $conditions='1=1';
+         if(Input::hasPost($this->model))
+         {  
+            $conditions='';
+            $val=Input::post($this->model);
+            $n=0;
+            foreach ($val as $key => $value) 
+            {
+               if(!empty($value)){
+                    $n++;
+                    $AND = $n==1 ? '' : ' AND ';
+                    $conditions.= $AND.$key.'='.$value;
+                }
+            }
+         }
         if($this->columns){
-            $this->results = Load::model($this->model)->paginate("columns: $this->columns","page: $page", 'order: estado DESC');
+            $this->results = Load::model($this->model)->paginate("conditions: $conditions","columns: $this->columns","page: $page", 'order: estado DESC');
             $this->columns_view = explode(",", $this->columns);
         }else{
-            $this->results = Load::model($this->model)->paginate("page: $page", 'order: estado DESC');
+            $this->results = Load::model($this->model)->paginate("conditions: $conditions","page: $page", 'order: estado DESC');
             if($this->results->items)$this->columns_view = current($this->results->items)->fields;
         }
-         $this->{$this->model} = Load::model($this->model);
 		
     }
 
