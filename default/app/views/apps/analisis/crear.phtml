@@ -165,11 +165,11 @@ $pres_id = $partida->presupuestos_id;?>
 												<td align="right">S/ <?php echo $item->parcial ? number_format($item->parcial,4):'-';?></td>
 												<td align="center">
 													<?php 
-													echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:15px;"></i>','title="Editar detalle de analsis"');
-													echo Html::linkAction('eliminar_analisis/'.$partida->id.'/'.$item->id,' <i class="fa fa-minus-square" style="font-size:15px;"></i>','title="Eliminar detalle de analsis" onclick="return confirm(\'¿Está seguro?\')"' );
+													echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:20px;"></i>','title="Editar detalle de analsis"');
+													echo Html::linkAction('eliminar_analisis/'.$partida->id.'/'.$item->id,' <i class="fa fa-trash" style="font-size:20px;"></i>','title="Eliminar detalle de analsis" onclick="return confirm(\'¿Está seguro?\')"' );
 													if($partida->getTipopartidas()->codigo==='FL' && $tipo->simbologia==='SE'){
-														echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id.'/'.$item->get_calculoflete(),' <i class="fa fa-road" style="font-size:15px;"></i>','title="Calcular el flete"');
-														if($item->get_calculoflete()) echo Html::linkAction('eliminar_flete/'.$partida->id.'/'.$item->get_calculoflete(),' <i class="fa fa-trash" style="font-size:15px;"></i>','title="Eliminar calculo del flete" onclick="return confirm(\'¿Está seguro?\')"');
+														echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id.'/'.$item->get_calculoflete(),' <i class="fa fa-road" style="font-size:20px;"></i>','title="Calcular el flete"');
+														if($item->get_calculoflete()) echo Html::linkAction('eliminar_flete/'.$partida->id.'/'.$item->get_calculoflete(),' <i class="fa fa-trash" style="font-size:20px;"></i>','title="Eliminar calculo del flete" onclick="return confirm(\'¿Está seguro?\')"');
 													};?></td>
 											</tr>
 									<?php   } 
