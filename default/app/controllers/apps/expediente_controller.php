@@ -32,7 +32,7 @@ class ExpedienteController extends AdminController {
 		View::select('crear');	
 		$Expedientes = new Expedientes();
 		$this->titulo='Expediente modificar';
-		//$this->codigo = $Expedientes->get_codigo();
+		//$this->codigo_expediente = $Expedientes->get_codigo_expediente_unico();
 		if (Input::hasPost('expedientes')) {
 
             $obj = $Expedientes;
@@ -48,7 +48,8 @@ class ExpedienteController extends AdminController {
         }
 
 		$this->expedientes = $Expedientes->find((int) $id);
-        $this->codigo = $this->expedientes->codigo_expediente;
+        $this->codigo = $Expedientes->get_codigo();
+		$this->codigo_expediente = $Expedientes->get_codigo_expediente_unico();
 
 	}
 	public function borrar($id, $act=NULL){
@@ -79,6 +80,7 @@ class ExpedienteController extends AdminController {
 		$Titulopartidas =  new Titulopartidas();
 
 		/*Obtiene el expedieten princiapl*/
+		echo $id;
 		$this->expediente = $Expedientes->find((int) $id);
 		if($this->expediente->estado!==1){
 			$EXP=$Expedientes->find((int) $id);

@@ -111,84 +111,86 @@ $pres_id = $partida->presupuestos_id;?>
 						echo Form::hidden('partida.tipopartidas_id');
 						echo Form::hidden('partida.medidas_id');
 						?>
-						<div role="separator" class="divider">
-							<div class="col-sm-3">
-								Rendimiento <b><?php echo $partida->getMedidas()->abr?>/DIA</b>
-							</div>
-							<div class="col-sm-2">
-								<?php echo $partida->rendimiento;?>
-							</div>
-							<div class="col-sm-3">
-								Costo unitario directo por: <?php echo $partida->getMedidas()->abr?>
-							</div>
-							<div class="col-sm-3">
-								<b><?php echo $partida->costo ? number_format($partida->costo,4): '-';?></b>
-							</div>
-						</div>
 						<div id="reporte-detalleanalisis">
-							<table class="table">
-								<caption>Detalle de Costo unitario </caption>
-								<thead>
-									<tr>
-										<th>Codigo</th>
-										<th>Descripcion recurso</th>
-										<th>Unidad</th>
-										<th>Cuadrilla</th>
-										<th>Cantidad</th>
-										<th>Precio S/</th>
-										<th>Parcial</th>
-										<th>Accion</th>
-									</tr>
-								</thead>
-								<tbody>
-									<?php 
-									
-									
-									foreach($tipos as $tipo){
-										$n=0;
-										foreach($analisis as $item){?>
+							<div role="separator" class="divider">
+								<div class="col-sm-3">
+									Rendimiento <b><?php echo $partida->getMedidas()->abr?>/DIA</b>
+								</div>
+								<div class="col-sm-2">
+									<?php echo $partida->rendimiento;?>
+								</div>
+								<div class="col-sm-3">
+									Costo unitario directo por: <?php echo $partida->getMedidas()->abr?>
+								</div>
+								<div class="col-sm-3">
+									<b><?php echo $partida->costo ? number_format($partida->costo,4): '-';?></b>
+								</div>
+							</div>
+							<div >
+								<table class="table">
+									<caption>Detalle de Costo unitario </caption>
+									<thead>
+										<tr>
+											<th>Codigo</th>
+											<th>Descripcion recurso</th>
+											<th>Unidad</th>
+											<th>Cuadrilla</th>
+											<th>Cantidad</th>
+											<th>Precio S/</th>
+											<th>Parcial</th>
+											<th>Accion</th>
+										</tr>
+									</thead>
+									<tbody>
 										<?php 
-											if($tipo->id==$item->getMateriales()->getTipomateriales()->tipomateriales_id){
-												$n++;
-												$cantidad = $item->cantidad ? $item->cantidad : 0;
-												$precio = $item->precio ? $item->precio : 0;
-												
-											?>
-											<?php if($n==1)echo "<tr><td colspan='8'><b>".$tipo->nombre.$tipo->simbologia."</b></td></tr>"; ?>
-											<tr>
-												<td><?php echo $item->getMateriales()->getCodigoCompleto();?></td>
-												<td><?php echo $item->getMateriales()->nombre;?></td>
-												<td><?Php echo $item->getMedidas()->nombre?></td>
-												<td align="right"><?php echo $item->cuadrilla ? number_format($item->cuadrilla,3):'-'?></td>
-												<td align="right"><?php echo number_format($cantidad,4);?></td>
-												<td align="right">S/ <?php echo $item->precio ? number_format($precio,4) : '-'?></td>
-												<td align="right">S/ <?php echo $item->parcial ? number_format($item->parcial,4):'-';?></td>
-												<td align="center">
-													<?php 
-													echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:20px;"></i>','title="Editar detalle de analsis"');
-													echo Html::linkAction('eliminar_analisis/'.$partida->id.'/'.$item->id,' <i class="fa fa-trash" style="font-size:20px;"></i>','title="Eliminar detalle de analsis" onclick="return confirm(\'¿Está seguro?\')"' );
-													if($partida->getTipopartidas()->codigo==='FL' && $tipo->simbologia==='SE'){
-														echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id.'/'.$item->get_calculoflete(),' <i class="fa fa-road" style="font-size:20px;"></i>','title="Calcular el flete"');
-														if($item->get_calculoflete()) echo Html::linkAction('eliminar_flete/'.$partida->id.'/'.$item->get_calculoflete(),' <i class="fa fa-trash" style="font-size:20px;"></i>','title="Eliminar calculo del flete" onclick="return confirm(\'¿Está seguro?\')"');
-													};?></td>
-											</tr>
-									<?php   } 
-										}?>
-								<?php }?>
-								</tbody>
-								<tfoot>
-									<tr>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td></td>
-										<td align="right"><b>Total:</b></td>
-										<td align="right">S/ <?php echo number_format($total_parcial_partida,4);?></td>
-										<td></td>
-									</tr>
-								</tfoot>
-							</table>
+										
+										
+										foreach($tipos as $tipo){
+											$n=0;
+											foreach($analisis as $item){?>
+											<?php 
+												if($tipo->id==$item->getMateriales()->getTipomateriales()->tipomateriales_id){
+													$n++;
+													$cantidad = $item->cantidad ? $item->cantidad : 0;
+													$precio = $item->precio ? $item->precio : 0;
+													
+												?>
+												<?php if($n==1)echo "<tr><td colspan='8'><b>".$tipo->nombre.$tipo->simbologia."</b></td></tr>"; ?>
+												<tr>
+													<td><?php echo $item->getMateriales()->getCodigoCompleto();?></td>
+													<td><?php echo $item->getMateriales()->nombre;?></td>
+													<td><?Php echo $item->getMedidas()->nombre?></td>
+													<td align="right"><?php echo $item->cuadrilla ? number_format($item->cuadrilla,3):'-'?></td>
+													<td align="right"><?php echo number_format($cantidad,4);?></td>
+													<td align="right">S/ <?php echo $item->precio ? number_format($precio,4) : '-'?></td>
+													<td align="right">S/ <?php echo $item->parcial ? number_format($item->parcial,4):'-';?></td>
+													<td align="center">
+														<?php 
+														echo Html::linkAction('editar/'.$partida->id.'/'.$item->id,' <i class="fa fa-edit" style="font-size:20px;"></i>','title="Editar detalle de analsis"');
+														echo Html::linkAction('eliminar_analisis/'.$partida->id.'/'.$item->id,' <i class="fa fa-trash" style="font-size:20px;"></i>','title="Eliminar detalle de analsis" onclick="return confirm(\'¿Está seguro?\')"' );
+														if($partida->getTipopartidas()->codigo==='FL' && $tipo->simbologia==='SE'){
+															echo Html::linkAction('calcular_flete/'.$partida->id.'/'.$item->id.'/'.$item->get_calculoflete(),' <i class="fa fa-road" style="font-size:20px;"></i>','title="Calcular el flete"');
+															if($item->get_calculoflete()) echo Html::linkAction('eliminar_flete/'.$partida->id.'/'.$item->get_calculoflete(),' <i class="fa fa-trash" style="font-size:20px;"></i>','title="Eliminar calculo del flete" onclick="return confirm(\'¿Está seguro?\')"');
+														};?></td>
+												</tr>
+										<?php   } 
+											}?>
+									<?php }?>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td align="right"><b>Total:</b></td>
+											<td align="right">S/ <?php echo number_format($total_parcial_partida,4);?></td>
+											<td></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

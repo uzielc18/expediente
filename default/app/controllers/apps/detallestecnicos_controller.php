@@ -11,8 +11,8 @@ class DetallestecnicosController extends AppController {
 		$this->titulo='Detalle tecnicos<b>'.$this->partida->nombre.'</b> del Modulo <b>'.$this->modulo->descripcion.'</b>';
         $this->titulo_small='';
         if($id==0){
-        	$detallestecnicos=$Detallestecnicos->find_first('partidas_id='.$partida_id);
-        	return Redirect::toAction('crear/'.$partida_id.'/'.$detallestecnicos->id);
+        	$this->detallestecnicos=$Detallestecnicos->find_first('partidas_id='.$partida_id);
+        	if($this->detallestecnicos)return Redirect::toAction('crear/'.$partida_id.'/'.$this->detallestecnicos->id);
         }else{
         	$this->detallestecnicos=$Detallestecnicos->find((int) $id);
         }

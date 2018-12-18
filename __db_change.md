@@ -72,3 +72,5 @@ ALTER TABLE `detallemetrados` ADD `detallemetrados_id` INT(11) NULL AFTER `image
 
 ALTER TABLE `expedientes` ADD `prefijo` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL AFTER `id`, ADD `codigo` VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL AFTER `prefijo`;
 --- cambios realizados 07-11-2018  cambio echo en local como nube ---
+
+ALTER TABLE `partidas` ADD `orden` TINYINT(5) NULL AFTER `partidas_id`;

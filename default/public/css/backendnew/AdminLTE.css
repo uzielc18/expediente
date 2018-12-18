@@ -4930,6 +4930,9 @@ padding: 10px;
 -moz-box-shadow: inset 1px 1px 5px 1px rgba(168,168,168,1)!important;
 box-shadow: inset 1px 1px 5px 1px rgba(168,168,168,1)!important;
 }
+td i.fa{
+  font-size: 18px;
+}
 
 /*
  * Misc: print

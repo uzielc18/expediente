@@ -7,7 +7,7 @@ $expediente_id=$expediente->id;
 
 <section class="content">
 <div class="row">
-  <div class="col-sm-3 col-md-2" >
+  <div class="col-sm-12 col-md-2" >
     <div style="position: fixed; width: 15%;">
     <?php if($expediente->id!=0){?>
             <?php foreach($registros as $reg){?>
@@ -21,10 +21,10 @@ $expediente_id=$expediente->id;
               </div>
               <div class="box-body no-padding">
                 <ul class="nav nav-pills nav-stacked">
-                  <?Php foreach($Ex->find('conditions: expedientes_id IS NULL AND tipoexpedientes_id='.$reg->id) as $expediente){?>
-                  <li <?php echo $expediente_id==$expediente->id ? 'class="active"': '';?>>
-                    <a href="/apps/expediente/generar/<?php echo $expediente->id ?>" <?php echo $expediente_id==$expediente->id ? 'style="color:#3c8dbc;"': '';?> class="">
-                      <i class="fa fa-file-excel-o"></i><span><?php echo $expediente->nombre;?></span>
+                  <?Php foreach($Ex->find('conditions: expedientes_id IS NULL AND tipoexpedientes_id='.$reg->id) as $exp){?>
+                  <li <?php echo $expediente_id==$exp->id ? 'class="active"': '';?>>
+                    <a href="/apps/expediente/generar/<?php echo $exp->id ?>" <?php echo $expediente_id==$exp->id ? 'style="color:#3c8dbc;"': '';?> class="">
+                      <i class="fa fa-file-excel-o"></i><span><?php echo $exp->nombre;?></span>
                     </a>
                   </li>
                   <?php }?>
@@ -36,7 +36,7 @@ $expediente_id=$expediente->id;
             }?>
     </div>
   </div>
-  <div class="col-md-10">
+  <div class="col-md-10 col-sm-12">
     <div class="box box-solid">
       <?php echo View::content();
       $bloque_id=$bloque? $bloque->id : 0;

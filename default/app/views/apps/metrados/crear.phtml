@@ -118,7 +118,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 							<div class="form-group">
 						    	<?php echo Form::label('Nº de veces del tipo','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
-						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
+						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces" required')?>
 						        </div>
 						    </div>
 						</div>
@@ -151,7 +151,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 							<div class="form-group">
 						    	<?php echo Form::label('Nº de veces','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
-						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
+						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces" required')?>
 						        </div>
 						    </div>
 						</div>
