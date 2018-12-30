@@ -118,7 +118,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 							<div class="form-group">
 						    	<?php echo Form::label('Nº de veces del tipo','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
-						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces" required')?>
+						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces"')?>
 						        </div>
 						    </div>
 						</div>
@@ -151,7 +151,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 							<div class="form-group">
 						    	<?php echo Form::label('Nº de veces','detallemetrados.numero_de_veces','class="col-sm-3 control-label"');?>
 						        <div class="col-sm-9">
-						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces" required')?>
+						            <?php echo Form::text('detallemetrados.numero_de_veces','class="form-control calcular" placeholder="Nº de veces" ')?>
 						        </div>
 						    </div>
 						</div>
@@ -252,6 +252,8 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 								$largo = $metro->largo ? $metro->largo : 1;
 								$ancho = $metro->ancho ? $metro->ancho : 1;
 								$altura = $metro->altura ? $metro->altura: 1;
+								$factor = $metro->factor ? $metro->factor: 1;
+								$numero_de_veces = $metro->numero_de_veces ? $metro->numero_de_veces: 1;
 								$total=$total+$metro->parcial;
 								?>
 								<?php 
@@ -287,7 +289,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 													<td align="right"><?php echo $metro->largo ? number_format($largo,4): '-'?></td>
 
 													<td  align="center"><?php echo $metro->factor ?></td>
-													<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
+													<td align="right"><?php echo number_format($numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
 													<td align="center">
 														<?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:20px;"></i>','class="__no_mostrar"');?>
 														<?php if(!empty($metro->imagen))echo Html::linkAction('crear_sin_imagen/'.$partida->id.'/'.$metro->id.'/0',' <i class="fa fa-plus" style="font-size:20px;"></i>','class="__no_mostrar" title="Agregar partida sin imagen"');?>
@@ -295,9 +297,11 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 													</td>
 												</tr>
 												<?php foreach($sub_metrados as $smetro){
-													$largo = $smetro->largo ? $smetro->largo : 1;
-													$ancho = $smetro->ancho ? $smetro->ancho : 1;
-													$altura = $smetro->altura ? $smetro->altura: 1;
+													$largo = $metro->largo ? $metro->largo : 1;
+													$ancho = $metro->ancho ? $metro->ancho : 1;
+													$altura = $metro->altura ? $metro->altura: 1;
+													$factor = $metro->factor ? $metro->factor: 1;
+													$numero_de_veces = $metro->numero_de_veces ? $metro->numero_de_veces: 1;
 													$total=$total+$smetro->parcial;?>
 												<tr>
 													<td><?php  echo $smetro->getMateriales()->getCodigoCompleto();?></td>
@@ -308,7 +312,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 													<td align="right"><?php echo $smetro->largo ? number_format($largo,4): '-'?></td>
 
 													<td  align="center"><?php echo $smetro->factor ?></td>
-													<td align="right"><?php echo number_format($smetro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
+													<td align="right"><?php echo number_format($numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
 													<td align="center">
 														<?php echo Html::linkAction('editar/'.$partida->id.'/'.$smetro->id,' <i class="fa fa-edit" style="font-size:20px;"></i>','class="__no_mostrar"');?>
 														<?php if(!empty($smetro->imagen))echo Html::linkAction('crear_sin_imagen/'.$partida->id.'/'.$smetro->id.'/0',' <i class="fa fa-plus" style="font-size:20px;"></i>','class="__no_mostrar" title="Agregar partida sin imagen"');?>
@@ -341,7 +345,7 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 									<td align="right"><?php echo $metro->ancho ? number_format($ancho,4) : '-'?></td>
 									<td align="right"><?php echo $metro->altura ? number_format($altura,4) : '-'?></td>
 									<td  align="center"><?php echo $metro->factor ?></td>
-									<td align="right"><?php echo number_format($metro->numero_de_veces*($largo*$ancho*$altura),4);echo ' '.$partida->getMedidas()->abr;?></td>
+									<td align="right"><?php echo number_format(($numero_de_veces*$largo*$ancho*$altura*$factor),4);echo ' '.$partida->getMedidas()->abr;?></td>
 									<td align="center">
 										<?php echo Html::linkAction('editar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-edit" style="font-size:20px;"></i>','class="__no_mostrar"');?>
 										<?php echo Js::linkAction('eliminar/'.$partida->id.'/'.$metro->id,' <i class="fa fa-trash" style="font-size:20px;"></i>','Deseas Eliminar?','class="__no_mostrar"');?>
@@ -429,11 +433,13 @@ View::partial('menu_expediente',false,array('expediente_id'=>$exp_id)) ?>
 					  var ancho = $( "#detallemetrados_ancho" ).val();
 					  var altura = $( "#detallemetrados_altura" ).val();
 					  var cantidad_elementos = $( "#detallemetrados_cantidad_elementos" ).val();
+					  var factor = $( "#detallemetrados_factor" ).val();
 					  if(!largo){largo=1;}
 					  if(!ancho){ancho=1;}
 					  if(!altura){altura=1;}
 					  if(!cantidad_elementos){cantidad_elementos=1;}
-					  return veces*(largo*ancho*altura*cantidad_elementos);
+					  if(!factor){factor=1;}
+					  return veces*(largo*ancho*altura*cantidad_elementos*factor);
 					}
 					$( ".calcular" ).change(function() {
 					  $("#detallemetrados_parcial" ).val(calcular());
