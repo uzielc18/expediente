@@ -3,7 +3,12 @@ View::template('apps/default_app');
 class MisProductosController extends AppController
 {
 	public function index(){
-		$this->titulo="Ultimos productos pedidos";
+		$this->titulo="Productos en proyectos";
+		$Detalleanalisis= new Detalleanalisis();
+		$Preciosempresas= new Preciosempresas(); 
+		$this->new_productos=$Detalleanalisis->get_materiales_sin_precio();
+		$this->mis_precisos=$Preciosempresas->get_materiales_actualizar();//('conditions: aclempresas_id='.Auth::get('aclempresas_id'));
+
 	}
     public function listar($tipomateriales_id=1,$indices_id=0,$page=1){
     	//View::select('/tiendas/materiales/index');

@@ -30,6 +30,9 @@ class Preciosempresas extends ActiveRecord {
         $precio=$this->find((int) $max)->precio;
         return $precio;
     }
+    public function get_materiales_actualizar(){
+        return $this->find_all_by_sql("SELECT DISTINCT materiales.id, materiales.nombre,materiales.descripcion, materiales.precio,materiales.peso FROM detalleanalisis INNER JOIN materiales ON materiales.id=detalleanalisis.materiales_id INNER JOIN preciosempresas ON preciosempresas.materiales_id = materiales.id AND preciosempresas.aclempresas_id=".Auth::get('aclempresas_id'));
+    }
 	
 }
 ?>
